@@ -1,0 +1,163 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+  .page{
+    background: #373C38;
+    color: #FFFFFF;
+    .weui-cell{
+      border:none;
+      background: #373C38;
+      font-size:14px;
+      &:before {
+        display: none;
+      }
+      &.middle-flex{
+        background: #FFFFFF;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        color: #111612;
+      }
+    }
+  }
+  .placeholder{
+    text-align: center;
+    background-color: #FFFFFF;
+    line-height: 3rem;
+    color: #616662;
+    width: 6rem;
+    .name{
+      border-bottom: 1px solid #616662;
+    }
+    &.second{
+      width: 100%;
+      border-left: 1px solid #616662;
+    }
+  }
+</style>
+<template>
+  <view class="page">
+    <!--頂部-->
+    <view class="page__bd">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+          </view>
+          <view class="weui-cell__bd">
+            <view>{{ userInfo.nickName }}</view>
+            <view>賬戶餘額：￥99999/今天天氣：晴</view>
+          </view>
+        </view>
+        <view class="weui-cell" style="padding-top: 0px">
+          <view style="color:#E64340">*您预约的洗车服务将于5.23日下午3点</view>
+        </view>
+      </view>
+    </view>
+    <!--下方 flex-->
+    <view class="page__bd">
+      <view class="weui-cell middle-flex">
+        <view style="width: 100%;text-align: center">請選擇時間</view>
+      </view>
+      <!--flex-->
+      <view class="weui-flex" style="border-top:1px #616662 solid">
+        <view>
+          <scroll-view class="placeholder" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
+            <view class="name {{item.active? 'active':''}}" wx:for="{{rootcateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
+              {{item.name}}
+            </view>
+          </scroll-view>
+        </view>
+        <view class="weui-flex__item">
+          <scroll-view class="placeholder second" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
+            <view class="name {{item.active? 'active':''}}" wx:for="{{rootcateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
+              {{item.name}}
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'about'
+    }
+    components = {
+
+    }
+
+    data = {
+      mynum: 20,
+      userInfo: {
+        nickName: '加载中...'
+      },
+      count: 0,
+      rootcateList: [],
+      windowHeight: 0
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    onLoad() {
+      let systemInfo = wx.getStorageSync(SYSTEM_INFO);
+      this.windowHeight = systemInfo.windowHeight;
+      let self = this
+      for (var i=0;i<=20;i++){
+        self.rootcateList.push({code:1,name:"tese"})
+      }
+      self.userInfo = wepy.getStorageSync('user_info')
+      this.$parent.doPrint()
+      this.$parent.getUserInfo(
+          function (userInfo) {
+            if (userInfo) {
+              self.userInfo = userInfo
+            }
+            self.normalTitle = '标题已被修改'
+
+            self.setTimeoutTitle = '标题三秒后会被修改'
+            setTimeout(() => {
+              self.setTimeoutTitle = '到三秒了'
+              self.$apply()
+            }, 3000)
+
+            self.$apply()
+          }
+      )
+    }
+  }
+</script>

@@ -59,6 +59,8 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/about',
+      'pages/appointment',
+      'pages/sellPackage',
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -116,7 +118,6 @@ export default class extends wepy.app {
     this.testAsync()
     let res = await wepy.login();
     let code = res.code
-    console.log(code)
     if (res.code){
       if (!wepy.getStorageSync('session_key')){
         const json = await api.getOpenId({
@@ -129,9 +130,8 @@ export default class extends wepy.app {
         wepy.setStorageSync('openid', json.data.openid);
       }
       let res = await wepy.getUserInfo()
-      console.log(res)
 
-      if (wepy.getStorageSync('openid')){
+      if (!wepy.getStorageSync('openid')){
         let encryptedData = res.encryptedData
         let iv = res.iv
         let session_key = wepy.getStorageSync('session_key')
@@ -158,7 +158,6 @@ export default class extends wepy.app {
 
   async testAsync () {
     const data = await this.sleep(3)
-    console.log(data)
   }
 
   async getUserInfo(cb) {
@@ -167,17 +166,14 @@ export default class extends wepy.app {
       return this.globalData.userInfo
     }
     let res = await wepy.getUserInfo()
-    console.log(res)
     cb && cb(res.userInfo)
   }
 
   doPrint(){
     wepy.login({
       success: function (data) {
-        console.log(data)
         wepy.getUserInfo({
           success: function (userinfo) {
-            console.log(userinfo)
           }
         });
       }

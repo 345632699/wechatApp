@@ -20,7 +20,7 @@
     .weui-cell{
       border:none;
       background: #373C38;
-      font-size:14px;
+      font-size: 0.8rem;
       &:before {
         display: none;
       }
@@ -40,6 +40,10 @@
     width: 6rem;
     .name{
       border-bottom: 1px solid #616662;
+      &.active{
+        background: #B1B4B2;
+        color: #FFFFFF;
+      }
     }
     &.second{
       width: 100%;
@@ -75,16 +79,17 @@
       <view class="weui-flex" style="border-top:1px #616662 solid">
         <view>
           <scroll-view class="placeholder" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
-            <view class="name {{item.active? 'active':''}}" wx:for="{{rootcateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
+            <view class="name {{item.active? 'active':''}}" wx:for="{{dateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
               {{item.name}}
+              <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
             </view>
           </scroll-view>
         </view>
         <view class="weui-flex__item">
           <scroll-view class="placeholder second" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
-            <view class="name {{item.active? 'active':''}}" wx:for="{{rootcateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
+            <navigator hover-class="none" open-type="navigate" class="name {{item.active? 'active':''}}" wx:for="{{timeList}}" wx:key="item" url="/pages/appointment?selectDate={{ currentDate }}&selectTime={{item.name}}">
               {{item.name}}
-            </view>
+            </navigator>
           </scroll-view>
         </view>
       </view>
@@ -94,6 +99,7 @@
 
 <script>
   import wepy from 'wepy'
+  import util from '../utils/util'
   import {
     SYSTEM_INFO,
     SEL_CLASS_CODE
@@ -112,8 +118,10 @@
         nickName: '加载中...'
       },
       count: 0,
-      rootcateList: [],
-      windowHeight: 0
+      dateList: [],
+      windowHeight: 0,
+      timeList: [],
+      currentDate: wx.getStorageSync(SEL_CLASS_CODE)
     }
 
     computed = {
@@ -123,7 +131,19 @@
     }
 
     methods = {
-
+      changeCate (e) {
+        let code = e.currentTarget.dataset.code;
+        this.getTimeList(code);
+        wepy.setStorageSync(SEL_CLASS_CODE, code);
+        //设置一级分类的选中状态
+        for (var i = 0; i < this.dateList.length; i++) {
+          var rootCate = this.dateList[i];
+          rootCate.active = false;
+          if (rootCate.code == code) {
+            rootCate.active = true;
+          }
+        }
+      }
     }
 
     events = {
@@ -133,31 +153,66 @@
       }
     }
 
+    //获取日期列表
+    async getDateList() {
+//      const json = await api.getDateList({
+//        query: {}
+//      });
+      if (1) {
+        for (var i=0;i<=20;i++){
+          this.dateList.push({code:i,name:"tese"+i})
+        }
+        if (this.dateList.length > 0) {
+          let selCode = wx.getStorageSync(SEL_CLASS_CODE);
+          var selRottCateCode = this.dateList[0].code;
+
+          if (selCode.length==0) {
+            this.dateList[0].active = true;
+          } else {
+            for (var i = 0; i < this.dateList.length; i++) {
+              if (selCode == this.dateList[i].code) {
+                selRottCateCode = this.dateList[i].code;
+                this.dateList[i].active = true;
+              }
+            }
+          }
+
+          this.getTimeList(selRottCateCode);
+        }
+      } else {
+        tip.error(json.data.msg);
+      }
+      this.$apply();
+    }
+    //获取某个日期的某个时间段
+    async getTimeList(rootCateCode) {
+//      const json = await api.childGoodsCatetoryList({
+//        query: {
+//          rootCategoryCode: rootCateCode
+//        }
+//      });
+      const TIMESTAMP = util.getCurrentTime()
+      if (1) {
+        for (var i=0;i<=20;i++){
+          this.timeList.push({code:i,name:TIMESTAMP + i})
+        }
+      } else {
+        tip.error(json.data.msg);
+      }
+      this.$apply();
+    }
+
     onLoad() {
       let systemInfo = wx.getStorageSync(SYSTEM_INFO);
       this.windowHeight = systemInfo.windowHeight;
       let self = this
-      for (var i=0;i<=20;i++){
-        self.rootcateList.push({code:1,name:"tese"})
-      }
       self.userInfo = wepy.getStorageSync('user_info')
-      this.$parent.doPrint()
-      this.$parent.getUserInfo(
-          function (userInfo) {
-            if (userInfo) {
-              self.userInfo = userInfo
-            }
-            self.normalTitle = '标题已被修改'
-
-            self.setTimeoutTitle = '标题三秒后会被修改'
-            setTimeout(() => {
-              self.setTimeoutTitle = '到三秒了'
-              self.$apply()
-            }, 3000)
-
-            self.$apply()
-          }
-      )
     }
+
+    onShow() {
+      this.getDateList()
+    }
+
+
   }
 </script>

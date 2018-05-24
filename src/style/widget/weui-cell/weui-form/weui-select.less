@@ -16,17 +16,39 @@
 
     &:before{
         content: " ";
-        .setArrow(right, 6px, #C8C8CD, 2px);
+        .setArrow(down, 6px, #C8C8CD, 2px);
 
         position: absolute;
         top: 50%;
         right: @weuiCellGapH;
-        margin-top: -4px;
+        margin-top: -8px;
     }
     &_in-select-after{
         padding-left: 0;
     }
 }
+
+.weui-select-right {
+    position: relative;
+    padding-left: @weuiCellGapH;
+    padding-right: 30px;
+
+    border-right: none;
+
+    &:before{
+        content: " ";
+        .setArrow(right, 6px, #C8C8CD, 2px);
+
+        position: absolute;
+        top: 50%;
+        right: @weuiCellGapH;
+        margin-top: -0.8rem;
+    }
+    &_in-select-after{
+        padding-left: 0;
+    }
+}
+
 .weui-cell__hd_in-select-after,
 .weui-cell__bd_in-select-before{
     padding-left: @weuiCellGapH;

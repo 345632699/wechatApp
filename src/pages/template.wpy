@@ -1,0 +1,52 @@
+<style lang="less">
+
+</style>
+<template>
+    <view class="page">
+        <!--頂部-->
+        <view class="name" @tap="changeCate" data-code="333">
+           测试
+            <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+        </view>
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'template'
+    }
+    components = {
+
+    }
+
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+      changeCate (e) {
+       console.log(e)
+       console.log(33333)
+      }
+    }
+
+
+    onLoad() {
+
+    }
+
+    onShow() {
+    }
+
+
+  }
+</script>

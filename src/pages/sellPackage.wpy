@@ -1,0 +1,56 @@
+<style lang="less">
+
+</style>
+<template>
+    <view class="page">
+        <!--頂部-->
+        <view class="name" @tap="selectPackage" data-code="333">
+            测试
+            <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+        </view>
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'template'
+    }
+    components = {
+
+    }
+
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+      selectPackage (e) {
+        let pacakge_id = e.currentTarget.dataset.code
+        let package_detail = "*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就"
+        let package_name = "168套餐 预计用时：3小时"
+        wepy.navigateTo({
+          url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
+        })
+      }
+    }
+
+
+    onLoad() {
+
+    }
+
+    onShow() {
+    }
+
+
+  }
+</script>

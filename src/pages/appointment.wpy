@@ -51,7 +51,7 @@
                 height:96rpx;
                 font-size:32rpx;
                 color:rgba(255,255,255,1);
-                line-height:;
+                line-height:32rpx;
             }
         }
 
@@ -73,6 +73,7 @@
             padding-bottom: 32rpx;
         }
         .carNum{
+            font-size: 32rpx;
             &.weui-select{
                 border: none;
                 padding-right:1.8rem;
@@ -221,7 +222,7 @@
                     <view class="weui-cell__ft">￥50</view>
                 </view>
             </view>
-            <view class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;">
+            <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;">
                 <button class="weui-btn mybtn" type="primary" plain="true">支付定金</button>
             </view>
         </view>

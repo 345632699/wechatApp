@@ -5,7 +5,7 @@
     }
     .page_box{
         border: 1px solid #D8D8D8;
-        height: 758rpx;
+        /*height: 758rpx;*/
         border-radius: 20rpx;
         margin-bottom: 20rpx;
         .img_box{
@@ -33,24 +33,24 @@
                 padding-bottom: 40rpx;
             }
             .main{
-                font-size:28rpx;
-                color:rgba(0,0,0,0.6);
-                text-align: justify;
-                display: -webkit-box;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
-                text-indent: 0;
+                padding-top: 16rpx;
+                padding-bottom: 16rpx;
+                border-top:1px solid #D8D8D8;
+                &.border-none{
+                    border:none;
+                }
+                .title{
+                    font-size: 40rpx;
+                    color: #000000;
+                }
+                .content{
+                    color:rgba(0,0,0,0.6);
+                    font-size: 28rpx;
+                }
             }
-            .tap{
-                display: inline-block;
-                padding-right: 48rpx;
-                padding-bottom: 36rpx;
-                padding-top: 40rpx;
-                color:#373C38;
-                font-size: 28rpx;
-            }
+        }
+        .font-weight{
+            font-weight: bold;
         }
     }
 </style>
@@ -58,21 +58,35 @@
     <view class="page">
         <!--頂部-->
         <view>
-            <view class="page_box" wx:for="{{dateList}}">
+            <view class="page_box">
                 <view class="img_box">
                     <image class="img" src="../images/tc.png" alt="" />
                 </view>
                 <view class="detail">
                     <view class="title font-weight">
-                        全方位清洁+轮胎养护
+                        全方位清洁+轮胎养护333
                     </view>
                     <view class="tips">耗时约3小时, 开始前30分钟内不可取消</view>
-                    <view class="main">包含：漆面预处理/漆面PA预洗/边缝细节刷洗/后备箱水槽/油箱盖内清洁/漆面两桶水洗漆面预处理面两桶水洗漆</view>
-                    <view @tap="selectPackage" data-code="333" class="tap">选择套餐</view>
-                    <navigator hover-class="none" url="/pages/packageDetail" class="tap">套餐详情</navigator>
+                    <view wx:for="{{dateList}}" wx:key="index">
+                        <view class="main {{ (0 == index) ? 'border-none':''}}" >
+                            <view class="title">
+                                漆面{{index}}
+                            </view>
+                            <view class="content">
+                                <view> 漆面深度清洁</view>
+                                <view> 漆面铁粉祛除</view>
+                                <view> 漆面柏油去除</view>
+                                <view> 漆面脱脂</view>
+                                <view> 漆面预处理</view>
+                                <view> 漆面PA预洗</view>
+                                <view> 漆面两桶水洗车</view>
+                            </view>
+                        </view>
+                    </view>
+
                 </view>
             </view>
-            <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+            <!--<icon type="succe面深度清o_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
         </view>
     </view>
 </template>
@@ -93,7 +107,7 @@
     }
 
     data = {
-      dateList: [1,2]
+      dateList: [1,2,3,4,5]
     }
 
     computed = {
@@ -112,16 +126,13 @@
 
 
     onLoad() {
-
+      const Towxml = require('towxml');
+      const towxml = new Towxml();
     }
 
     onShow() {
     }
 
-    onReachBottom() {
-      this.dateList.push(2)
-      this.dateList.push(4)
-    }
 
 
   }

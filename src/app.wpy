@@ -61,6 +61,7 @@ export default class extends wepy.app {
       'pages/about',
       'pages/appointment',
       'pages/sellPackage',
+      'pages/packageDetail',
     ],
     window: {
       backgroundTextStyle: 'dark',

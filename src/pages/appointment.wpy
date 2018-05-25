@@ -35,40 +35,42 @@
         background-color: #FFFFFF;
     }
     .weui-cells{
+        padding-left: 10rpx;
+        padding-right: 10rpx;
         &:before {
-            margin-right:1rem;
-            margin-left: 1rem;
+            margin-right:48rpx;
+            margin-left: 48rpx;
         }
         .weui-btn{
             &.mybtn{
                 border:none;
-                margin:0 1rem 0 1rem;
+                margin:0 32rpx 0 32rpx;
+                padding: 32rpx 0 32rpx 0;
                 background: #373C38;
                 border-radius: 1.5rem;
-                height:2rem;
-                font-size:0.8rem;
+                height:96rpx;
+                font-size:32rpx;
                 color:rgba(255,255,255,1);
-                line-height:2rem;
+                line-height:;
             }
         }
 
     }
     .weui-cell{
-        font-size: 0.8rem;
-        line-height: 0.8rem;
+        padding-top: 32rpx;
+        padding-bottom: 0;
+        font-size: 32rpx;
+        line-height: 32rpx;
         &.money{
             &:before {
                 display: none;
             }
-            margin-top: -0.5rem;
-            padding-top: 0.5rem;
         }
         &.input-text{
             &:before {
                 display: none;
             }
-            margin-top: -0.5rem;
-            padding-top: 0.25rem;
+            padding-bottom: 32rpx;
         }
         .carNum{
             &.weui-select{
@@ -144,18 +146,18 @@
                     </view>
                     <view class="weui-cell__bd">车牌号码…</view>
                 </view>
-                <view class="weui-cell input-text" style="margin-top: -1rem;padding-bottom: 5px">
+                <view class="weui-cell input-text" style="margin-top: -0.6rem;padding-bottom: 5px">
                     <view class="weui-cell__hd margin-format" >
                         <image class="img-format" src="{{icon}}" ></image>
                     </view>
-                    <view style="width: 1.7rem;">
+                    <view style="width: 68rpx;">
                         <picker @change="bindProvinceChange" value="{{provinceIndex}}" range="{{province}}">
                             <view class="picker">
                                 {{currentProvince}}
                             </view>
                         </picker>
                     </view>
-                    <view style="margin-top: -1px;width: 30%">
+                    <view style="width: 30%">
                         <input class="weui-input" value="{{ carNum }}" placeholder="请输入车牌号" />
                     </view>
                     <view class="weui-cell__bd"  hidden="{{ (null != 1) ? '':'false'}}">
@@ -182,13 +184,13 @@
                         <view class="weui-select-right"></view>
                     </view>
                 </navigator>
-                <view class="weui-cell money" hidden="{{ package_detail ? '':'false'}}">
+                <view class="weui-cell input-text" style="padding-bottom: 0;padding-top: 0" hidden="{{ package_detail ? '':'false'}}">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
                     <view class="weui-cell__bd font-red">*开始洗车前半小时内不可取消预约</view>
                 </view>
-                <view class="weui-cell money" hidden="{{ package_detail ? '':'false'}}">
+                <view class="weui-cell input-text" hidden="{{ package_detail ? '':'false'}}">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -197,7 +199,7 @@
             </view>
 
             <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
+                <view class="weui-cell money">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -211,7 +213,7 @@
                     <view class="weui-cell__bd">尾款</view>
                     <view class="weui-cell__ft">￥50</view>
                 </view>
-                <view class="weui-cell money last">
+                <view class="weui-cell money" style="padding-bottom: 32rpx">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -219,7 +221,7 @@
                     <view class="weui-cell__ft">￥50</view>
                 </view>
             </view>
-            <view class="weui-cells weui-cells_after-title" style="padding-top: 10px">
+            <view class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;">
                 <button class="weui-btn mybtn" type="primary" plain="true">支付定金</button>
             </view>
         </view>

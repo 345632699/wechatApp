@@ -20,7 +20,7 @@
     .weui-cell{
       border:none;
       background: #373C38;
-      font-size: 0.8rem;
+      font-size: 28rpx;
       &:before {
         display: none;
       }
@@ -29,6 +29,24 @@
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         color: #111612;
+      }
+    }
+    .mybtn{
+      position: fixed;
+      bottom: 40rpx;
+      right: 32rpx;
+      border-radius: 50%;
+      width: 112rpx;
+      height: 112rpx;
+      color: #FFFFFF;
+      background: #373C38;
+      font-size: 28rpx;
+      direction: rtl;
+      .text-pos{
+        position: relative;
+        top:26rpx;
+        left: -28rpx;
+        line-height: 32rpx;
       }
     }
   }
@@ -94,6 +112,14 @@
         </view>
       </view>
     </view>
+
+    <!--按钮-->
+    <view class="mybtn">
+      <view>
+        <view class="text-pos">立即</view>
+        <view class="text-pos">预约</view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -109,7 +135,6 @@
       navigationBarTitleText: 'about'
     }
     components = {
-
     }
 
     data = {

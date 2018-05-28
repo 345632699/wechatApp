@@ -1,0 +1,16 @@
+<template>
+  <view @tap="tap">Click me</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Child extends wepy.component {
+    methods = {
+      tap () {
+        console.log('child is clicked')
+        this.$emit('childFn', 100)
+      }
+    }
+  }
+</script>

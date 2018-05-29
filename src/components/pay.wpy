@@ -1,0 +1,128 @@
+<style type="less">
+    .wepy-api-dialog_pay{
+        .wepy-api-dialog__mask_pay{
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+        }
+        .wepy-api-dialog__main_pay{
+            position: fixed;
+            z-index: 5000;
+            max-width: 530rpx;
+            width: 560rpx;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            background:#FFFFFF;
+            text-align: center;
+            overflow: hidden;
+            border-radius: 32rpx;
+            font-weight: bold;
+            .wepy-api-dialog__hd_pay{
+                padding:32rpx;
+                padding-bottom: 16rpx;
+                text-align: left;
+                .wepy-api-dialog__title_pay{
+                    width:496rpx;
+                    font-weight: bold;
+                    font-size: 32rpx;
+                }
+            }
+            .weui-cell{
+                &.weui_pay{
+                    height: 110rpx;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    .weui-cell__bd{
+                        text-align: left;
+                        padding-left: 32rpx;
+                        font-size: 28rpx;
+                        color:rgba(0,0,0,0.87);
+                    }
+                }
+            }
+        }
+    }
+</style>
+<template>
+    <view class="wepy-api-dialog_pay" wx:if="{{ pay_active }}" @tap="hide">
+        <view class="wepy-api-dialog__mask_pay"></view>
+        <view class="wepy-api-dialog__main_pay">
+            <view class="wepy-api-dialog__hd_pay">
+                <view class="wepy-api-dialog__title_pay">
+                    定金金额：¥50
+                </view>
+                <view class="wepy-api-dialog__title_pay">
+                    账户余额：¥9999
+                </view>
+                <view class="wepy-api-dialog__title_pay">
+                    请选择支付方式
+                </view>
+            </view>
+            <view @tap="pay" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">微信支付</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+            <view @tap="pay" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">餘額支付</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import tip from '../utils/tip'
+
+  export default class MyAlert extends wepy.component {
+
+    data = {
+    }
+
+    props = {
+      // 静态传值
+      title: {
+        type:String,
+        default: ''
+      },
+
+      msg: {
+        type:String,
+        default: ''
+      },
+
+      // 父向子单向动态传值
+      pay_active: {
+        type: Number,
+        default: 0,
+        twoWay: true
+      },
+
+      confirmText: {
+        type:String,
+        default: '確認'
+      }
+    };
+
+
+    methods = {
+      hide () {
+        this.pay_active = 0
+      },
+      pay (e) {
+        tip.toast("支付成功")
+      }
+
+    }
+
+    onload () {
+      console.log(this.title);
+    }
+
+  }
+</script>

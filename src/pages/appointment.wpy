@@ -53,6 +53,7 @@
                 line-height:72rpx;
                 width: 610rpx;
                 margin: auto;
+                margin-bottom: 32rpx;
             }
         }
 
@@ -71,6 +72,13 @@
             padding-bottom: 24rpx;
             &:before {
                 display: none;
+            }
+            .weui-flex__item{
+                .size78{
+                    height: 156rpx;
+                    width: 95%;
+                    padding-left: 10rpx;
+                }
             }
         }
         .carNum{
@@ -94,8 +102,8 @@
     .img-format{
         margin-right: 5px;
         vertical-align: middle;
-        width:1rem;
-        height: 1rem;
+        width:28rpx;
+        height: 28rpx;
     }
     .margin-format{
         margin-top: -5px;
@@ -105,16 +113,20 @@
         text-overflow:ellipsis;
         white-space:nowrap;
     }
+    .weui-api-dialog__hd{
+        border: 1px solid red;
+        background: red;
+    }
 
 </style>
 <template>
     <view class="page">
         <!--頂部-->
-        <view class="page__bd">
+        <scroll-view scroll-y scroll-with-animation="true" class="page__bd">
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <image class="img-format" src="{{icon}}" style=""></image>
+                        <image class="img-format" src="../images/appointment/time.png" style=""></image>
                     </view>
                     <view class="weui-cell__bd">预约时间</view>
                 </view>
@@ -129,7 +141,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <image class="img-format" src="{{icon}}" ></image>
+                        <image class="img-format" src="../images/appointment/washing.png" ></image>
                     </view>
                     <view class="weui-cell__bd">洗车进行中…</view>
                 </view>
@@ -144,17 +156,17 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <image class="img-format" src="{{icon}}" ></image>
+                        <image class="img-format" src="../images/appointment/bus.png" ></image>
                     </view>
                     <view class="weui-cell__bd">车牌号码…</view>
                 </view>
                 <view class="weui-cell input-text" style="margin-top: -12rpx;padding-bottom: 5px">
-                    <view class="weui-cell__hd margin-format" >
-                        <image class="img-format" src="{{icon}}" ></image>
+                    <view class="weui-cell__hd margin-format" style="padding-top: 7rpx;padding-left: 4rpx">
+                        <image class="img-format" style="width: 15rpx;height: 15rpx" src="../images/appointment/down.png" ></image>
                     </view>
                     <view style="width: 68rpx;">
                         <picker @change="bindProvinceChange" value="{{provinceIndex}}" range="{{province}}">
-                            <view class="picker">
+                            <view class="picker" style="border-right: 1px solid #B1B4B2">
                                 {{currentProvince}}
                             </view>
                         </picker>
@@ -173,7 +185,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <image class="img-format" src="{{icon}}" ></image>
+                        <image class="img-format" src="../images/appointment/select.png" ></image>
                     </view>
                     <view class="weui-cell__bd">套餐选择</view>
                 </view>
@@ -201,9 +213,40 @@
             </view>
 
             <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell money">
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="../images/appointment/display.png" ></image>
+                    </view>
+                    <view class="weui-cell__bd">效果展示</view>
+                </view>
+                <view class="weui-cell input-text">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
+                    </view>
+                    <view class="weui-flex">
+                        <view>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                        </view>
+
+                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
+                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
+                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
+                    </view>
+                </view>
+            </view>
+
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell money">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="../images/appointment/money.png" ></image>
                     </view>
                     <view class="weui-cell__bd">定金</view>
                     <view class="weui-cell__ft">￥50</view>
@@ -223,12 +266,17 @@
                     <view class="weui-cell__ft">￥50</view>
                 </view>
             </view>
-            <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;">
-                <button class="weui-btn mybtn" type="primary" plain="true">支付定金</button>
+            <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="payPre">支付定金</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
             </view>
-        </view>
+        </scroll-view>
     </view>
     <tips></tips>
+    <alert :is_active.sync="is_active" :title.sync="alert_title" :msg="msg" :confirmText.sync="confirmText"></alert>
+    <pay :pay_active.sync="pay_active"></pay>
+
 </template>
 
 <script>
@@ -239,12 +287,17 @@
     SEL_CLASS_CODE
   } from '../utils/constant';
   import Tips from '../components/tips'
+  import Alert from '../components/myAlert'
+  import tip from '../utils/tip'
+  import Pay from '../components/pay'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '订单预览'
     }
     components = {
-      tips: Tips
+      tips: Tips,
+      alert: Alert,
+      pay: Pay,
     }
     data = {
       province: ['粤A', '粤B', '粤C', '粤D'],
@@ -259,7 +312,13 @@
       carNum: "", //輸入框内的字符串
       pacakge_id: 0,
       package_detail: "",
-      package_name:"请选择套餐"
+      package_name:"请选择套餐",
+      is_active: 0,
+      pay_active: 0, //是否限制支付選項
+      alert_title: "取消訂單",
+      msg: "确认要取消预约吗？取消后可能无法选择同一时间\n",
+      comfirm: 0,
+      confirmText: '確認取消',
     }
 
 
@@ -276,8 +335,46 @@
       },
       parentFn (num, evt) {
         console.log('parent received emit event, number is: ' + num)
+      },
+      previewImage (e) {
+        console.log(e)
+        var current = e.target.dataset.src;
+        wepy.previewImage({
+          current: current, // 当前显示图片的http链接
+          urls: [current] // 需要预览的图片http链接列表
+        })
+      },
+      //導航
+      lead () {
+        console.log(2333)
+        wepy.openLocation({
+          latitude: 22.85758,
+          longitude: 108.31476,
+          name: "南宁市西乡塘区秀厢大道东祥云商务酒店",
+          address:"南宁市西乡塘区秀厢大道东祥云商务酒店",
+          scale: 28
+        })
+      },
+
+      async cancelOrder () {
+        this.is_active = 1
+      },
+
+      payPre() {
+        this.pay_active = 1
       }
+
     }
+
+    // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
+    events = {
+      'comfirmAction': (comfirm) => {
+        console.log(comfirm)
+        if (comfirm == 1){
+          tip.toast("取消成功")
+        }
+      }
+    };
 
     onLoad(option) {
       console.log(option)
@@ -285,8 +382,5 @@
       this.package_detail = option.package_detail
       this.package_name = option.package_name
     }
-
-
-
   }
 </script>

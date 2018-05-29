@@ -65,7 +65,7 @@ export default class extends wepy.app {
     ],
     window: {
       backgroundTextStyle: 'dark',
-      navigationBarBackgroundColor: '#373C38',
+      navigationBarBackgroundColor: '#FFFFFF',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black',
       enablePullDownRefresh: false,
@@ -80,23 +80,13 @@ export default class extends wepy.app {
       "list": [{
         "pagePath": "pages/index",
         "text": "首页",
-        "iconPath": "images/icon_home.png",
-        "selectedIconPath": "images/home_active.png"
+        "iconPath": "images/index/date_hover.png",
+        "selectedIconPath": "images/index/date.png"
       }, {
         "pagePath": "pages/about",
-        "text": "分类",
-        "iconPath": "images/icon_classify.png",
-        "selectedIconPath": "images/classify_active.png"
-      }, {
-        "pagePath": "pages/index",
-        "text": "购物车",
-        "iconPath": "images/icon_shop_cart.png",
-        "selectedIconPath": "images/icon_home.png"
-      }, {
-        "pagePath": "pages/index",
-        "text": "我",
-        "iconPath": "images/icon_info.png",
-        "selectedIconPath": "images/icon_home.png"
+        "text": "发现",
+        "iconPath": "images/index/discover.png",
+        "selectedIconPath": "images/index/discover.png"
       }]
     }
   }

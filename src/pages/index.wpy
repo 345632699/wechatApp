@@ -15,20 +15,25 @@
     color: #aaa;
   }
   .page{
-    background: #373C38;
+    background: #FFFFFF;
     color: #FFFFFF;
     .weui-cell{
       border:none;
-      background: #373C38;
+      background: #FFFFFF;
       font-size: 28rpx;
       &:before {
         display: none;
+      }
+      .weui-cell__bd{
+        color: #111612;
       }
       &.middle-flex{
         background: #FFFFFF;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+        border-radius:16rpx 16rpx 0px 0px;
         color: #111612;
+        box-shadow: 0px -4rpx 10rpx 0px rgba(0,0,0,0.5);
       }
     }
     .mybtn{
@@ -121,11 +126,13 @@
       </view>
     </view>
   </view>
+  <pay></pay>
 </template>
 
 <script>
   import wepy from 'wepy'
   import util from '../utils/util'
+  import Pay from '../components/pay'
   import {
     SYSTEM_INFO,
     SEL_CLASS_CODE
@@ -135,6 +142,7 @@
       navigationBarTitleText: 'about'
     }
     components = {
+      pay: Pay
     }
 
     data = {

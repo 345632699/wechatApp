@@ -133,6 +133,7 @@
   import wepy from 'wepy'
   import util from '../utils/util'
   import Pay from '../components/pay'
+  import BindMobile from '../components/bindMobile'
   import {
     SYSTEM_INFO,
     SEL_CLASS_CODE
@@ -142,7 +143,8 @@
       navigationBarTitleText: 'about'
     }
     components = {
-      pay: Pay
+      pay: Pay,
+      mobile: BindMobile,
     }
 
     data = {

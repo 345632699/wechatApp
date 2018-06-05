@@ -235,7 +235,7 @@
                     </view>
                     <view class="weui-cell__bd">手机号码</view>
                 </view>
-                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
+                <view class="weui-cell input-text" @tap="bindMobile">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -243,7 +243,7 @@
                     <view class="weui-cell__bd">
                         <view class="weui-select-right"></view>
                     </view>
-                </navigator>
+                </view>
             </view>
 
             <view class="weui-cells weui-cells_after-title">
@@ -310,6 +310,7 @@
     <tips></tips>
     <alert :is_active.sync="is_active" :title.sync="alert_title" :msg="msg" :confirmText.sync="confirmText"></alert>
     <pay :pay_active.sync="pay_active"></pay>
+    <mobile :bind_active.sync="bind_active"></mobile>
 
 </template>
 
@@ -324,6 +325,8 @@
   import Alert from '../components/myAlert'
   import tip from '../utils/tip'
   import Pay from '../components/pay'
+  import BindMobile from '../components/bindMobile'
+
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '订单预览'
@@ -332,6 +335,7 @@
       tips: Tips,
       alert: Alert,
       pay: Pay,
+      mobile: BindMobile,
     }
     data = {
       province: ['粤A', '粤B', '粤C', '粤D'],
@@ -349,6 +353,7 @@
       package_name:"请选择套餐",
       is_active: 0,
       pay_active: 0, //是否限制支付選項
+      bind_active: 0, //绑定手机
       alert_title: "取消訂單",
       msg: "确认要取消预约吗？取消后可能无法选择同一时间\n",
       comfirm: 0,
@@ -396,6 +401,10 @@
 
       payPre() {
         this.pay_active = 1
+      },
+
+      bindMobile() {
+        this.bind_active = 1
       }
 
     }

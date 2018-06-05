@@ -34,10 +34,10 @@
         background-color: #FFFFFF;
     }
     .weui-cells{
-        padding-left: 10rpx;
-        padding-right: 10rpx;
+        padding-left: 30rpx;
+        padding-right: 30rpx;
         padding-top: 16rpx;
-        &:before {
+        &:after {
             margin-right:48rpx;
             margin-left: 48rpx;
         }
@@ -98,8 +98,8 @@
             margin-right: 20rpx;
             &.font14{
                 font-size: 28rpx;
-                height: 48rpx;
-                line-height: 48rpx;
+                height: 36rpx;
+                line-height: 36rpx;
             }
         }
 
@@ -133,6 +133,19 @@
         color:#E0E0E0;
     }
 
+    .brightMask{
+        .pre{
+            position: fixed;
+            top:25%;
+            left: 0rpx;
+        }
+        .next{
+            position: fixed;
+            top:25%;
+            right: 0rpx;
+        }
+    }
+
 </style>
 <template>
     <view class="page">
@@ -156,22 +169,6 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/washing.png" ></image>
-                    </view>
-                    <view class="weui-cell__bd">洗车进行中…</view>
-                </view>
-                <view class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view>预计结束时间 下午 3:30</view>
-                </view>
-            </view>
-
-
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
                         <image class="img-format" src="../images/appointment/bus.png" ></image>
                     </view>
                     <view class="weui-cell__bd">车牌号码</view>
@@ -190,12 +187,22 @@
                     <view style="width: 28%">
                         <input class="weui-input" maxlength="5" value="{{ carNum }}" placeholder="请输入车牌号" />
                     </view>
-                    <view class="weui-cell__bd"  hidden="{{ (null != 1) ? '':'false'}}">
-                        <picker @change="bindCarChange" value="{{carNumIndex}}" range="{{carNumbers}}">
-                            <view class="carNum weui-select">从我的车牌中选取</view>
-                        </picker>
-                    </view>
                 </view>
+            </view>
+
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="../images/appointment/addPhone.png" ></image>
+                    </view>
+                    <view class="weui-cell__bd">手机号码</view>
+                </view>
+                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="" ></image>
+                    </view>
+                    <view >13760264461</view>
+                </navigator>
             </view>
 
             <view class="weui-cells weui-cells_after-title">
@@ -209,71 +216,19 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view class="{{ (package_name != '请选择套餐') ? '':'brightGrey'}}">{{ package_name }}</view>
-                    <view class="weui-cell__bd">
-                        <view class="weui-select-right"></view>
-                    </view>
+                    <view class="font-gray">168元套餐</view>
                 </navigator>
-                <view class="weui-cell input-text" style="padding-bottom: 0;padding-top: 0;margin-top: " hidden="{{ package_detail ? '':'false'}}">
+                <view class="weui-cell input-text" style="padding-bottom: 0;margin-top: -20rpx;">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
                     <view class=" font-red">*开始洗车前半小时内不可取消预约</view>
                 </view>
-                <view class="weui-cell input-text" hidden="{{ package_detail ? '':'false'}}">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class=" font-gray text-format">*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就</view>
-                </view>
-            </view>
-
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/addPhone.svg" ></image>
-                    </view>
-                    <view class="weui-cell__bd">手机号码</view>
-                </view>
-                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="{{ (package_name != '请选择套餐') ? '':'brightGrey'}}">绑定手机以便我们与您取得联系</view>
-                    <view class="weui-cell__bd">
-                        <view class="weui-select-right"></view>
-                    </view>
-                </navigator>
-            </view>
-
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/display.png" ></image>
-                    </view>
-                    <view class="weui-cell__bd">效果展示</view>
-                </view>
                 <view class="weui-cell input-text">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view class="weui-flex">
-                        <view>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                        </view>
-
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
-                    </view>
+                    <view class=" font-gray text-format">*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就</view>
                 </view>
             </view>
 
@@ -301,7 +256,6 @@
                 </view>
             </view>
             <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="payPre">支付定金</button>
                 <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
                 <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
             </view>
@@ -310,7 +264,14 @@
     <tips></tips>
     <alert :is_active.sync="is_active" :title.sync="alert_title" :msg="msg" :confirmText.sync="confirmText"></alert>
     <pay :pay_active.sync="pay_active"></pay>
-
+    <view class="brightMask">
+        <view class="pre" @tap="pre">
+            <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg">左</image>
+        </view>
+        <view class="next" @tap="next">
+            <image style="width: 70rpx" src="../images/order/rightTriNormal.svg">右</image>
+        </view>
+    </view>
 </template>
 
 <script>
@@ -366,6 +327,12 @@
         this.currentCarNum = this.carNumbers[this.carNumIndex]
         this.carNum = this.currentCarNum.slice(2,)
         this.currentProvince = this.currentCarNum.slice(0,2)
+      },
+      pre (e) {
+        console.log(3333)
+      },
+      next (e) {
+        console.log(444)
       },
       parentFn (num, evt) {
         console.log('parent received emit event, number is: ' + num)

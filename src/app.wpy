@@ -62,6 +62,7 @@ export default class extends wepy.app {
       'pages/appointment',
       'pages/sellPackage',
       'pages/packageDetail',
+      'pages/order_detail',
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -80,13 +81,13 @@ export default class extends wepy.app {
       "list": [{
         "pagePath": "pages/index",
         "text": "首页",
-        "iconPath": "images/index/date_hover.png",
-        "selectedIconPath": "images/index/date.png"
+        "iconPath": "images/index/date.png",
+        "selectedIconPath": "images/index/date_hover.png"
       }, {
         "pagePath": "pages/about",
         "text": "发现",
         "iconPath": "images/index/discover.png",
-        "selectedIconPath": "images/index/discover.png"
+        "selectedIconPath": "images/index/discover_hover.png"
       }]
     }
   }

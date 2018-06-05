@@ -4,7 +4,7 @@
     <view class="weui-cells_after-title tip-buttom" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../images/appointment/stepper.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">支付定金</view>
         <view class="weui-cell__ft">2/4</view>
@@ -12,12 +12,13 @@
     </view>
     <!--具体内容-->
     <view hidden="{{active? '':'false'}}">
-      <view class="weui-mask">
+      <view class="weui-mask" @tap="hideAct">
       </view>
       <view class="weui-actionsheet {{ active ? 'weui-actionsheet_toggle' : '' }} ">
         <view class="weui-actionsheet__menu">
           <view class="weui-actionsheet__cell" @tap="hideAct">
             <view class="first">
+              <image style="width: 30rpx;height: 20rpx;padding: 8rpx;" src="../images/appointment/sheet.svg" ></image>
             </view>
             <view class="left">
               1
@@ -80,7 +81,7 @@
 <style type="less">
   .page{
     .tip-buttom{
-      color:#000000;
+      color:#FFFFFF;
       position: fixed;
       left: 0;
       bottom: 0;
@@ -88,11 +89,11 @@
       height: 112rpx;
       .weui-cell{
         padding:0 32rpx 0 32rpx;
-        background: #D8D8D8;
+        background: #5A5B5E;
         font-size: 24rpx;
         line-height: 112rpx;
         .weui-cell__ft{
-          color:#000000;
+          color:#FFFFFF;
         }
       }
     }
@@ -126,8 +127,8 @@
          transform: translate(0, 0);
       }
       .weui-actionsheet__menu{
-        color: #979797;
-        background: #D8D8D8;
+        color:rgba(255,255,255,0.4);
+        background: #5A5B5E;
         .weui-actionsheet__cell{
           position: relative;
           padding: 10px 0;
@@ -144,7 +145,7 @@
             border-radius: 50%;
             height: 60rpx;
             width: 60rpx;
-            border: 2px solid #979797;
+            border:2px solid rgba(255,255,255,0.4);
             line-height: 60rpx;
             font-weight: bold;
           }
@@ -157,9 +158,9 @@
             padding-right: 64rpx;
           }
           &.active{
-             color: #111612;
+             color: #FFFFFF;
              .left{
-               border: 2px solid #111612;
+               border: 2px solid #FFFFFF;
              }
           }
         }

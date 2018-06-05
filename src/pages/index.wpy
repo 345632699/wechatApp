@@ -120,10 +120,10 @@
 
     <!--按钮-->
     <view class="mybtn">
-      <view>
+      <navigator hover-class="none" open-type="navigate"  url="/pages/order_detail?order_id=1">
         <view class="text-pos">立即</view>
         <view class="text-pos">预约</view>
-      </view>
+      </navigator>
     </view>
   </view>
   <pay></pay>

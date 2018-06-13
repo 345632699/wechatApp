@@ -110,33 +110,39 @@ export default class extends wepy.app {
     this.testAsync()
     let res = await wepy.login();
     let code = res.code
+    let resUser = await wepy.getUserInfo()
+    wepy.setStorageSync('user_info', resUser.userInfo);
+    console.log(code)
+    console.log(resUser)
     if (res.code){
-      if (!wepy.getStorageSync('session_key')){
+//      if (!wepy.getStorageSync('session_key')){
         const json = await api.getOpenId({
           query: {
-            code: code
+            code: code,
+            rawData: resUser.rawData,
+            signature: resUser.signature
           },
           method: 'POST'
         });
-        wepy.setStorageSync('session_key', json.data.session_key);
-        wepy.setStorageSync('openid', json.data.openid);
-      }
-      let res = await wepy.getUserInfo()
+        console.log(json)
+//        wepy.setStorageSync('session_key', json.data.session_key);
+//        wepy.setStorageSync('openid', json.data.openid);
+//      }
 
-      if (!wepy.getStorageSync('openid')){
-        let encryptedData = res.encryptedData
-        let iv = res.iv
-        let session_key = wepy.getStorageSync('session_key')
-        const json = await api.decrypt({
-          query: {
-            encryptedData: encryptedData,
-            iv: iv,
-            session_key: session_key,
-          },
-          method: 'POST'
-        });
-      }
-      wepy.setStorageSync('user_info', res.userInfo);
+//      if (!wepy.getStorageSync('openid')){
+//        let encryptedData = res.encryptedData
+//        let iv = res.iv
+//        let session_key = wepy.getStorageSync('session_key')
+//        const json = await api.decrypt({
+//          query: {
+//            encryptedData: encryptedData,
+//            iv: iv,
+//            session_key: session_key,
+//          },
+//          method: 'POST'
+//        });
+//      }
+
     }
   }
 

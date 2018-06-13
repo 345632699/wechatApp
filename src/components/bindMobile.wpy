@@ -107,7 +107,7 @@
     }
 </style>
 <template>
-    <view class="wepy-api-dialog_bind" wx:if="{{ bind_active }}" @tap="hide">
+    <view class="wepy-api-dialog_bind" wx:if="{{ bind_active }}">
         <view class="wepy-api-dialog__mask_bind"></view>
         <view class="wepy-api-dialog__main_bind">
             <view class="wepy-api-dialog__hd_bind">
@@ -117,11 +117,11 @@
             </view>
             <view class="main">
                 <view class="mobile">
-                    <input type="number" maxlength="11" placeholder="请输入手机号" class="number" value="{{ number }}" name="number">
+                    <input type="number" maxlength="11" placeholder="请输入手机号" class="number" value="{{ number }}" />
                     <view class="doSend" >发送验证码</view>
                 </view>
                 <view class="code">
-                    <input type="number" maxlength="4" placeholder="请输入验证码" class="number" value="{{ code }}" name="code">
+                    <input type="number" maxlength="4" placeholder="请输入验证码" class="number" value="{{ code }}" />
                 </view>
             </view>
             <view class="foot">
@@ -143,6 +143,7 @@
 
     data = {
       number: 13760264461,
+      code: '',
     }
 
     props = {

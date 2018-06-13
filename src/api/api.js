@@ -3,7 +3,7 @@ import {
 } from '../utils/wxRequest';
 
 let env = "-test" //-dev 或者 -test
-const apiMall = 'https://cc.mqphp.com/'
+const apiMall = 'https://wxapp.mqphp.com/cy1993_app'
 // const apiMall = 'http://localhost:8080/'
 
 /**
@@ -18,7 +18,7 @@ const wxJsCode2Session = (params) => wxRequest(params, apiMall + "/api/wechat/js
 const user2session = (params) => wxRequest(params, apiMall + "/api/wechat/user2session?jsoncallback=?");
 
 //測試連接
-const getOpenId = (params) => wxRequest(params, apiMall + "/api/v1/sample/openid");
+const getOpenId = (params) => wxRequest(params, apiMall + "/login/");
 const decrypt = (params) => wxRequest(params, apiMall + "/api/v1/sample/decrypt");
 
 

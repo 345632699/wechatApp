@@ -127,13 +127,14 @@
     </view>
   </view>
   <pay></pay>
+  <rate @change.user="callbackStart"></rate>
 </template>
 
 <script>
   import wepy from 'wepy'
   import util from '../utils/util'
   import Pay from '../components/pay'
-  import BindMobile from '../components/bindMobile'
+  import Rate from "../components/rate"
   import {
     SYSTEM_INFO,
     SEL_CLASS_CODE
@@ -144,7 +145,7 @@
     }
     components = {
       pay: Pay,
-      mobile: BindMobile,
+      rate: Rate,
     }
 
     data = {
@@ -178,6 +179,9 @@
             rootCate.active = true;
           }
         }
+      },
+      callbackStart(count){
+        console.log(count)
       }
     }
 

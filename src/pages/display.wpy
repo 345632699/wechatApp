@@ -1,0 +1,94 @@
+<style lang="less">
+    .container{
+        .imgs{
+            padding: 16rpx;
+            padding-bottom: 0;
+            padding-top: 0;
+            .img1{
+                border:1px solid red;
+                width:704rpx;
+                height:344rpx;
+                padding:8rpx;
+            }
+            .img2{
+                border:1px solid red;
+                display: inline-block;
+                width:230rpx;
+                height:230rpx;
+                margin-right:8rpx;
+            }
+            .img3{
+                border:1px solid red;
+                width:348rpx;
+                height:348rpx;
+                display: inline-block;
+                margin-right:8rpx;
+            }
+            .last{
+                margin-right: 0;
+            }
+        }
+    }
+</style>
+<template>
+    <view class="page">
+       <view class="container">
+           <view class="imgs">
+               <image class="img1" src="../images/half.png" />
+               <image class="img2" src="../images/half.png" />
+               <image class="img2" src="../images/half.png" />
+               <image class="img2 last" src="../images/half.png" />
+               <image class="img3" src="../images/half.png" />
+               <image class="img3 last" src="../images/half.png" />
+           </view>
+           <view class="imgs">
+               <image class="img1" src="../images/half.png" />
+               <image class="img2" src="../images/half.png" />
+               <image class="img2" src="../images/half.png" />
+               <image class="img2 last" src="../images/half.png" />
+               <image class="img3" src="../images/half.png" />
+               <image class="img3 last" src="../images/half.png" />
+           </view>
+       </view>
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'template'
+    }
+    components = {
+
+    }
+
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+      changeCate (e) {
+        console.log(e)
+        console.log(33333)
+      }
+    }
+
+
+    onLoad() {
+
+    }
+
+    onShow() {
+    }
+
+
+  }
+</script>

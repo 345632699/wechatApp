@@ -181,7 +181,7 @@
                         <image class="img-format" style="width: 15rpx;height: 15rpx;padding: 8rpx;" src="../images/appointment/down.svg" ></image>
                     </view>
                     <view style="width: 60rpx;padding-left: 0">
-                        <picker @change="bindProvinceChange" value="{{provinceIndex}}" range="{{province}}">
+                        <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
                             <view class="picker" style="border-right: 1px solid #B1B4B2">
                                 {{currentProvince}}
                             </view>
@@ -338,9 +338,12 @@
       mobile: BindMobile,
     }
     data = {
-      province: ['粤A', '粤B', '粤C', '粤D'],
+      province: [
+        ['粤A', '粤B', '粤C', '粤D'],
+        ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3']
+      ],
       carNumbers: ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3'],
-      provinceIndex: 0,
+      multiIndex: [0,0],
       carNumIndex: 0,
       date: '2016-09-01',
       time: '12:01',
@@ -363,6 +366,7 @@
 
     methods = {
       bindProvinceChange (e) {
+        console.log(e.detail)
         this.provinceIndex =  e.detail.value
         this.currentProvince = this.province[this.provinceIndex]
       },

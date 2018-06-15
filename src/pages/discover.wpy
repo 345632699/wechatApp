@@ -1,0 +1,124 @@
+<style lang="less">
+    .page{
+        .notice{
+            padding:32rpx;
+            background: #FFFFFF;
+            .weui-cell{
+                border:1px solid #BDBDBD;
+                border-radius: 16rpx;
+                position: relative;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                align-items: center;
+                background:rgba(255,255,255,1);
+                padding: 32rpx;
+                .weui-cell__hd{
+                    position: relative;
+                    margin-left: 16rpx;
+                    image{
+                        width:160rpx;
+                        height:160rpx;
+                        border-radius:8rpx;
+                    }
+                }
+                .weui-cell__bd{
+                    -webkit-box-flex: 1;
+                    -webkit-flex: 1;
+                    flex: 1;
+                    width: 460rpx;
+                    .title{
+                        height:48rpx;
+                        font-size:32rpx;
+                        color:rgba(33,33,33,1);
+                        line-height:48rpx;
+                        font-weight: bold;
+                        padding-bottom: 16rpx;
+                    }
+                    .context{
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                        display:-webkit-box;
+                        -webkit-box-orient:vertical;
+                        -webkit-line-clamp:2;
+                        height:80rpx;
+                        font-size:28rpx;
+                        color:rgba(0,0,0,0.6);
+                        line-height:40rpx;
+                    }
+                    .time{
+                        padding-top: 16rpx;
+                        height:32rpx;
+                        font-size:24rpx;
+                        color:rgba(33,33,33,1);
+                        line-height:32rpx;
+                    }
+                }
+            }
+        }
+    }
+</style>
+<template>
+    <view class="page">
+        <!--跳转按钮-->
+        <view class="btn_bg">
+            <button class="btn">案例展示</button>
+            <button class="btn">关于我们</button>
+        </view>
+        <!--公告-->
+        <view class="notice">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <view class="title">联系人名称</view>
+                    <view class="context">摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息</view>
+                    <view class="time">今天 上午 10:30</view>
+                </view>
+                <view class="weui-cell__hd">
+                    <image src="../images/half.png" />
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '发现'
+    }
+    components = {
+
+    }
+
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+      changeCate (e) {
+        console.log(e)
+        console.log(33333)
+      }
+    }
+
+
+    onLoad() {
+
+    }
+
+    onShow() {
+    }
+
+
+  }
+</script>

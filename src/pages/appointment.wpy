@@ -149,7 +149,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>2017.5.15 下午 3:30</view>
+                    <view>{{ selectDate }} {{start_time}}</view>
                 </view>
             </view>
 
@@ -164,7 +164,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>预计结束时间 下午 3:30</view>
+                    <view>预计结束时间 {{ end_time }}</view>
                 </view>
             </view>
 
@@ -345,8 +345,9 @@
       carNumbers: ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3'],
       multiIndex: [0,0],
       carNumIndex: 0,
-      date: '2016-09-01',
-      time: '12:01',
+      selectDate: '',
+      start_time: '',
+      end_time: '',
       icon: "../images/icon_home.png",
       currentCarNum: "",
       currentProvince: "粤B",
@@ -428,6 +429,9 @@
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name
+      this.selectDate = option.selectDate
+      this.start_time = option.start_time
+      this.end_time = option.end_time
     }
   }
 </script>

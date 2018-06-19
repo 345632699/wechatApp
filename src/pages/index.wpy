@@ -102,16 +102,16 @@
       <view class="weui-flex" style="border-top:1px #616662 solid">
         <view>
           <scroll-view class="placeholder" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
-            <view class="name {{item.active? 'active':''}}" wx:for="{{dateList}}" wx:key="item" @tap="changeCate" data-code="{{item.code}}">
-              {{item.name}}
+            <view style="line-height: 40rpx;padding-top: 8rpx;padding-bottom: 8rpx" class="name {{item.active? 'active':''}}" wx:for="{{dateList}}" wx:key="item" @tap="changeCate" data-code="{{item.date}}">
+              <text >{{item.dateFormat}} \n {{item.weekday}}</text>
               <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
             </view>
           </scroll-view>
         </view>
         <view class="weui-flex__item">
           <scroll-view class="placeholder second" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
-            <navigator hover-class="none" open-type="navigate" class="name {{item.active? 'active':''}}" wx:for="{{timeList}}" wx:key="item" url="/pages/appointment?selectDate={{ currentDate }}&selectTime={{item.name}}">
-              {{item.name}}
+            <navigator hover-class="none" open-type="navigate" class="name {{item.active? 'active':''}}" wx:for="{{timeList}}" wx:key="item" url="/pages/appointment?selectDate={{ currentDate }}&start_time={{item.start_time}}&end_time={{item.end_time}}">
+              {{item.start_time}}~{{ item.end_time }}
             </navigator>
           </scroll-view>
         </view>
@@ -127,7 +127,9 @@
     </view>
   </view>
   <pay></pay>
-  <rate @change.user="callbackStart"></rate>
+  <!--<rate @change.user="callbackStart"></rate>-->
+  <!--<button open-type="getUserInfo">用戶授權</button>-->
+
 </template>
 
 <script>
@@ -139,6 +141,7 @@
     SYSTEM_INFO,
     SEL_CLASS_CODE
   } from '../utils/constant';
+  import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'about'
@@ -169,13 +172,14 @@
     methods = {
       changeCate (e) {
         let code = e.currentTarget.dataset.code;
+        this.currentDate = code
         this.getTimeList(code);
         wepy.setStorageSync(SEL_CLASS_CODE, code);
         //设置一级分类的选中状态
         for (var i = 0; i < this.dateList.length; i++) {
           var rootCate = this.dateList[i];
           rootCate.active = false;
-          if (rootCate.code == code) {
+          if (rootCate.date == code) {
             rootCate.active = true;
           }
         }
@@ -194,50 +198,49 @@
 
     //获取日期列表
     async getDateList() {
-//      const json = await api.getDateList({
-//        query: {}
-//      });
-      if (1) {
-        for (var i=0;i<=20;i++){
-          this.dateList.push({code:i,name:"tese"+i})
-        }
-        if (this.dateList.length > 0) {
-          let selCode = wx.getStorageSync(SEL_CLASS_CODE);
-          var selRottCateCode = this.dateList[0].code;
+      const json = await api.getavailabledate({
+        query: {
+          branch_id: "1",
+          user_type: "1"
+        },
+        method: 'POST'
+      });
+      this.dateList = json.data.data
+      for(var p in this.dateList){//遍历json数组时，这么写p为索引，0,1
+        this.dateList[p].dateFormat = this.dateList[p].date.slice(5)
+      }
+      if (this.dateList.length > 0) {
+        let selCode = wx.getStorageSync(SEL_CLASS_CODE);
+        var selRottCateCode = this.dateList[0].date;
 
-          if (selCode.length==0) {
-            this.dateList[0].active = true;
-          } else {
-            for (var i = 0; i < this.dateList.length; i++) {
-              if (selCode == this.dateList[i].code) {
-                selRottCateCode = this.dateList[i].code;
-                this.dateList[i].active = true;
-              }
+        if (selCode.length==0) {
+          this.dateList[0].active = true;
+        } else {
+          for (var i = 0; i < this.dateList.length; i++) {
+            if (selCode == this.dateList[i].date) {
+              selRottCateCode = this.dateList[i].date;
+              this.dateList[i].active = true;
             }
           }
-
-          this.getTimeList(selRottCateCode);
         }
-      } else {
-        tip.error(json.data.msg);
+
+        this.getTimeList(selRottCateCode);
       }
+
       this.$apply();
     }
     //获取某个日期的某个时间段
     async getTimeList(rootCateCode) {
-//      const json = await api.childGoodsCatetoryList({
-//        query: {
-//          rootCategoryCode: rootCateCode
-//        }
-//      });
-      const TIMESTAMP = util.getCurrentTime()
-      if (1) {
-        for (var i=0;i<=20;i++){
-          this.timeList.push({code:i,name:TIMESTAMP + i})
-        }
-      } else {
-        tip.error(json.data.msg);
-      }
+      console.log(rootCateCode)
+      const json = await api.getavailabletime({
+        query: {
+          branch_id: "1",
+          user_type: "0",
+          date: rootCateCode
+        },
+        method: 'POST'
+      });
+      this.timeList = json.data.data
       this.$apply();
     }
 
@@ -248,8 +251,8 @@
       self.userInfo = wepy.getStorageSync('user_info')
     }
 
-    onShow() {
-      this.getDateList()
+    async onShow() {
+      await this.getDateList()
     }
 
 

@@ -114,22 +114,20 @@ export default class extends wepy.app {
     let code = res.code
     let resUser = await wepy.getUserInfo()
     wepy.setStorageSync('user_info', resUser.userInfo);
-    console.log(code)
-    console.log(resUser)
     if (res.code){
-//      if (!wepy.getStorageSync('session_key')){
+      if (!wepy.getStorageSync('userid')){
         const json = await api.getOpenId({
           query: {
+            appid: "wxf1017d0c13e86f43",
             code: code,
             rawData: resUser.rawData,
             signature: resUser.signature
           },
           method: 'POST'
         });
-        console.log(json)
 //        wepy.setStorageSync('session_key', json.data.session_key);
-//        wepy.setStorageSync('openid', json.data.openid);
-//      }
+        wepy.setStorageSync('userid', json.data.userid);
+      }
 
 //      if (!wepy.getStorageSync('openid')){
 //        let encryptedData = res.encryptedData

@@ -84,6 +84,7 @@
     SYSTEM_INFO,
     SEL_CLASS_CODE
   } from '../utils/constant';
+  import api from "../api/api"
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'template'
@@ -115,7 +116,14 @@
 
     }
 
-    onShow() {
+    async onShow() {
+      const json = await api.getavailableproduct({
+        query: {
+          branch_id: "1"
+        },
+        method: 'POST'
+      });
+      console.log(json)
     }
 
     onReachBottom() {

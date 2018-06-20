@@ -70,6 +70,7 @@
                         height: 88rpx;
                         line-height: 88rpx;
                         position: relative;
+                        top:-34rpx;
                     }
                 }
                 .code{
@@ -107,7 +108,7 @@
 </style>
 <template>
     <view class="wepy-api-dialog_bind" wx:if="{{ bind_active }}">
-        <view class="wepy-api-dialog__mask_bind"  @tap="hide"></view>
+        <view class="wepy-api-dialog__mask_bind"></view>
         <view class="wepy-api-dialog__main_bind">
             <view class="wepy-api-dialog__hd_bind">
                 <view class="wepy-api-dialog__title_bind">
@@ -116,11 +117,11 @@
             </view>
             <view class="main">
                 <view class="mobile">
-                    <input type="number" maxlength="11" placeholder="请输入手机号" @input="bindPhone" class="number" value="{{ number }}" />
+                    <input type="number" maxlength="11" placeholder="请输入手机号" @blur="bindPhone" class="number" value="{{ number }}" />
                     <view class="doSend" @tap="sendSms" >发送验证码</view>
                 </view>
                 <view class="code">
-                    <input type="number" maxlength="4" placeholder="请输入验证码"  @input="bindCode" class="number" value="{{ code }}" />
+                    <input type="number" maxlength="4" placeholder="请输入验证码"  @blur="bindCode" class="number" value="{{ code }}" />
                 </view>
             </view>
             <view class="foot">
@@ -177,9 +178,6 @@
       hide () {
         this.bind_active = 0
       },
-      display () {
-        this.bind_active = 1
-      },
       bindPhone (e) {
         this.number =  e.detail.value
       },
@@ -196,14 +194,10 @@
           method: 'POST'
         });
 
-        if (res.data.state == true){
+        if (res.data.state){
           this.bind_active = 0
           this.$apply()
           tip.toast("绑定成功")
-        }else{
-          this.bind_active = 0
-          this.$apply()
-          tip.toast(res.data.message)
         }
       },
       async sendSms () {
@@ -216,9 +210,6 @@
         });
         if (res.data.state){
           tip.toast("發送成功")
-        }else{
-//          tip.error(res.data.message)
-          console.log(res.data.message);
         }
       }
 

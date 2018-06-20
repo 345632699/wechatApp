@@ -409,7 +409,7 @@
       },
 
       bindMobile() {
-        this.$invoke("mobile","display")
+        this.bind_active = 1
       }
 
     }

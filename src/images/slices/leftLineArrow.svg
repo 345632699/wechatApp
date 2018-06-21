@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>leftLineArrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M17.5,7.8224916 C17.2820299,7.60403015 16.9861039,7.4812584 16.6775,7.4812584 C16.3688961,7.4812584 16.0729701,7.60403015 15.855,7.8224916 L10.5,13.1774916 C10.045,13.6324916 10.045,14.3674916 10.5,14.8224916 L15.855,20.1774916 C16.31,20.6324916 17.045,20.6324916 17.5,20.1774916 C17.955,19.7224916 17.955,18.9874916 17.5,18.5324916 L12.9733333,13.9941583 L17.5,9.4674916 C17.955,9.0124916 17.9433333,8.26582494 17.5,7.8224916 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-10.000000, -146.000000)">
+            <g id="leftArrow" transform="translate(10.000000, 146.000000)">
+                <g id="Icon-/-Keyboard-Arrow---Left-/-Rounded">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="icon/navigation/chevron_left_24px" fill-rule="nonzero"></g>
+                    <g id="✱-/-Color-/-Icons-/-Selected-/-On-Secondary-/-Active--" mask="url(#mask-2)" fill="#000000" fill-opacity="0.87" fill-rule="evenodd">
+                        <rect id="Rectangle-3" x="0" y="0" width="28" height="28"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

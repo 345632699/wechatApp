@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>downLineArrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M18.5208333,10.4999916 L13.9941667,15.0266583 L9.4675,10.4999916 C9.24952989,10.2815302 8.95360392,10.1587584 8.645,10.1587584 C8.33639608,10.1587584 8.04047011,10.2815302 7.8225,10.4999916 C7.3675,10.9549916 7.3675,11.6899916 7.8225,12.1449916 L13.1775,17.4999916 C13.6325,17.9549916 14.3675,17.9549916 14.8225,17.4999916 L20.1775,12.1449916 C20.6325,11.6899916 20.6325,10.9549916 20.1775,10.4999916 C19.7225,10.0566583 18.9758333,10.0449916 18.5208333,10.4999916 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-82.000000, -146.000000)">
+            <g id="downArrow" transform="translate(82.000000, 146.000000)">
+                <g id="Icon-/-Keyboard-Arrow---Down-/-Rounded">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="icon/navigation/expand_more_24px" fill-rule="nonzero"></g>
+                    <g id="✱-/-Color-/-Icons-/-Selected-/-On-Surface-/-Inactive" mask="url(#mask-2)" fill="#000000" fill-opacity="0.54" fill-rule="evenodd">
+                        <rect id="Rectangle" x="0" y="0" width="28" height="28"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

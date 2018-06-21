@@ -126,8 +126,6 @@
 
 
     onLoad() {
-      const Towxml = require('towxml');
-      const towxml = new Towxml();
     }
 
     onShow() {

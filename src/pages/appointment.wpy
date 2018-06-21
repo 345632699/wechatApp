@@ -224,7 +224,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view class=" font-gray text-format">*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就</view>
+                    <view class=" font-gray text-format">*包含: {{ package_detail }}</view>
                 </view>
             </view>
 
@@ -239,7 +239,8 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view class="{{ (package_name != '请选择套餐') ? '':'brightGrey'}}">绑定手机以便我们与您取得联系</view>
+                    <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone > 0 }}">{{ phone }}</view>
+                    <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone <= 0 }}">绑定手机以便我们与您取得联系</view>
                     <view class="weui-cell__bd">
                         <view class="weui-select-right"></view>
                     </view>
@@ -310,7 +311,7 @@
     <tips></tips>
     <alert :is_active.sync="is_active" :title.sync="alert_title" :msg="msg" :confirmText.sync="confirmText"></alert>
     <pay :pay_active.sync="pay_active"></pay>
-    <mobile :bind_active.sync="bind_active"></mobile>
+    <mobile :bind_active.sync="bind_active" @change.user="changePhone"></mobile>
 
 </template>
 
@@ -326,6 +327,8 @@
   import tip from '../utils/tip'
   import Pay from '../components/pay'
   import BindMobile from '../components/bindMobile'
+  import province from '../utils/region'
+  import api from '../api/api'
 
   export default class Index extends wepy.page {
     config = {
@@ -338,10 +341,7 @@
       mobile: BindMobile,
     }
     data = {
-      province: [
-        ['粤A', '粤B', '粤C', '粤D'],
-        ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3']
-      ],
+      province: province,
       carNumbers: ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3'],
       multiIndex: [0,0],
       carNumIndex: 0,
@@ -361,15 +361,15 @@
       alert_title: "取消訂單",
       msg: "确认要取消预约吗？取消后可能无法选择同一时间\n",
       comfirm: 0,
+      phone: 0,
       confirmText: '確認取消',
     }
 
 
     methods = {
       bindProvinceChange (e) {
-        console.log(e.detail)
-        this.provinceIndex =  e.detail.value
-        this.currentProvince = this.province[this.provinceIndex]
+        this.multiIndex =  e.detail.value
+        this.currentProvince = this.province[0][this.multiIndex[0]]+this.province[1][this.multiIndex[1]]
       },
       bindCarChange (e) {
         this.carNumIndex =  e.detail.value
@@ -377,11 +377,7 @@
         this.carNum = this.currentCarNum.slice(2,)
         this.currentProvince = this.currentCarNum.slice(0,2)
       },
-      parentFn (num, evt) {
-        console.log('parent received emit event, number is: ' + num)
-      },
       previewImage (e) {
-        console.log(e)
         var current = e.target.dataset.src;
         wepy.previewImage({
           current: current, // 当前显示图片的http链接
@@ -390,7 +386,6 @@
       },
       //導航
       lead () {
-        console.log(2333)
         wepy.openLocation({
           latitude: 22.85758,
           longitude: 108.31476,
@@ -398,6 +393,11 @@
           address:"南宁市西乡塘区秀厢大道东祥云商务酒店",
           scale: 28
         })
+      },
+      changePhone (phone) {
+        wx.setStorageSync('phone_number',phone)
+        this.phone = phone
+        this.$apply()
       },
 
       async cancelOrder () {
@@ -417,7 +417,6 @@
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
     events = {
       'comfirmAction': (comfirm) => {
-        console.log(comfirm)
         if (comfirm == 1){
           tip.toast("取消成功")
         }
@@ -425,13 +424,22 @@
     };
 
     onLoad(option) {
-      console.log(option)
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name
       this.selectDate = option.selectDate
       this.start_time = option.start_time
       this.end_time = option.end_time
+    }
+
+    async onShow () {
+      const res = await api.getuserinfo({
+        query: {
+          user_id: wepy.getStorageSync('userid'),
+        },
+        method: 'POST'
+      });
+
     }
   }
 </script>

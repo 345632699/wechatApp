@@ -70,7 +70,6 @@
                         height: 88rpx;
                         line-height: 88rpx;
                         position: relative;
-                        top:-34rpx;
                     }
                 }
                 .code{
@@ -117,11 +116,11 @@
             </view>
             <view class="main">
                 <view class="mobile">
-                    <input type="number" maxlength="11" placeholder="请输入手机号" @blur="bindPhone" class="number" value="{{ number }}" />
+                    <input type="number" maxlength="11" placeholder="请输入手机号" @input="bindPhone" class="number" value="{{ number }}" />
                     <view class="doSend" @tap="sendSms" >发送验证码</view>
                 </view>
                 <view class="code">
-                    <input type="number" maxlength="4" placeholder="请输入验证码"  @blur="bindCode" class="number" value="{{ code }}" />
+                    <input style="margin-left: -46rpx" type="number" maxlength="4" placeholder="请输入验证码"  @input="bindCode" class="number" value="{{ code }}" />
                 </view>
             </view>
             <view class="foot">
@@ -195,13 +194,13 @@
         });
 
         if (res.data.state){
+          this.$emit("change", this.number)
           this.bind_active = 0
           this.$apply()
           tip.toast("绑定成功")
         }
       },
       async sendSms () {
-        console.log(this.number)
         const res = await api.sendverifycode({
           query: {
             phoneNumber: this.number

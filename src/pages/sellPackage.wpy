@@ -19,6 +19,20 @@
                 width: 100%;
                 height: 100%;
             }
+            .mainTitle{
+                color: #FFFFFF;
+                font-size: 70rpx;
+                position: relative;
+                top: -200rpx;
+                left: 16rpx;
+            }
+            .product_name{
+                color: #FFFFFF;
+                font-size: 70rpx;
+                position: relative;
+                top: -240rpx;
+                left: 16rpx;
+            }
         }
         .detail{
             padding: 36rpx 32rpx 36rpx 32rpx;
@@ -58,17 +72,23 @@
     <view class="page">
         <!--頂部-->
         <view>
-            <view class="page_box" wx:for="{{dateList}}">
+            <view class="page_box" wx:for="{{dateList}}" wx:key="item">
                 <view class="img_box">
-                    <image class="img" src="../images/tc.png" alt="" />
+                    <image class="img" src="../images/slices/168.png" alt="" />
+                    <view class="mainTitle">
+                        {{ item.product_price }}
+                    </view>
+                    <view class="product_name">
+                        {{ item.product_name }}
+                    </view>
                 </view>
                 <view class="detail">
                     <view class="title font-weight">
-                        全方位清洁+轮胎养护
+                        {{ item.product_subtitle }}
                     </view>
-                    <view class="tips">耗时约3小时, 开始前30分钟内不可取消</view>
-                    <view class="main">包含：漆面预处理/漆面PA预洗/边缝细节刷洗/后备箱水槽/油箱盖内清洁/漆面两桶水洗漆面预处理面两桶水洗漆</view>
-                    <view @tap="selectPackage" data-code="333" class="tap">选择套餐</view>
+                    <view class="tips">耗时约{{ item.product_cost_time }}小时, 开始前{{ item.product_cancel_limit_time }}分钟内不可取消</view>
+                    <view class="main">包含：{{ item.product_details }}</view>
+                    <view @tap="selectPackage" data-code="{{ item.product_id }}" data-package_detail="{{ item.product_subtitle }}" data-package_name="{{ item.product_name }}" class="tap">选择套餐</view>
                     <navigator hover-class="none" url="/pages/packageDetail" class="tap">套餐详情</navigator>
                 </view>
             </view>
@@ -94,7 +114,7 @@
     }
 
     data = {
-      dateList: [1,2]
+      dateList: []
     }
 
     computed = {
@@ -102,9 +122,10 @@
 
     methods = {
       selectPackage (e) {
+        console.log(e.currentTarget)
         let pacakge_id = e.currentTarget.dataset.code
-        let package_detail = "*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就"
-        let package_name = "168套餐 预计用时：3小时"
+        let package_detail =  e.currentTarget.dataset.package_detail
+        let package_name = e.currentTarget.dataset.package_name
         wepy.navigateTo({
           url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
         })
@@ -123,7 +144,8 @@
         },
         method: 'POST'
       });
-      console.log(json)
+      this.dateList = json.data.data
+      this.$apply()
     }
 
     onReachBottom() {

@@ -338,7 +338,6 @@
         console.log('parent received emit event, number is: ' + num)
       },
       previewImage (e) {
-        console.log(e)
         var current = e.target.dataset.src;
         wepy.previewImage({
           current: current, // 当前显示图片的http链接
@@ -347,7 +346,6 @@
       },
       //導航
       lead () {
-        console.log(2333)
         wepy.openLocation({
           latitude: 22.85758,
           longitude: 108.31476,
@@ -370,7 +368,6 @@
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
     events = {
       'comfirmAction': (comfirm) => {
-        console.log(comfirm)
         if (comfirm == 1){
           tip.toast("取消成功")
         }
@@ -378,7 +375,6 @@
     };
 
     onLoad(option) {
-      console.log(option)
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name

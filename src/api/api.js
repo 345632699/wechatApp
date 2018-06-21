@@ -19,6 +19,8 @@ const user2session = (params) => wxRequest(params, apiMall + "/api/wechat/user2s
 
 //測試連接
 const getOpenId = (params) => wxRequest(params, apiMall + "/login/");
+const getusermainpage = (params) => wxRequest(params, apiMall + "/getusermainpage/");
+const getuserinfo = (params) => wxRequest(params, apiMall + "/getuserinfo/");
 const sendverifycode = (params) => wxRequest(params, apiMall + "/sendverifycode/");
 const checkverifycode = (params) => wxRequest(params, apiMall + "/checkverifycode/");
 const binduserinfo = (params) => wxRequest(params, apiMall + "/binduserinfo/");
@@ -35,6 +37,8 @@ module.exports = {
   wxJsCode2Session,
   user2session,
   getOpenId,
+  getuserinfo,
+  getusermainpage,
   sendverifycode,
   checkverifycode,
   binduserinfo,

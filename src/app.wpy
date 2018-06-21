@@ -108,8 +108,17 @@ export default class extends wepy.app {
     //存储系统信息 
     let systemInfo = wepy.getSystemInfoSync();
     wepy.setStorageSync(SYSTEM_INFO, systemInfo);
+  }
 
-    this.testAsync()
+  sleep (s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async getAuth () {
     let res = await wepy.login();
     let code = res.code
     let resUser = await wepy.getUserInfo()
@@ -125,37 +134,9 @@ export default class extends wepy.app {
           },
           method: 'POST'
         });
-//        wepy.setStorageSync('session_key', json.data.session_key);
         wepy.setStorageSync('userid', json.data.userid);
       }
-
-//      if (!wepy.getStorageSync('openid')){
-//        let encryptedData = res.encryptedData
-//        let iv = res.iv
-//        let session_key = wepy.getStorageSync('session_key')
-//        const json = await api.decrypt({
-//          query: {
-//            encryptedData: encryptedData,
-//            iv: iv,
-//            session_key: session_key,
-//          },
-//          method: 'POST'
-//        });
-//      }
-
     }
-  }
-
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3)
   }
 
   async getUserInfo(cb) {

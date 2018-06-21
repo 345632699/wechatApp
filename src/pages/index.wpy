@@ -85,11 +85,12 @@
           </view>
           <view class="weui-cell__bd">
             <view>{{ userInfo.nickName }}</view>
-            <view>賬戶餘額：￥99999/今天天氣：晴</view>
+            <view>賬戶餘額：￥{{ account.balance }}/今天天氣：晴</view>
           </view>
         </view>
-        <view class="weui-cell" style="padding-top: 0px">
-          <view style="color:#E64340">*您预约的洗车服务将于5.23日下午3点</view>
+        <view class="weui-cell" style="padding-top: 0px" >
+          <view style="color:#E64340" wx:if="{{ account.have_recent_book }}">*您预约的洗车服务将于5.23日下午3点</view>
+          <view style="color:#E64340" wx:else="{{ account.have_recent_book }}">*暂无预约</view>
         </view>
       </view>
     </view>
@@ -156,11 +157,16 @@
       userInfo: {
         nickName: '加载中...'
       },
+      account:{
+          balance: '加载中...'
+      },
       count: 0,
       dateList: [],
       windowHeight: 0,
       timeList: [],
-      currentDate: wx.getStorageSync(SEL_CLASS_CODE)
+      currentDate: wx.getStorageSync(SEL_CLASS_CODE),
+      indexDetail:'',
+      user_id:0
     }
 
     computed = {
@@ -198,14 +204,6 @@
 
     //获取日期列表
     async getDateList() {
-      const json = await api.getavailabledate({
-        query: {
-          branch_id: "1",
-          user_type: "1"
-        },
-        method: 'POST'
-      });
-      this.dateList = json.data.data
       for(var p in this.dateList){//遍历json数组时，这么写p为索引，0,1
         this.dateList[p].dateFormat = this.dateList[p].date.slice(5)
       }
@@ -231,11 +229,10 @@
     }
     //获取某个日期的某个时间段
     async getTimeList(rootCateCode) {
-      console.log(rootCateCode)
       const json = await api.getavailabletime({
         query: {
           branch_id: "1",
-          user_type: "0",
+          user_type: wepy.getStorageSync('user_type'),
           date: rootCateCode
         },
         method: 'POST'
@@ -244,14 +241,31 @@
       this.$apply();
     }
 
-    onLoad() {
+    async onLoad() {
       let systemInfo = wx.getStorageSync(SYSTEM_INFO);
       this.windowHeight = systemInfo.windowHeight;
-      let self = this
-      self.userInfo = wepy.getStorageSync('user_info')
+      this.$apply()
     }
 
     async onShow() {
+      await  this.$parent.getAuth()
+      let user_id = wepy.getStorageSync('userid')
+      this.userInfo = wepy.getStorageSync('user_info')
+      if (user_id){
+        const res = await api.getusermainpage({
+          query: {
+            branch_id: "1",
+            user_id: user_id,
+          },
+          method: 'POST'
+        });
+        this.dateList = res.data.data[0].available_date
+        this.account.user_type = res.data.data[0].user_type
+        this.account.balance = res.data.data[0].balance
+        this.account.have_recent_book = res.data.data[0].have_recent_book
+        wepy.setStorageSync('user_type',res.data.data[0].user_type)
+        this.$apply();
+      }
       await this.getDateList()
     }
 

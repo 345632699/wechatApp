@@ -86,7 +86,7 @@ export default class extends wepy.app {
         "iconPath": "images/index/date.png",
         "selectedIconPath": "images/index/date_hover.png"
       }, {
-        "pagePath": "pages/display",
+        "pagePath": "pages/discover",
         "text": "发现",
         "iconPath": "images/index/discover.png",
         "selectedIconPath": "images/index/discover_hover.png"
@@ -134,7 +134,8 @@ export default class extends wepy.app {
           },
           method: 'POST'
         });
-        wepy.setStorageSync('userid', json.data.userid);
+        wepy.setStorageSync('userid', json.data.data[0].userid);
+        wepy.setStorageSync('merchant_id', json.data.data[0].merchant_id);
       }
     }
   }

@@ -1,5 +1,6 @@
 <style lang="less">
     .page{
+        background: #FFFFFF;
         .notice{
             padding:32rpx;
             background: #FFFFFF;
@@ -58,14 +59,34 @@
                 }
             }
         }
+        .btn_bg{
+            background: #FFFFFF;
+            width: 100%;
+            text-align: center;
+            padding:16rpx;
+            height: 72rpx;
+            margin-bottom: 16rpx;
+            box-shadow: 0px 6rpx 10rpx 0px rgba(0,0,0,0.5);
+            padding-bottom: 48rpx;
+            .btn{
+                display: inline-block;
+                color: #FFFFFF;
+                font-size: 34rpx;
+                width:280rpx;
+                height:96rpx;
+                font-weight: bold;
+                margin-right: 24rpx;
+                margin-left: 24rpx;
+            }
+        }
     }
 </style>
 <template>
     <view class="page">
         <!--跳转按钮-->
         <view class="btn_bg">
-            <button class="btn">案例展示</button>
-            <button class="btn">关于我们</button>
+            <button class="btn" style="background-image: url('../images/discover/discoverBtn1.png');background-size:100% 100% ">案例展示</button>
+            <button class="btn" style="background-image: url('../images/discover/discoverBtn2.png');background-size:100% 100% ">关于我们</button>
         </view>
         <!--公告-->
         <view class="notice">
@@ -90,6 +111,7 @@
     SYSTEM_INFO,
     SEL_CLASS_CODE
   } from '../utils/constant';
+  import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '发现'
@@ -114,7 +136,14 @@
 
     }
 
-    onShow() {
+    async onShow() {
+      const res = await api.getuserinfo({
+        query: {
+          user_id: wepy.getStorageSync('userid'),
+
+        },
+        method: 'POST'
+      });
     }
 
 

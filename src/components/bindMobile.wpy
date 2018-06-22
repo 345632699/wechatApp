@@ -194,6 +194,14 @@
         });
 
         if (res.data.state){
+          const res = await api.binduserinfo({
+            query: {
+              userId:wx.getStorageSync('userid'),
+              phoneNumber: this.number
+            },
+            method: 'POST'
+          });
+
           this.$emit("change", this.number)
           this.bind_active = 0
           this.$apply()

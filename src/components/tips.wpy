@@ -4,10 +4,11 @@
     <view class="weui-cells_after-title tip-buttom" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="../images/appointment/stepper.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../images/appointment/myorder.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:if="{{ type >1 }}"></image>
+          <image src="../images/appointment/stepper.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:else></image>
         </view>
-        <view class="weui-cell__bd">支付定金</view>
-        <view class="weui-cell__ft">2/4</view>
+        <view class="weui-cell__bd">{{ title }}</view>
+        <view class="weui-cell__ft">{{ step }}/4</view>
       </view>
     </view>
     <!--具体内容-->
@@ -20,12 +21,12 @@
             <view class="first">
               <image style="width: 30rpx;height: 20rpx;padding: 8rpx;" src="../images/appointment/sheet.svg" ></image>
             </view>
-            <view class="left">
+            <view class="left {{ 1 == step ? 'active' : '' }}">
               1
             </view>
             <view class="right">选择时间</view>
           </view>
-          <view class="weui-actionsheet__cell" @tap="hideAct">
+          <view class="weui-actionsheet__cell {{ 2 == step ? 'active' : '' }}" @tap="hideAct">
             <view class="first">
             </view>
             <view class="left">
@@ -33,7 +34,7 @@
             </view>
             <view class="right">选择套餐</view>
           </view>
-          <view class="weui-actionsheet__cell active" @tap="hideAct">
+          <view class="weui-actionsheet__cell {{ 3 == step ? 'active' : '' }}" @tap="hideAct">
             <view class="first">
             </view>
             <view class="left">
@@ -41,7 +42,7 @@
             </view>
             <view class="right">支付定金</view>
           </view>
-          <view class="weui-actionsheet__cell" @tap="hideAct">
+          <view class="weui-actionsheet__cell {{ 4 == step ? 'active' : '' }}" @tap="hideAct">
             <view class="first">
             </view>
             <view class="left">
@@ -62,6 +63,20 @@
     data = {
       active: ''
     }
+    props = {
+      step: {
+        type:Number,
+        default: 1
+      },
+      title: {
+        type:String,
+        default: "支付定金"
+      },
+      type: {
+        type:Number,
+        default: 1 //1为直接下单 2 为查看订单
+      }
+    }
 
     methods = {
       tap () {
@@ -74,7 +89,9 @@
       }
     }
 
-    onload () {}
+    onload () {
+      console.log(this.type)
+    }
 
   }
 </script>

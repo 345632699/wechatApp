@@ -88,7 +88,7 @@
                     </view>
                     <view class="tips">耗时约{{ item.product_cost_time }}小时, 开始前{{ item.product_cancel_limit_time }}分钟内不可取消</view>
                     <view class="main">包含：{{ item.product_details }}</view>
-                    <view @tap="selectPackage" data-code="{{ item.product_id }}" data-package_detail="{{ item.product_subtitle }}" data-package_name="{{ item.product_name }}" class="tap">选择套餐</view>
+                    <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
                     <navigator hover-class="none" url="/pages/packageDetail" class="tap">套餐详情</navigator>
                 </view>
             </view>
@@ -122,12 +122,18 @@
 
     methods = {
       selectPackage (e) {
-        console.log(e.currentTarget)
         let pacakge_id = e.currentTarget.dataset.code
-        let package_detail =  e.currentTarget.dataset.package_detail
-        let package_name = e.currentTarget.dataset.package_name
-        wepy.navigateTo({
-          url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
+        let package_detail =  e.currentTarget.dataset.info.product_subtitle
+        let package_name = e.currentTarget.dataset.info.product_name
+        let product_deposite = e.currentTarget.dataset.info.product_deposite
+        let product_price = e.currentTarget.dataset.info.product_price
+
+        wepy.redirectTo({
+          url:'/pages/appointment?package_id='+pacakge_id+
+          '&package_detail='+package_detail+
+          '&product_price='+product_price+
+          '&product_deposite='+product_deposite+
+          '&package_name='+package_name,
         })
       }
     }
@@ -149,8 +155,6 @@
     }
 
     onReachBottom() {
-      this.dateList.push(2)
-      this.dateList.push(4)
     }
 
 

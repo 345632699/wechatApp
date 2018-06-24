@@ -315,9 +315,9 @@
       province: province,
       multiIndex: [0,0],
 
-      selectDate: wepy.getStorageSync('selectDate'),
-      start_time: wepy.getStorageSync('start_time'),
-      end_time: wepy.getStorageSync('end_time'),
+      selectDate: '',
+      start_time: '',
+      end_time: '',
 
       icon: "../images/icon_home.png",
       carInfo:{
@@ -426,7 +426,6 @@
       this.product.name = option.package_name
       this.product.deposite = option.product_deposite
       this.product.price = option.product_price
-      console.log(this.product.deposite)
       if (option.package_id) {
         this.step = 3
         this.title = "支付定金"
@@ -439,7 +438,13 @@
         wepy.setStorageSync('selectDate',option.selectDate)
         wepy.setStorageSync('start_time',option.start_time)
         wepy.setStorageSync('end_time',option.end_time)
+      }else{
+        this.selectDate = wepy.getStorageSync('selectDate')
+        this.start_time = wepy.getStorageSync('start_time')
+        this.end_time = wepy.getStorageSync('end_time')
+        this.$apply()
       }
+
       this.$apply()
 
     }

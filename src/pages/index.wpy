@@ -135,7 +135,7 @@
   </view>
   <pay></pay>
   <!--<rate @change.user="callbackStart"></rate>-->
-  <!--<button open-type="getUserInfo">用戶授權</button>-->
+  <button open-type="getUserInfo">用戶授權</button>
 
 </template>
 
@@ -296,6 +296,7 @@
       this.account.user_type = res.data.data[0].user_type
       this.account.balance = res.data.data[0].balance
       this.account.weather = res.data.data[0].weather
+      this.account.order_id_list = res.data.data[0].order_id_list
       wepy.setStorageSync('order_id_list',res.data.data[0].order_id_list)
       this.account.have_recent_book = res.data.data[0].have_recent_book
       wepy.setStorageSync('user_type',res.data.data[0].user_type)

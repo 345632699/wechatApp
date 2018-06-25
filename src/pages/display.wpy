@@ -33,21 +33,13 @@
 <template>
     <view class="page">
        <view class="container">
-           <view class="imgs">
-               <image class="img1" src="../images/half.png" />
-               <image class="img2" src="../images/half.png" />
-               <image class="img2" src="../images/half.png" />
-               <image class="img2 last" src="../images/half.png" />
-               <image class="img3" src="../images/half.png" />
-               <image class="img3 last" src="../images/half.png" />
-           </view>
-           <view class="imgs">
-               <image class="img1" src="../images/half.png" />
-               <image class="img2" src="../images/half.png" />
-               <image class="img2" src="../images/half.png" />
-               <image class="img2 last" src="../images/half.png" />
-               <image class="img3" src="../images/half.png" />
-               <image class="img3 last" src="../images/half.png" />
+           <view class="imgs" wx:for="{{ imgList }}" wx:key="item">
+               <image class="img1" src="{{ item[0].image_url }}" />
+               <image class="img2" src="{{ item[1].image_url }}" />
+               <image class="img2" src="{{ item[2].image_url }}" />
+               <image class="img2 last" src="{{ item[3].image_url }}" />
+               <image class="img3" src="{{ item[4].image_url }}" />
+               <image class="img3 last" src="{{ item[5].image_url }}" />
            </view>
        </view>
     </view>
@@ -60,15 +52,17 @@
     SYSTEM_INFO,
     SEL_CLASS_CODE
   } from '../utils/constant';
+  import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'template'
+      navigationBarTitleText: '案例展示'
     }
     components = {
 
     }
 
     data = {
+      imgList: []
     }
 
     computed = {
@@ -79,12 +73,33 @@
       }
     }
 
-
-    onLoad() {
-
+    async getshowimages () {
+      const res = await api.getshowimages({
+        query: {
+          merchant_id: wepy.getStorageSync('merchant_id'),
+          number: '6'
+        },
+        method: 'POST'
+      });
+      return res.data.data
     }
 
-    onShow() {
+    async onLoad() {
+      let imgs = await this.getshowimages()
+      this.imgList[0] = imgs
+      let imgs1 = await this.getshowimages()
+      this.imgList[1] = imgs1
+      this.$apply()
+    }
+
+    async onShow() {
+    }
+
+    async onReachBottom() {
+      let imgs = await this.getshowimages()
+      this.imgList.push(imgs)
+      console.log(this.imgList)
+      this.$apply()
     }
 
 

@@ -96,11 +96,11 @@
         </view>
         <!--公告-->
         <view class="notice">
-            <view class="weui-cell">
+            <view class="weui-cell" wx:for="{{articles}}" wx:key="item" data-code="item.notice_id">
                 <view class="weui-cell__bd">
-                    <view class="title">联系人名称</view>
-                    <view class="context">摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息摘要信息</view>
-                    <view class="time">今天 上午 10:30</view>
+                    <view class="title">{{ item.title }}</view>
+                    <view class="context">{{ item.content }}</view>
+                    <view class="time">{{ item.publish_time }}</view>
                 </view>
                 <view class="weui-cell__hd">
                     <image src="../images/half.png" />
@@ -127,6 +127,7 @@
     }
 
     data = {
+      articles: []
     }
 
     computed = {
@@ -143,13 +144,14 @@
     }
 
     async onShow() {
-      const res = await api.getuserinfo({
+      const res = await api.getnotices({
         query: {
-          user_id: wepy.getStorageSync('userid'),
-
+          user_id: wepy.getStorageSync('merchant_id'),
         },
         method: 'POST'
       });
+      this.articles = res.data.data
+      this.$apply()
     }
 
 

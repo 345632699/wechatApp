@@ -87,9 +87,9 @@
                         {{ item.product_subtitle }}
                     </view>
                     <view class="tips">耗时约{{ item.product_cost_time }}小时, 开始前{{ item.product_cancel_limit_time }}分钟内不可取消</view>
-                    <view class="main">包含：{{ item.product_details }}</view>
+                    <view class="main">包含：{{ item.product_intro }}</view>
                     <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
-                    <navigator hover-class="none" url="/pages/packageDetail" class="tap">套餐详情</navigator>
+                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情</navigator>
                 </view>
             </view>
             <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
@@ -107,7 +107,7 @@
   import api from "../api/api"
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'template'
+      navigationBarTitleText: '套餐选择'
     }
     components = {
 

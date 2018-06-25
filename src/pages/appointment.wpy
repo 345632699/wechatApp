@@ -303,7 +303,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '订单预览'
+      navigationBarTitleText: '订单预约'
     }
     components = {
       tips: Tips,

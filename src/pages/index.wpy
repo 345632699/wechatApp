@@ -98,7 +98,7 @@
     <view class="page__bd">
       <view class="weui-cell middle-flex">
         <picker @change="bindBranchChange" value="{{ branchIndex }}" range="{{ branchList }}">
-          <view style="width: 100%;text-align: center">{{ branch_name }}</view>
+          <view style="width: 100%;text-align: center">{{ defaultBranch.name }}</view>
         </picker>
       </view>
       <!--flex-->
@@ -135,7 +135,7 @@
   </view>
   <pay></pay>
   <!--<rate @change.user="callbackStart"></rate>-->
-  <button open-type="getUserInfo">用戶授權</button>
+  <!--<button open-type="getUserInfo">用戶授權</button>-->
 
 </template>
 
@@ -151,7 +151,8 @@
   import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'about'
+      navigationBarTitleText: '首页',
+      "disableScroll": true
     }
     components = {
       pay: Pay,
@@ -178,7 +179,10 @@
       branchInfo:[],
       branchList:[],
       branchIndex:0,
-      branch_name: '请选择分店'
+      defaultBranch:{
+        name: '请选择分店'
+      },
+
     }
 
     computed = {
@@ -203,12 +207,11 @@
         }
       },
       async bindBranchChange (e) {
-        let branch_id = this.branchInfo[e.detail.value].branch_id
-        this.branch_name = this.branchInfo[e.detail.value].branch_name
+        let branch_id = this.branchInfo[e.detail.value].id
+        this.defaultBranch.name = this.branchInfo[e.detail.value].name
         this.$apply()
         let user_id = wx.getStorageSync("userid")
         await this.getusermainpage(branch_id,user_id)
-        await this.getDateList()
       },
       callbackStart(count){
         console.log(count)
@@ -227,24 +230,6 @@
       for(var p in this.dateList){//遍历json数组时，这么写p为索引，0,1
         this.dateList[p].dateFormat = this.dateList[p].date.slice(5)
       }
-      if (this.dateList.length > 0) {
-        let selCode = wx.getStorageSync(SEL_CLASS_CODE);
-        var selRottCateCode = this.dateList[0].date;
-
-        if (selCode.length==0) {
-          this.dateList[0].active = true;
-        } else {
-          for (var i = 0; i < this.dateList.length; i++) {
-            if (selCode == this.dateList[i].date) {
-              selRottCateCode = this.dateList[i].date;
-              this.dateList[i].active = true;
-            }
-          }
-        }
-
-        this.getTimeList(selRottCateCode);
-      }
-
       this.$apply();
     }
     //获取某个日期的某个时间段
@@ -267,22 +252,6 @@
       this.$apply()
     }
 
-    async getbranchinfo(merchant_id,user_id){
-      const res = await api.getbranchinfo({
-        query: {
-          merchant_id: merchant_id,
-          user_id: user_id,
-        },
-        method: 'POST'
-      });
-      this.branchInfo = res.data.data
-      for (var p in res.data.data){
-        this.branchList[p] = res.data.data[p].branch_name
-      }
-      this.$apply()
-      return this.branchInfo[0].branch_id
-    }
-
     async getusermainpage(branch_id,user_id){
       const res = await api.getusermainpage({
         query: {
@@ -292,7 +261,9 @@
         method: 'POST'
       });
       this.dateList = res.data.data[0].available_date
-      console.log(this.dateList)
+      //设置当前选中日期
+      this.dateList[0].active = true
+      //设置用户信息
       this.account.user_type = res.data.data[0].user_type
       this.account.balance = res.data.data[0].balance
       this.account.weather = res.data.data[0].weather
@@ -300,20 +271,38 @@
       wepy.setStorageSync('order_id_list',res.data.data[0].order_id_list)
       this.account.have_recent_book = res.data.data[0].have_recent_book
       wepy.setStorageSync('user_type',res.data.data[0].user_type)
+
+      //分店信息
+      this.branchInfo = res.data.data[0].branch_list
+      for (var p in this.branchInfo){
+        this.branchList[p] = this.branchInfo[p].name
+      }
+
+      this.defaultBranch = res.data.data[0].default_branch
+
+      this.timeList = res.data.data[0].today_available_time
+      await this.getDateList()
       this.$apply();
+    }
+
+    async selected (code) {
+      for (var i = 0; i < this.dateList.length; i++) {
+        var rootCate = this.dateList[i];
+        rootCate.active = false;
+        if (rootCate.date == code) {
+          rootCate.active = true;
+        }
+      }
     }
 
     async onShow() {
       await  this.$parent.getAuth()
       let user_id = wepy.getStorageSync('userid')
       let merchant_id = wepy.getStorageSync('merchant_id')
-      let default_branch_id = await this.getbranchinfo(merchant_id,user_id)
-      console.log(default_branch_id)
       this.userInfo = wepy.getStorageSync('user_info')
       if (user_id){
-        await this.getusermainpage(default_branch_id,user_id)
+        await this.getusermainpage('',user_id)
       }
-      await this.getDateList()
     }
 
 

@@ -275,14 +275,12 @@
     <alert :is_active.sync="is_active" :title.sync="alert_title" :msg="msg" :confirmText.sync="confirmText"></alert>
     <pay :pay_active.sync="pay_active"></pay>
     <view class="brightMask">
-        //pre
         <view class="pre" @tap="pre" wx:if="{{ orderIndex > 0 }}">
             <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg" >左</image>
         </view>
         <view class="pre" wx:else>
             <image style="width: 70rpx" src="../images/order/LeftTriDisable.svg" >左</image>
         </view>
-        //next
         <view class="next" wx:if="{{ (orderIndex+1) >= orderCount }}">
             <image style="width: 70rpx" src="../images/order/rightTriDisable.svg" >右</image>
         </view>

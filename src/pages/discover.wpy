@@ -92,7 +92,7 @@
         <!--跳转按钮-->
         <view class="btn_bg">
             <button @tap="display" class="btn display">案例展示</button>
-            <button class="btn about">关于我们</button>
+            <button @tap="about" class="btn about">关于我们</button>
         </view>
         <!--公告-->
         <view class="notice">
@@ -140,6 +140,11 @@
       display () {
         wepy.navigateTo({
           url: "/pages/display"
+        })
+      },
+      about () {
+        wepy.navigateTo({
+          url: "/pages/about"
         })
       }
     }

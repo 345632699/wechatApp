@@ -304,7 +304,6 @@
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '订单预约',
-      "disableScroll": true
     }
     components = {
       tips: Tips,
@@ -398,10 +397,10 @@
         const res = await api.getuserinfo({
           query: {
             user_id: wepy.getStorageSync('userid'),
-
           },
           method: 'POST'
         });
+
 
         this.pay_active = 1
       },
@@ -459,6 +458,7 @@
         method: 'POST'
       });
       this.carInfo.carNumList = res.data.data[0].car_numbers
+      this.phone = res.data.data[0].phone_number
       this.$apply()
     }
   }

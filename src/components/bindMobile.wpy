@@ -193,7 +193,7 @@
           method: 'POST'
         });
 
-        if (res.data.state){
+        if (res.data.status){
           const res = await api.binduserinfo({
             query: {
               userId:wx.getStorageSync('userid'),
@@ -215,11 +215,10 @@
           },
           method: 'POST'
         });
-        if (res.data.state){
+        if (res.data.status){
           tip.toast("發送成功")
         }
       }
-
 
     }
 

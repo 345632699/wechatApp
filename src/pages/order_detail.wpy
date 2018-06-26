@@ -363,7 +363,6 @@
       async next (e) {
         this.orderIndex = this.orderIndex + 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
-        console.log(order_id)
         await this.getorderinfo(order_id)
         this.$apply()
       },

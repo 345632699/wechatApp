@@ -97,8 +97,8 @@
     <!--下方 flex-->
     <view class="page__bd">
       <view class="weui-cell middle-flex">
-        <picker @change="bindBranchChange" value="{{ branchIndex }}" range="{{ branchList }}">
-          <view style="width: 100%;text-align: center">{{ defaultBranch.name }}</view>
+        <picker style="width: 100%;" @change="bindBranchChange" value="{{ branchIndex }}" range="{{ branchList }}">
+          <view style="text-align: center;margin: auto;">店鋪：{{ defaultBranch.name }}</view>
         </picker>
       </view>
       <!--flex-->
@@ -123,10 +123,10 @@
 
     <!--按钮-->
     <view class="mybtn">
-      <navigator hover-class="none" open-type="navigate" wx:if="{{ account.order_id_list <= 0 }}">
+      <view @tap="orderNow" hover-class="none" open-type="navigate" wx:if="{{ account.order_id_list <= 0 }}">
         <view class="text-pos">立即</view>
         <view class="text-pos">预约</view>
-      </navigator>
+      </view>
       <navigator hover-class="none" open-type="navigate"  wx:else="{{ account.order_id_list > 0 }}" url="/pages/order_detail?order_id=1">
         <view class="text-pos">查看</view>
         <view class="text-pos">预约</view>
@@ -213,6 +213,22 @@
         let user_id = wx.getStorageSync("userid")
         await this.getusermainpage(branch_id,user_id)
       },
+
+      async orderNow() {
+        const res = await api.getrecentavailabledatetime({
+          query: {
+            branch_id: this.defaultBranch.id,
+            user_type: wepy.getStorageSync('user_type'),
+          },
+          method: 'POST'
+        });
+        let dateInfo = res.data.data[0]
+
+        wepy.navigateTo({
+          url: "/pages/appointment?selectDate="+dateInfo.date+"&start_time="+ dateInfo.start_time +"&end_time="+dateInfo.end_time
+        })
+      },
+
       callbackStart(count){
         console.log(count)
       }
@@ -236,7 +252,7 @@
     async getTimeList(rootCateCode) {
       const json = await api.getavailabletime({
         query: {
-          branch_id: "1",
+          branch_id: this.defaultBranch.id,
           user_type: wepy.getStorageSync('user_type'),
           date: rootCateCode
         },
@@ -263,6 +279,7 @@
       this.dateList = res.data.data[0].available_date
       //设置当前选中日期
       this.dateList[0].active = true
+      this.currentDate = this.dateList[0].date
       //设置用户信息
       this.account.user_type = res.data.data[0].user_type
       this.account.balance = res.data.data[0].balance

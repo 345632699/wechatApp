@@ -1,259 +1,133 @@
 <style lang="less">
-    .userinfo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    page{
+        background: #000000;
+        font-size: 32rpx;
+        color: #FFFFFF;
+        .weui-article{
+            padding-left: 32rpx;
+            padding-right: 32rpx;
+            padding-top: 0;
+            .weui-article__h1{
+                font-size: 48rpx;
+            }
+            .weui-article__p{
+                text-align: center;
+                width: 100%;
+                text-indent: 64rpx;
+            }
+        }
+        .weui-cell{
+            background: #000000;
+            color: #FFFFFF;
+            padding-left: 0;
+            &:before {
+                display: none;
+            }
+        }
+        .phone{
+            position: relative;
+            float: right;
+            top:-64rpx;
+        }
 
-    .userinfo-avatar {
-        width: 80rpx;
-        height: 80rpx;
-        border-radius: 50%;
     }
-
-    .userinfo-nickname {
-        color: #aaa;
+    image{
+        margin: 4px 0;
     }
 </style>
 <template>
-    <view class="container">
-        <view class="userinfo" @tap="handleViewTap">
-            <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-            <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+    <view class="page" style="background: #000000">
+        <view ></view>
+        <view class="page__hd" style="padding-bottom: 0">
+            <view class="weui-article__p" style="text-align: center;margin-bottom: 0">
+                <image class="weui-article__img" src="../images/discover/logo.png" style="width: 292rpx;height: 260rpx" />
+            </view>
         </view>
-
-        <panel>
-            <view class="title" slot="title">测试数据绑定</view>
-
-            <text class="info">{{normalTitle}}</text>
-            <text class="info">{{setTimeoutTitle}}</text>
-            <text class="info">{{mixin}}</text>
-            <text class="info">{{mynum}}</text>
-            <text class="info">{{now}}</text>
-            <text class="info">{{num}}</text>
-            <text class="info">{{asyncNum}}</text>
-            <text class="info">{{sumNum}}</text>
-            <button @tap="plus('a')" size="mini">  +  </button>
-        </panel>
-
-        <panel>
-            <view class="title" slot="title">其它测试</view>
-            <button @tap="toast" size="mini">第三方组件</button>
-            <button @tap="communicate" size="mini">组件通信</button>
-            <button @tap="tap" size="mini">混合TAP事件</button>
-            <button open-type="getUserInfo">點擊授權</button>
-        </panel>
-
-        <panel>
-            <view class="title" slot="title">测试并发网络请求</view>
-            <view>返回结果: <text>{{netrst}}</text></view>
-            <button @tap="request" size="mini"> 点我发起10个请求 </button>
-        </panel>
-
-        <panel>
-            <view class="title" slot="title">测试组件</view>
-
-            <text class="testcounter">计数组件1: </text>
-            <view class="counterview">
-                <counter1 @index-emit.user="counterEmit" />
+        <view class="page__bd" style="padding-top: 0;">
+            <view class="weui-article" style="padding-top: 0">
+                <view class="weui-article__h1" style="font-size: 48rpx">介绍</view>
+                <view class="weui-article__section">
+                    <view class="weui-article__section">
+                        <view class="weui-article__p">
+                            C&Y·1993专业汽车洗车中心是一家专注于专业的技术，高效的服务的汽车洗车中心。专心致志，全心全意地服务大众，实现100%的客户满意度是我们的宗旨。C&Y·1993专业汽车洗车中心以顾客为本，竭尽全力打造深圳信誉店。
+                        </view>
+                        <view class="weui-article__p">
+                            “青春如初春，如朝日，如百卉之萌动。”我们是一群有梦想的年轻人，我们拥有活力、拥有激情，我们敢于挑战，善于创新。在这群拥有梦想的年轻人日以继夜辛勤劳作的背景之下，一家专注为汽车精洗、内饰清洁，并配有专业机洗车的汽车洗车中心——C&Y·1993，于2016年12月踏上启程之路，正式运营！迄今为止，我们也经历了一个多年头，时间并没有消磨我们的激情，而是让我们更加专业细心。
+                        </view>
+                        <view class="weui-article__p">
+                            C&Y·1993——让您的爱车灰尘仆仆而来，白白净净而归
+                        </view>
+                    </view>
+                    <view class="weui-article__h1" style="font-size: 48rpx;margin-bottom: 0">地址信息</view>
+                    <view class="weui-article__section">
+                        <view class="weui-article__h3" style="margin-bottom: 0">梅林总店</view>
+                        <view class="weui-cell weui-cell_access">
+                            <view class="weui-cell__bd">
+                                <view style="vertical-align: middle">中国广东省深圳市福田区梅林街道梅秀路1-1号华强云产业园单身宿舍3栋111</view>
+                            </view>
+                            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                        </view>
+                        <view class="weui-article__h3">电话</view>
+                        <view class="weui-article__h3" data-phone="0755-28574489" @tap="makeCall">
+                            <view>
+                                0755-28574489
+                            </view>
+                            <image class="phone" src="../images/discover/phone.png" style="height: 56rpx;width: 56rpx"></image>
+                        </view>
+                        <view class="weui-article__p">
+                        </view>
+                    </view>
+                </view>
             </view>
-
-            <text class="testcounter">计数组件2: </text>
-
-            <view class="counterview">
-                <counter2 :num.sync="mynum"></counter2>
-            </view>
-        </panel>
-
-        <panel>
-            <view class="title" slot="title">测试组件Repeat</view>
-            <repeat for="" index="index" item="item" key="key">
-                <group :grouplist="item" :indexa="index"></group>
-            </repeat>
-        </panel>
-
-        <panel>
-            <view class="title" slot="title">测试列表</view>
-            <list></list>
-        </panel>
-
-        <toast />
+        </view>
     </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import { connect } from 'wepy-redux'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import List from '../components/list' // aliasFields example
-  import moduleA from 'module-a' // aliasFields ignore module example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
-  import testMixin from '../mixins/test'
-
-  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
-
-  @connect({
-    num (state) {
-      return state.counter.num
-    },
-    asyncNum (state) {
-      return state.counter.asyncNum
-    },
-    sumNum (state) {
-      return state.counter.num + state.counter.asyncNum
-    }
-  })
-
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE
+  } from '../utils/constant';
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '关于我们',
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+
     }
 
-    mixins = [testMixin]
-
     data = {
-      mynum: 20,
-      userInfo: {
-        nickName: '加载中...'
-      },
-      normalTitle: '原始标题',
-      setTimeoutTitle: '标题三秒后会被修改',
-      count: 0,
-      netrst: '',
-      groupList: [
-        {
-          id: 1,
-          name: '点击改变',
-          list: [
-            {
-              childid: '1.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: '点击改变',
-          list: [
-            {
-              childid: '2.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: '点击改变',
-          list: [
-            {
-              childid: '3.1',
-              childname: '子项，点我改变'
-            }
-          ]
-        }
-      ]
     }
 
     computed = {
-      now () {
-        return +new Date()
-      }
     }
 
     methods = {
-      plus () {
-        this.mynum++
-      },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+      makeCall (e) {
+        let phone = e.currentTarget.dataset.phone
+        console.log(e.currentTarget)
+        wx.makePhoneCall({
+          phoneNumber: phone, //此号码并非真实电话号码，仅用于测试
+          success:function(){
+            console.log("拨打电话成功！")
+          },
+          fail:function(){
+            console.log("拨打电话失败！")
+          }
         })
-
-        promise.then((d) => {
-          console.log('toast done')
-        })
-      },
-      tap () {
-        console.log('do noting from ' + this.$name)
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
-        let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
-            }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
     }
 
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
 
     onLoad() {
-      let self = this
-      self.userInfo = wepy.getStorageSync('user_info')
-      this.$parent.doPrint()
-      this.$parent.getUserInfo(
-          function (userInfo) {
-            if (userInfo) {
-              self.userInfo = userInfo
-            }
-            self.normalTitle = '标题已被修改'
 
-            self.setTimeoutTitle = '标题三秒后会被修改'
-            setTimeout(() => {
-              self.setTimeoutTitle = '到三秒了'
-              self.$apply()
-            }, 3000)
-
-            self.$apply()
-          }
-      )
     }
+
+    onShow() {
+    }
+
+
   }
 </script>

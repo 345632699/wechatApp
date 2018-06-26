@@ -91,7 +91,7 @@
     <view class="page">
         <!--跳转按钮-->
         <view class="btn_bg">
-            <button class="btn display">案例展示</button>
+            <button @tap="display" class="btn display">案例展示</button>
             <button class="btn about">关于我们</button>
         </view>
         <!--公告-->
@@ -103,7 +103,7 @@
                     <view class="time">{{ item.publish_time }}</view>
                 </view>
                 <view class="weui-cell__hd">
-                    <image src="../images/half.png" />
+                    <image src="{{ item.image }}" />
                 </view>
             </view>
         </view>
@@ -120,7 +120,8 @@
   import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '发现'
+      navigationBarTitleText: '发现',
+      "disableScroll": true
     }
     components = {
 
@@ -135,6 +136,11 @@
 
     methods = {
       changeCate (e) {
+      },
+      display () {
+        wepy.navigateTo({
+          url: "/pages/display"
+        })
       }
     }
 

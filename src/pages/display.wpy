@@ -5,20 +5,16 @@
             padding-bottom: 0;
             padding-top: 0;
             .img1{
-                border:1px solid red;
                 width:704rpx;
                 height:344rpx;
-                padding:8rpx;
             }
             .img2{
-                border:1px solid red;
                 display: inline-block;
                 width:230rpx;
                 height:230rpx;
                 margin-right:8rpx;
             }
             .img3{
-                border:1px solid red;
                 width:348rpx;
                 height:348rpx;
                 display: inline-block;
@@ -34,12 +30,12 @@
     <view class="page">
        <view class="container">
            <view class="imgs" wx:for="{{ imgList }}" wx:key="item">
-               <image class="img1" src="{{ item[0].image_url }}" />
-               <image class="img2" src="{{ item[1].image_url }}" />
-               <image class="img2" src="{{ item[2].image_url }}" />
-               <image class="img2 last" src="{{ item[3].image_url }}" />
-               <image class="img3" src="{{ item[4].image_url }}" />
-               <image class="img3 last" src="{{ item[5].image_url }}" />
+               <image @tap="previewImage" data-src="{{ item[0].image_url }}" class="img1" src="{{ item[0].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[1].image_url }}" class="img2" src="{{ item[1].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[2].image_url }}" class="img2" src="{{ item[2].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[3].image_url }}" class="img2 last" src="{{ item[3].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[4].image_url }}" class="img3" src="{{ item[4].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[5].image_url }}" class="img3 last" src="{{ item[5].image_url }}" mode="aspectFill" />
            </view>
        </view>
     </view>
@@ -70,7 +66,14 @@
 
     methods = {
       changeCate (e) {
-      }
+      },
+      previewImage (e) {
+        var current = e.target.dataset.src;
+        wepy.previewImage({
+          current: current, // 当前显示图片的http链接
+          urls: [current] // 需要预览的图片http链接列表
+        })
+      },
     }
 
     async getshowimages () {

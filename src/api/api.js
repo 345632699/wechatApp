@@ -32,6 +32,7 @@ const getorderinfo = (params) => wxRequest(params, apiMall + "/getorderinfo/");
 const getbranchinfo = (params) => wxRequest(params, apiMall + "/getbranchinfo/");
 const getnotices = (params) => wxRequest(params, apiMall + "/getnotices/");
 const getshowimages = (params) => wxRequest(params, apiMall + "/getshowimages/");
+const getrecentavailabledatetime = (params) => wxRequest(params, apiMall + "/getrecentavailabledatetime/");
 const PostDepositPayment = (params) => wxRequest(params, apiMall + "/PostDepositPayment/");
 const decrypt = (params) => wxRequest(params, apiMall + "/api/v1/sample/decrypt");
 
@@ -53,6 +54,7 @@ module.exports = {
   getorderinfo,
   getnotices,
   getshowimages,
+  getrecentavailabledatetime,
   PostDepositPayment,
   decrypt,
 }

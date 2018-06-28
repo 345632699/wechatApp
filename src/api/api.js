@@ -3,7 +3,7 @@ import {
 } from '../utils/wxRequest';
 
 let env = "-test" //-dev 或者 -test
-const apiMall = 'https://dj.mqphp.com/cy1993_app'
+const apiMall = 'https://wx.cy1993.com/cy1993_app'
 // const apiMall = 'http://localhost:8080/'
 
 /**

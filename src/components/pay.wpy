@@ -64,11 +64,11 @@
                     请选择支付方式
                 </view>
             </view>
-            <view @tap="pay" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+            <view @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">微信支付</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </view>
-            <view @tap="pay" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+            <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">餘額支付</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </view>
@@ -114,8 +114,11 @@
       hide () {
         this.pay_active = 0
       },
-      pay (e) {
-        tip.toast("支付成功")
+      payByBalance (e) {
+        this.$emit('payByBalance',1,2)
+      },
+      payByWechat (e) {
+        this.$emit('payByBalance',1,2)
       }
 
     }

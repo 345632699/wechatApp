@@ -188,7 +188,7 @@
                         </picker>
                     </view>
                     <view style="width: 28%">
-                        <input class="weui-input" maxlength="5" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
+                        <input class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
                     <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList.length > 0}}">
                         <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
@@ -318,6 +318,7 @@
       selectDate: '',
       start_time: '',
       end_time: '',
+      branch_id:'',
 
       icon: "../images/icon_home.png",
       carInfo:{
@@ -359,12 +360,17 @@
       bindProvinceChange (e) {
         this.multiIndex =  e.detail.value
         this.carInfo.currentProvince = this.province[0][this.multiIndex[0]]+this.province[1][this.multiIndex[1]]
+        this.carInfo.currentCarNum = this.carInfo.currentProvince + this.carInfo.carNum
+        wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
+        wepy.setStorageSync('carNum',this.carInfo.carNum)
+        this.$apply()
       },
       bindCarChange (e) {
         this.carInfo.carNumIndex =  e.detail.value
         this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
         this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
         this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+        this.$apply()
       },
       previewImage (e) {
         var current = e.target.dataset.src;
@@ -389,20 +395,34 @@
         this.$apply()
       },
 
+      setCarNUm (e) {
+        this.carInfo.currentCarNum = this.carInfo.currentProvince + e.detail.value
+        this.carInfo.carNum = e.detail.value
+        wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
+        wepy.setStorageSync('carNum',this.carInfo.carNum)
+        this.$apply()
+      },
+
       async cancelOrder () {
         this.is_active = 1
       },
 
       async payPre() {
-        const res = await api.getuserinfo({
+        this.pay_active = 1
+        const res = await api.Order({
           query: {
-            user_id: wepy.getStorageSync('userid'),
+            userId: wepy.getStorageSync('userid'),
+            appId: "wx3a8aa895f494599a",
+            branchId: this.branch_id,
+            productId: this.product.id,
+            itemId: "",
+            bookingSecomrviceTime: this.selectDate + " " + this.start_time,
+            carNumber: this.carInfo.currentCarNum,
           },
           method: 'POST'
         });
 
 
-        this.pay_active = 1
       },
 
       bindMobile() {
@@ -412,11 +432,27 @@
     }
 
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
-    events = {
+     events = {
       'comfirmAction': (comfirm) => {
         if (comfirm == 1){
           tip.toast("取消成功")
         }
+      },
+      'payByBalance' : (e,d) => {
+        console.log(this.selectDate)
+      },
+      'payByWechat' : async (e) => {
+        const res = await api.Order({
+          query: {
+            userId: wepy.getStorageSync('userid'),
+            appId: "wx3a8aa895f494599a",
+            outTradeNo: this.outTradeNo,
+            feeType: "CNY",
+            goodsTag: "",
+            limitPay: "",
+          },
+          method: 'POST'
+        });
       }
     };
 
@@ -435,13 +471,16 @@
         this.selectDate = option.selectDate
         this.start_time = option.start_time
         this.end_time = option.end_time
+        this.branch_id = option.branch_id
         wepy.setStorageSync('selectDate',option.selectDate)
         wepy.setStorageSync('start_time',option.start_time)
         wepy.setStorageSync('end_time',option.end_time)
+        wepy.setStorageSync('branch_id',option.branch_id)
       }else{
         this.selectDate = wepy.getStorageSync('selectDate')
         this.start_time = wepy.getStorageSync('start_time')
         this.end_time = wepy.getStorageSync('end_time')
+        this.branch_id = wepy.getStorageSync('branch_id')
         this.$apply()
       }
 
@@ -450,6 +489,12 @@
     }
 
     async onShow () {
+      if (wepy.getStorageSync('carNum') || wepy.getStorageSync('currentProvince') ){
+        this.carInfo.carNum = wepy.getStorageSync('carNum')
+        this.carInfo.currentProvince = wepy.getStorageSync('currentProvince')
+        this.carInfo.currentCarNum = this.carInfo.currentProvince + this.carInfo.carNum
+        this.$apply()
+      }
       const res = await api.getuserinfo({
         query: {
           user_id: wepy.getStorageSync('userid'),

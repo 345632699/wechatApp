@@ -94,6 +94,8 @@
         </view>
       </view>
     </view>
+    <!--<button open-type="getUserInfo">用戶授權</button>-->
+
     <!--下方 flex-->
     <view class="page__bd">
       <view class="weui-cell middle-flex">
@@ -113,7 +115,7 @@
         </view>
         <view class="weui-flex__item">
           <scroll-view class="placeholder second" scroll-y scroll-with-animation="true" style="height:{{windowHeight-140}}px">
-            <navigator hover-class="none" open-type="navigate" class="name {{item.active? 'active':''}}" wx:for="{{timeList}}" wx:key="item" url="/pages/appointment?selectDate={{ currentDate }}&start_time={{item.start_time}}&end_time={{item.end_time}}">
+            <navigator hover-class="none" open-type="navigate" class="name {{item.active? 'active':''}}" wx:for="{{timeList}}" wx:key="item" url="/pages/appointment?branch_id={{ defaultBranch.id }}&selectDate={{ currentDate }}&start_time={{item.start_time}}&end_time={{item.end_time}}">
               {{item.start_time}}~{{ item.end_time }}
             </navigator>
           </scroll-view>
@@ -135,7 +137,6 @@
   </view>
   <pay></pay>
   <!--<rate @change.user="callbackStart"></rate>-->
-  <!--<button open-type="getUserInfo">用戶授權</button>-->
 
 </template>
 
@@ -208,6 +209,7 @@
       },
       async bindBranchChange (e) {
         let branch_id = this.branchInfo[e.detail.value].id
+        this.defaultBranch.id = branch_id
         this.defaultBranch.name = this.branchInfo[e.detail.value].name
         this.$apply()
         let user_id = wx.getStorageSync("userid")

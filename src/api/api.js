@@ -3,7 +3,7 @@ import {
 } from '../utils/wxRequest';
 
 let env = "-test" //-dev 或者 -test
-const apiMall = 'https://wx.cy1993.com/cy1993_app'
+const apiMall = 'https://wx.cy1993.cn/cy1993_app'
 // const apiMall = 'http://localhost:8080/'
 
 /**
@@ -33,6 +33,8 @@ const getbranchinfo = (params) => wxRequest(params, apiMall + "/getbranchinfo/")
 const getnotices = (params) => wxRequest(params, apiMall + "/getnotices/");
 const getshowimages = (params) => wxRequest(params, apiMall + "/getshowimages/");
 const getrecentavailabledatetime = (params) => wxRequest(params, apiMall + "/getrecentavailabledatetime/");
+const WXDepositPayment = (params) => wxRequest(params, apiMall + "/WXDepositPayment/");
+const Order = (params) => wxRequest(params, apiMall + "/Order/");
 const PostDepositPayment = (params) => wxRequest(params, apiMall + "/PostDepositPayment/");
 const decrypt = (params) => wxRequest(params, apiMall + "/api/v1/sample/decrypt");
 
@@ -55,6 +57,8 @@ module.exports = {
   getnotices,
   getshowimages,
   getrecentavailabledatetime,
+  WXDepositPayment,
+  Order,
   PostDepositPayment,
   decrypt,
 }

@@ -72,7 +72,7 @@
             <view class="wepy-api-dialog__bd">{{ msg }}</view>
             <view class="wepy-api-dialog__ft">
                 <view class="wepy-api-dialog__btn wepy-api-dialog__btn_default" @tap="comfirmCancel">{{ confirmText }}</view>
-                <view class="wepy-api-dialog__btn wepy-api-dialog__btn_primary" @tap="closeTap">關閉</view>
+                <view class="wepy-api-dialog__btn wepy-api-dialog__btn_primary" @tap="closeTap">关闭</view>
             </view>
         </view>
     </view>

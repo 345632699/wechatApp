@@ -127,7 +127,7 @@ export default class extends wepy.app {
       if (!wepy.getStorageSync('userid')){
         const json = await api.getOpenId({
           query: {
-            appid: "wxf1017d0c13e86f43",
+            appid: "wx3a8aa895f494599a",
             code: code,
             rawData: resUser.rawData,
             signature: resUser.signature

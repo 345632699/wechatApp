@@ -273,7 +273,7 @@
                 </view>
             </view>
             <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="payPre">支付定金</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金{{ pay_success }}</button>
                 <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
                 <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
             </view>
@@ -318,7 +318,7 @@
       selectDate: '',
       start_time: '',
       end_time: '',
-      branch_id:'',
+      branch_id:0,
 
       icon: "../images/icon_home.png",
       carInfo:{
@@ -351,6 +351,8 @@
       step:2,
       title: "选择套餐",
 
+      order_id:"",
+      pay_success:0,
 
       phone: wx.getStorageSync('phone_number'),
     }
@@ -370,6 +372,8 @@
         this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
         this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
         this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+        wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
+        wepy.setStorageSync('carNum',this.carInfo.carNum)
         this.$apply()
       },
       previewImage (e) {
@@ -382,10 +386,10 @@
       //導航
       lead () {
         wepy.openLocation({
-          latitude: 22.85758,
-          longitude: 108.31476,
-          name: "南宁市西乡塘区秀厢大道东祥云商务酒店",
-          address:"南宁市西乡塘区秀厢大道东祥云商务酒店",
+          latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
+          longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
+          name: this.defaultBranch.name,
+          address:this.defaultBranch.location,
           scale: 28
         })
       },
@@ -411,16 +415,18 @@
         this.pay_active = 1
         const res = await api.Order({
           query: {
-            userId: wepy.getStorageSync('userid'),
+            userId: parseInt(wepy.getStorageSync('userid')),
             appId: "wx3a8aa895f494599a",
-            branchId: this.branch_id,
-            productId: this.product.id,
+            branchId: parseInt(this.branch_id),
+            productId: parseInt(this.product.id),
             itemId: "",
-            bookingSecomrviceTime: this.selectDate + " " + this.start_time,
+            bookingServiceTime: this.selectDate + " " + this.start_time + ":00",
             carNumber: this.carInfo.currentCarNum,
           },
           method: 'POST'
         });
+        this.order_id = res.data.data[0].orderId
+        this.$apply()
 
 
       },
@@ -442,17 +448,20 @@
         console.log(this.selectDate)
       },
       'payByWechat' : async (e) => {
-        const res = await api.Order({
+        const res = await api.wxdepositpayment({
           query: {
             userId: wepy.getStorageSync('userid'),
             appId: "wx3a8aa895f494599a",
-            outTradeNo: this.outTradeNo,
+            orderId: this.order_id,
             feeType: "CNY",
             goodsTag: "",
             limitPay: "",
           },
           method: 'POST'
         });
+        let wxpayData = res.data.data[0]
+        let that = this
+        await this.wxpay(wxpayData,that)
       }
     };
 
@@ -488,6 +497,31 @@
 
     }
 
+    async wxpay(param,that) {
+      wx.requestPayment({
+        timeStamp: param.timeStamp,
+        nonceStr: param.nonceStr,
+        package: param.package,
+        signType: param.signType,
+        paySign: param.paySign,
+        success: function (res) {
+          // success
+          console.log(param)
+          that.pay_success = 1
+          that.$apply()
+
+        },
+        fail: function (res) {
+          // fail
+          console.log("fail");
+        },
+        complete: function () {
+          // complete
+          console.log("done");
+        }
+      })
+    }
+
     async onShow () {
       if (wepy.getStorageSync('carNum') || wepy.getStorageSync('currentProvince') ){
         this.carInfo.carNum = wepy.getStorageSync('carNum')
@@ -504,6 +538,7 @@
       });
       this.carInfo.carNumList = res.data.data[0].car_numbers
       this.phone = res.data.data[0].phone_number
+      this.defaultBranch = wepy.getStorageSync('defaultBranch')
       this.$apply()
     }
   }

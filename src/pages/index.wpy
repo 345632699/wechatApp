@@ -94,7 +94,7 @@
         </view>
       </view>
     </view>
-    <!--<button open-type="getUserInfo">用戶授權</button>-->
+    <button open-type="getUserInfo">用戶授權</button>
 
     <!--下方 flex-->
     <view class="page__bd">
@@ -211,6 +211,7 @@
         let branch_id = this.branchInfo[e.detail.value].id
         this.defaultBranch.id = branch_id
         this.defaultBranch.name = this.branchInfo[e.detail.value].name
+        wepy.setStorageSync('defaultBranch',this.branchInfo[e.detail.value])
         this.$apply()
         let user_id = wx.getStorageSync("userid")
         await this.getusermainpage(branch_id,user_id)
@@ -298,6 +299,7 @@
       }
 
       this.defaultBranch = res.data.data[0].default_branch
+      wepy.setStorageSync('defaultBranch',this.defaultBranch)
 
       this.timeList = res.data.data[0].today_available_time
       await this.getDateList()

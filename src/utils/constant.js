@@ -20,3 +20,5 @@ export const SYSTEM_INFO = "systemInfo";
 export const ADDRESS_ID = "addressId";
 
 export const SEL_CLASS_CODE = "selClassCode";
+
+export const APPID = "wx3a8aa895f494599a";

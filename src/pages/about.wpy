@@ -60,17 +60,17 @@
                     </view>
                     <view class="weui-article__h1" style="font-size: 48rpx;margin-bottom: 0">地址信息</view>
                     <view class="weui-article__section">
-                        <view class="weui-article__h3" style="margin-bottom: 0">梅林总店</view>
+                        <view class="weui-article__h3" style="margin-bottom: 0">{{ defaultBranch.name }}</view>
                         <view class="weui-cell weui-cell_access">
                             <view class="weui-cell__bd">
-                                <view style="vertical-align: middle">中国广东省深圳市福田区梅林街道梅秀路1-1号华强云产业园单身宿舍3栋111</view>
+                                <view style="vertical-align: middle">{{ defaultBranch.location }}</view>
                             </view>
                             <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                         </view>
                         <view class="weui-article__h3">电话</view>
-                        <view class="weui-article__h3" data-phone="0755-28574489" @tap="makeCall">
+                        <view class="weui-article__h3" data-phone="{{ defaultBranch.phone_number }}" @tap="makeCall">
                             <view>
-                                0755-28574489
+                                {{ defaultBranch.phone_number }}
                             </view>
                             <image class="phone" src="../images/discover/phone.png" style="height: 56rpx;width: 56rpx"></image>
                         </view>
@@ -99,6 +99,7 @@
     }
 
     data = {
+      defaultBranch:{},
     }
 
     computed = {
@@ -132,6 +133,8 @@
     }
 
     onShow() {
+      this.defaultBranch = wepy.getStorageSync('defaultBranch')
+      this.$apply()
     }
 
 

@@ -443,7 +443,18 @@
      events = {
       'comfirmAction': (comfirm) => {
         if (comfirm == 1){
-          tip.toast("取消成功")
+          const res = await api.cancelorder({
+            query: {
+              orderId: parseInt(this.order_id),
+              appid:APPID,
+            },
+            method: 'POST'
+          });
+          if (res.data.status){
+            this.cancel = 1
+            this.$apply()
+            tip.toast("取消成功")
+          }
         }
       },
       'payByBalance' : (e,d) => {

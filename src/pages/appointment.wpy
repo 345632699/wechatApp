@@ -291,7 +291,8 @@
   import util from '../utils/util'
   import {
     SYSTEM_INFO,
-    SEL_CLASS_CODE
+    SEL_CLASS_CODE,
+    APPID
   } from '../utils/constant';
   import Tips from '../components/tips'
   import Alert from '../components/myAlert'
@@ -443,22 +444,23 @@
 
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
      events = {
-      'comfirmAction':async (comfirm) => {
-        if (comfirm == 1){
-          const res = await api.cancelorder({
-            query: {
-              orderId: parseInt(this.order_id),
-              appid:APPID,
-            },
-            method: 'POST'
-          });
-          if (res.data.status){
-            this.cancel = 1
-            this.$apply()
-            tip.toast("取消成功")
-          }
-        }
-      },
+       'comfirmAction': async  (comfirm) => {
+         if (comfirm == 1){
+           const res = await api.cancelorder({
+             query: {
+               orderId: parseInt(this.order_id),
+               appid:APPID,
+             },
+             method: 'POST'
+           });
+           if (res.data.status){
+             this.cancel = 1
+             this.$apply()
+             wepy.navigateBack()
+             tip.toast("取消成功")
+           }
+         }
+       },
       'payByBalance' : (e,d) => {
         console.log(this.selectDate)
       },

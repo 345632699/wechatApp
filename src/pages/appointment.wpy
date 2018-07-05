@@ -348,6 +348,8 @@
         confirmText: '確認取消',
       },
 
+      cancel:0,
+
       step:2,
       title: "选择套餐",
 
@@ -441,7 +443,7 @@
 
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
      events = {
-      'comfirmAction': (comfirm) => {
+      'comfirmAction':async (comfirm) => {
         if (comfirm == 1){
           const res = await api.cancelorder({
             query: {

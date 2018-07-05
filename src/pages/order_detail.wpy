@@ -339,6 +339,8 @@
         comfirm: 0,
         confirmText: '確認取消',
       },
+      //是否已经取消
+      cancel: 0 ,
 
       orderDetail: {},
       orderIndex: 0,
@@ -435,6 +437,7 @@
           if (res.data.status){
             this.cancel = 1
             this.$apply()
+            wepy.navigateBack()
             tip.toast("取消成功")
           }
         }

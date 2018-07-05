@@ -355,6 +355,8 @@
       pay_success:0,
 
       phone: wx.getStorageSync('phone_number'),
+
+      defaultBranch: {},
     }
 
 
@@ -385,6 +387,8 @@
       },
       //導航
       lead () {
+        console.log(this.defaultBranch.longitude_latitude.lat)
+        console.log(this.defaultBranch.longitude_latitude.lng)
         wepy.openLocation({
           latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
           longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
@@ -539,6 +543,9 @@
       this.carInfo.carNumList = res.data.data[0].car_numbers
       this.phone = res.data.data[0].phone_number
       this.defaultBranch = wepy.getStorageSync('defaultBranch')
+      let a = wepy.getStorageSync('defaultBranch').longitude_latitude
+
+      console.log(typeof (wepy.getStorageSync('defaultBranch')));
       this.$apply()
     }
   }

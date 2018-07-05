@@ -279,7 +279,7 @@
             <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg" >左</image>
         </view>
         <view class="pre" wx:else>
-            <image style="width: 70rpx" src="../images/order/LeftTriDisable.svg" >左</image>
+            <image style="width: 70rpx" src="../images/order/left_disable.svg" >左</image>
         </view>
         <view class="next" wx:if="{{ (orderIndex+1) >= orderCount }}">
             <image style="width: 70rpx" src="../images/order/rightTriDisable.svg" >右</image>

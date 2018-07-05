@@ -273,14 +273,14 @@
                 </view>
             </view>
             <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金{{ pay_success }}</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
             </view>
         </scroll-view>
     </view>
     <tips :step.sync="step" :title.sync="title"></tips>
-    <alert :is_active.sync="is_active" :title.sync="alertInfo.alert_title" :msg="alertInfo.msg" :confirmText.sync="alertInfo.confirmText"></alert>
+    <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
     <pay :pay_active.sync="pay_active"></pay>
     <mobile :bind_active.sync="bind_active" @change.user="changePhone"></mobile>
 
@@ -387,8 +387,6 @@
       },
       //導航
       lead () {
-        console.log(this.defaultBranch.longitude_latitude.lat)
-        console.log(this.defaultBranch.longitude_latitude.lng)
         wepy.openLocation({
           latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
           longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
@@ -543,9 +541,6 @@
       this.carInfo.carNumList = res.data.data[0].car_numbers
       this.phone = res.data.data[0].phone_number
       this.defaultBranch = wepy.getStorageSync('defaultBranch')
-      let a = wepy.getStorageSync('defaultBranch').longitude_latitude
-
-      console.log(typeof (wepy.getStorageSync('defaultBranch')));
       this.$apply()
     }
   }

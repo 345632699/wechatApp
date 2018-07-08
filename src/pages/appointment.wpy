@@ -432,8 +432,6 @@
         });
         this.order_id = res.data.data[0].orderId
         this.$apply()
-
-
       },
 
       bindMobile() {
@@ -461,8 +459,20 @@
            }
          }
        },
-      'payByBalance' : (e,d) => {
-        console.log(this.selectDate)
+      'payByBalance' : async (e) => {
+        const res = await api.balancedepositpayment({
+          query: {
+            orderId: this.order_id,
+          },
+          method: 'POST'
+        });
+        if(res.data.status){
+          this.pay_success = 1
+          this.$apply()
+          tip.success('支付成功')
+        }else {
+          tip.error(res.data.errmsg)
+        }
       },
       'payByWechat' : async (e) => {
         const res = await api.wxdepositpayment({

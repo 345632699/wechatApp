@@ -188,12 +188,12 @@
                     </view>
                     <view class="weui-cell__bd">手机号码</view>
                 </view>
-                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
+                <view class="weui-cell input-text">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
                     <view >{{ orderDetail.phone_number }}</view>
-                </navigator>
+                </view>
             </view>
 
             <view class="weui-cells weui-cells_after-title">
@@ -247,31 +247,37 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="../images/appointment/money.png" ></image>
                     </view>
-                    <view class="weui-cell__bd font14">定金 {{  "deposit" == orderDetail.pay_status ? "(已支付)" : ""}}</view>
-                    <view class="weui-cell__ft">￥50</view>
+                    <view class="weui-cell__bd font14">定金 {{  orderDetail.order_status >= 1  ? "(已支付)" : ""}}</view>
+                    <view class="weui-cell__ft">￥{{ orderDetail.product_deposit }}</view>
                 </view>
                 <view class="weui-cell money">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
                     <view class="weui-cell__bd font14">尾款</view>
-                    <view class="weui-cell__ft">￥50</view>
+                    <view class="weui-cell__ft">￥{{ orderDetail.product_price - orderDetail.product_deposit }}</view>
                 </view>
                 <view class="weui-cell money" style="padding-bottom: 32rpx">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
                     <view class="weui-cell__bd font14">总计</view>
-                    <view class="weui-cell__ft">￥50</view>
+                    <view class="weui-cell__ft">￥{{ orderDetail.product_price }}</view>
                 </view>
             </view>
-            <view wx:if="{{ orderDetail.order_status > 0 || cancel>0 }}" class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">订单已取消</button>
+            <view wx:if="{{ 5 == orderDetail.order_status || cancel>0 }}" class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
+                <button class="weui-btn mybtn" type="primary" plain="true">订单已取消</button>
+                <button class="weui-btn mybtn" type="primary" @tap="backToIndex" plain="true">返回</button>
+            </view>
+            <view wx:if="{{ orderDetail.order_status < 0 }}" class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
+                <button class="weui-btn mybtn" type="primary" plain="true">订单异常</button>
                 <button class="weui-btn mybtn" type="primary" @tap="backToIndex" plain="true">返回</button>
             </view>
             <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
+                <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
+                <button wx:if="{{ orderDetail.cannot_cancel <= 0 }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
+                <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">正在洗车</button>
+                <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
             </view>
         </scroll-view>
     </view>
@@ -292,6 +298,7 @@
             <image style="width: 70rpx" src="../images/order/rightTriNormal.svg" >右</image>
         </view>
     </view>
+    <pay :pay_active.sync="pay_active"></pay>
 </template>
 
 <script>
@@ -368,6 +375,7 @@
       backToIndex () {
         wepy.navigateBack()
       },
+
       async pre (e) {
         this.orderIndex = this.orderIndex - 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
@@ -404,10 +412,11 @@
       async cancelOrder () {
         this.is_active = 1
       },
-
-      payPre() {
+      //支付尾款
+      async wxTotalPayment () {
         this.pay_active = 1
-      }
+        this.$apply()
+      },
 
     }
 
@@ -421,10 +430,8 @@
       this.orderDetail = res.data.data[0]
       this.$apply()
     }
-
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
     events = {
-      // 1 确认取消  2  关闭弹窗
       'comfirmAction': async  (comfirm) => {
         if (comfirm == 1){
           const res = await api.cancelorder({
@@ -441,8 +448,63 @@
             tip.toast("取消成功")
           }
         }
+      },
+      'payByBalance' : async (e) => {
+        const res = await api.balancetotalpayment({
+          query: {
+            orderId: this.order_id,
+          },
+          method: 'POST'
+        });
+        if(res.data.status){
+          this.pay_success = 1
+          this.$apply()
+          tip.success('支付成功')
+        }else {
+          tip.error(res.data.errmsg)
+        }
+      },
+      'payByWechat' : async (e) => {
+        const res = await api.wxtotalpayment({
+          query: {
+            userId: wepy.getStorageSync('userid'),
+            appId: APPID,
+            orderId: this.order_id,
+            feeType: "CNY",
+            goodsTag: "",
+            limitPay: "",
+          },
+          method: 'POST'
+        });
+        let wxpayData = res.data.data[0]
+        let that = this
+        await this.wxpay(wxpayData,that)
       }
-    };
+    }
+
+    async wxpay(param,that) {
+      wx.requestPayment({
+        timeStamp: param.timeStamp,
+        nonceStr: param.nonceStr,
+        package: param.package,
+        signType: param.signType,
+        paySign: param.paySign,
+        success: function (res) {
+          // success
+          that.pay_success = 1
+          that.$apply()
+
+        },
+        fail: function (res) {
+          // fail
+          console.log("fail");
+        },
+        complete: function () {
+          // complete
+          console.log("done");
+        }
+      })
+    }
 
     onLoad(option) {
       this.pacakge_id = option.pacakge_id

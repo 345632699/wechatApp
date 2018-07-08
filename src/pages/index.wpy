@@ -135,7 +135,7 @@
 
 
 
-    <!--<button open-type="getUserInfo">用戶授權</button>-->
+    <button open-type="getUserInfo">用戶授權</button>
 
     <!--下方 flex-->
 

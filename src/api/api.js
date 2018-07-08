@@ -38,6 +38,12 @@ const Order = (params) => wxRequest(params, apiMall + "/order/");
 const cancelorder = (params) => wxRequest(params, apiMall + "/cancelorder/");
 const PostDepositPayment = (params) => wxRequest(params, apiMall + "/PostDepositPayment/");
 const decrypt = (params) => wxRequest(params, apiMall + "/api/v1/sample/decrypt");
+//余额支付
+const balancedepositpayment = (params) => wxRequest(params, apiMall + "/balancedepositpayment/");
+//余额支付尾款
+const balancetotalpayment = (params) => wxRequest(params, apiMall + "/balancetotalpayment/");
+//微信支付尾款
+const wxtotalpayment = (params) => wxRequest(params, apiMall + "/wxtotalpayment/");
 
 
 module.exports = {
@@ -61,6 +67,9 @@ module.exports = {
   wxdepositpayment,
   Order,
   cancelorder,
+  balancedepositpayment,
+  balancetotalpayment,
+  wxtotalpayment,
   PostDepositPayment,
   decrypt,
 }

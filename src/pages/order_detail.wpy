@@ -322,19 +322,6 @@
       rate: Rate,
     }
     data = {
-      province: ['粤A', '粤B', '粤C', '粤D'],
-      carNumbers: ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3'],
-      provinceIndex: 0,
-      carNumIndex: 0,
-      date: '2016-09-01',
-      time: '12:01',
-      icon: "../images/icon_home.png",
-      currentCarNum: "",
-      currentProvince: "粤B",
-      carNum: "", //輸入框内的字符串
-      pacakge_id: 0,
-      package_detail: "",
-      package_name:"请选择套餐",
       is_active: 0,
       pay_active: 0, //是否限制支付選項
 
@@ -358,22 +345,14 @@
       tipType: 2, //1 为下订单 2为查看订单
 
       //评价分数
-      evaluate: 5
+      evaluate: 5,
+
+      defaultBranch: {}
 
     }
 
 
     methods = {
-      bindProvinceChange (e) {
-        this.provinceIndex =  e.detail.value
-        this.currentProvince = this.province[this.provinceIndex]
-      },
-      bindCarChange (e) {
-        this.carNumIndex =  e.detail.value
-        this.currentCarNum = this.carNumbers[this.carNumIndex]
-        this.carNum = this.currentCarNum.slice(2,)
-        this.currentProvince = this.currentCarNum.slice(0,2)
-      },
       backToIndex () {
         wepy.navigateBack()
       },
@@ -405,10 +384,10 @@
       //導航
       lead () {
         wepy.openLocation({
-          latitude: 22.85758,
-          longitude: 108.31476,
-          name: "南宁市西乡塘区秀厢大道东祥云商务酒店",
-          address:"南宁市西乡塘区秀厢大道东祥云商务酒店",
+          latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
+          longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
+          name: this.defaultBranch.name,
+          address:this.defaultBranch.location,
           scale: 28
         })
       },
@@ -516,17 +495,15 @@
         signType: param.signType,
         paySign: param.paySign,
         success: function (res) {
-          // success
-          that.pay_success = 1
-          that.$apply()
-
+            that.pay_success = 1
+            that.orderDetail.order_status = 4
+            that.$apply()
+            tip.success('支付成功')
         },
         fail: function (res) {
-          // fail
-          console.log("fail");
+          tip.success('支付出错')
         },
         complete: function () {
-          // complete
           console.log("done");
         }
       })
@@ -536,6 +513,7 @@
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name
+      this.defaultBranch = wepy.getStorageSync('defaultBranch')
       let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
       this.orderCount = wepy.getStorageSync('order_id_list').length
       this.order_id = order_id

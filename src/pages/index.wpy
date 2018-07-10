@@ -133,10 +133,6 @@
     </navigator>
     </view>
 
-
-
-    <button open-type="getUserInfo">用戶授權</button>
-
     <!--下方 flex-->
 
     <!--按钮-->
@@ -152,7 +148,6 @@
     </view>
   </view>
   <pay></pay>
-  <!--<rate @change.user="callbackStart"></rate>-->
 
 </template>
 
@@ -160,7 +155,6 @@
   import wepy from 'wepy'
   import util from '../utils/util'
   import Pay from '../components/pay'
-  import Rate from "../components/rate"
   import {
     SYSTEM_INFO,
     SEL_CLASS_CODE
@@ -173,7 +167,6 @@
     }
     components = {
       pay: Pay,
-      rate: Rate,
     }
 
     data = {
@@ -253,9 +246,6 @@
         console.log(e)
       },
 
-      callbackStart(count){
-        console.log(count)
-      }
     }
 
     events = {

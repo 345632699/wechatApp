@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <!--按钮导航栏-->
-    <view class="weui-cells_after-title tip-buttom" @tap="tap" hidden="{{active ? '' : false}}">
+    <view class="weui-cells_after-title tip-buttom" wx:if="{{ 1 == type }}" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
           <image src="../images/appointment/myorder.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:if="{{ type >1 }}"></image>
@@ -9,6 +9,16 @@
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
         <view class="weui-cell__ft">{{ step }}/4</view>
+      </view>
+    </view>
+    <view class="weui-cells_after-title tip-buttom" wx:if="{{ 2 == type }}" hidden="{{active ? '' : false}}">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <image src="../images/appointment/myorder.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:if="{{ type >1 }}"></image>
+          <image src="../images/appointment/stepper.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:else></image>
+        </view>
+        <view class="weui-cell__bd">{{ title }}</view>
+        <view class="weui-cell__ft">{{ step }}/ {{ order_count }}</view>
       </view>
     </view>
     <!--具体内容-->
@@ -75,14 +85,16 @@
       type: {
         type:Number,
         default: 1 //1为直接下单 2 为查看订单
+      },
+      order_count: {
+        type:Number,
+        default: 1 //1为直接下单 2 为查看订单
       }
     }
 
     methods = {
       tap () {
-        // this.num = this.num + 1
         this.active = 1
-        console.log(this.active)
       },
       hideAct () {
         this.active = ''
@@ -90,7 +102,6 @@
     }
 
     onload () {
-      console.log(this.type)
     }
 
   }

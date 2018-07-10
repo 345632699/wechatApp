@@ -47,6 +47,7 @@ import 'wepy-async-function'
 import { setStore } from 'wepy-redux'
 import configStore from './store'
 import api from './api/api'
+import tip from './utils/tip'
 import {
   SYSTEM_INFO,
   SEL_CLASS_CODE,
@@ -66,6 +67,7 @@ export default class extends wepy.app {
       'pages/order_detail',
       'pages/discover',
       'pages/display',
+      'pages/auth',
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -122,22 +124,29 @@ export default class extends wepy.app {
   async getAuth () {
     let res = await wepy.login();
     let code = res.code
-    let resUser = await wepy.getUserInfo()
-    wepy.setStorageSync('user_info', resUser.userInfo);
-    if (res.code){
-      if (!wepy.getStorageSync('userid')){
-        const json = await api.getOpenId({
-          query: {
-            appid: APPID,
-            code: code,
-            rawData: resUser.rawData,
-            signature: resUser.signature
-          },
-          method: 'POST'
-        });
-        wepy.setStorageSync('userid', json.data.data[0].userid);
-        wepy.setStorageSync('merchant_id', json.data.data[0].merchant_id);
+    try{
+      let resUser = await wepy.getUserInfo()
+      wepy.setStorageSync('user_info', resUser.userInfo);
+      if (res.code){
+        if (!wepy.getStorageSync('userid')){
+          const json = await api.getOpenId({
+            query: {
+              appid: APPID,
+              code: code,
+              rawData: resUser.rawData,
+              signature: resUser.signature
+            },
+            method: 'POST'
+          });
+          wepy.setStorageSync('userid', json.data.data[0].userid);
+          wepy.setStorageSync('merchant_id', json.data.data[0].merchant_id);
+        }
       }
+    }catch (e) {
+      tip.error('请先进行授权')
+      wepy.navigateTo({
+        url: './auth'
+      })
     }
   }
 

@@ -224,15 +224,7 @@
                     </view>
                     <view class="weui-flex">
                         <view>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
-                            <image @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image>
+                            <image wx:for="{{ orderDetail.image_list }}" @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="{{ item }}" src="{{ item }}" class="placeholder size78"></image>
                         </view>
 
                         <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
@@ -273,15 +265,19 @@
                 <button class="weui-btn mybtn" type="primary" plain="true">订单异常</button>
                 <button class="weui-btn mybtn" type="primary" @tap="backToIndex" plain="true">返回</button>
             </view>
-            <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
+            <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;padding-bottom: 100px">
                 <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
                 <button wx:if="{{ orderDetail.cannot_cancel <= 0 }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
                 <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">正在洗车</button>
-                <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
+                <button wx:if="{{ 3 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
+                <view style="text-align: center;" wx:if="{{ 4 == orderDetail.order_status }}">
+                    <rate @change.user="callbackStart"></rate>
+                </view>
+                <button style="margin-top: 16rpx;" wx:if="{{ 4 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="evaluate">提交评价</button>
             </view>
         </scroll-view>
     </view>
-    <tips :step.sync="step" :title.sync="tipContent" :type.sync="tipType"></tips>
+    <tips :step.sync="step" :title.sync="tipContent" :type.sync="tipType" :order_count.sync="orderCount"></tips>
     <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo" ></alert>
     <pay :pay_active.sync="pay_active"></pay>
     <view class="brightMask">
@@ -313,6 +309,7 @@
   import Alert from '../components/myAlert'
   import tip from '../utils/tip'
   import Pay from '../components/pay'
+  import Rate from "../components/rate"
   import api from '../api/api'
   export default class Index extends wepy.page {
     config = {
@@ -322,6 +319,7 @@
       tips: Tips,
       alert: Alert,
       pay: Pay,
+      rate: Rate,
     }
     data = {
       province: ['粤A', '粤B', '粤C', '粤D'],
@@ -354,9 +352,13 @@
       order_id: 0,
       orderCount: 0,
 
-      step: 2,
+
+      step: 1, //订单排序
       tipContent: "我的预约",
       tipType: 2, //1 为下订单 2为查看订单
+
+      //评价分数
+      evaluate: 5
 
     }
 
@@ -378,12 +380,14 @@
 
       async pre (e) {
         this.orderIndex = this.orderIndex - 1
+        this.step = this.orderIndex + 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
         await this.getorderinfo(order_id)
         this.$apply()
       },
       async next (e) {
         this.orderIndex = this.orderIndex + 1
+        this.step = this.orderIndex + 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
         await this.getorderinfo(order_id)
         this.$apply()
@@ -407,6 +411,27 @@
           address:"南宁市西乡塘区秀厢大道东祥云商务酒店",
           scale: 28
         })
+      },
+
+      callbackStart(count){
+        this.evaluate = count
+        this.$apply()
+      },
+
+      async evaluate () {
+        const res = await api.updatecomment({
+          query: {
+            order_id: this.order_id,
+            rank: this.evaluate
+          },
+          method: 'POST'
+        });
+        if (res.data.status) {
+          tip.success("感谢评价")
+          wepy.navigateBack()
+        }else{
+          tip.error(res.data.errmsg)
+        }
       },
 
       async cancelOrder () {
@@ -458,6 +483,7 @@
         });
         if(res.data.status){
           this.pay_success = 1
+          this.orderDetail.order_status = 4
           this.$apply()
           tip.success('支付成功')
         }else {
@@ -506,19 +532,18 @@
       })
     }
 
-    onLoad(option) {
+    async onLoad(option) {
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name
-    }
-
-    async onShow () {
       let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
       this.orderCount = wepy.getStorageSync('order_id_list').length
-      console.log(this.orderCount)
       this.order_id = order_id
       await this.getorderinfo(order_id)
       this.$apply()
+    }
+
+    async onShow () {
     }
   }
 </script>

@@ -44,6 +44,8 @@ const balancedepositpayment = (params) => wxRequest(params, apiMall + "/balanced
 const balancetotalpayment = (params) => wxRequest(params, apiMall + "/balancetotalpayment/");
 //微信支付尾款
 const wxtotalpayment = (params) => wxRequest(params, apiMall + "/wxtotalpayment/");
+//更新评价
+const updatecomment = (params) => wxRequest(params, apiMall + "/updatecomment/");
 
 
 module.exports = {
@@ -70,6 +72,7 @@ module.exports = {
   balancedepositpayment,
   balancetotalpayment,
   wxtotalpayment,
+  updatecomment,
   PostDepositPayment,
   decrypt,
 }

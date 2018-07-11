@@ -273,9 +273,11 @@
                 </view>
             </view>
             <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
+                <form @submit="payPre" report-submit='true' >
+                    <button class="weui-btn mybtn" form-type="submit" type="primary" plain="true" wx:if="{{ pay_success<1 }}" >支付定金</button>
+                    <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
+                    <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
+                </form>
             </view>
         </scroll-view>
     </view>
@@ -416,7 +418,8 @@
         this.is_active = 1
       },
 
-      async payPre() {
+      async payPre(e) {
+        let formId = e.detail.formId
         this.pay_active = 1
         const res = await api.Order({
           query: {
@@ -427,6 +430,7 @@
             itemId: "",
             bookingServiceTime: this.selectDate + " " + this.start_time + ":00",
             carNumber: this.carInfo.currentCarNum,
+            formId: formId,
           },
           method: 'POST'
         });

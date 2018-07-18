@@ -188,9 +188,9 @@
                         </picker>
                     </view>
                     <view style="width: 28%">
-                        <input class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
+                        <input style="padding-left: 16rpx" class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
-                    <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList.length > 0}}">
+                    <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList != false }}">
                         <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
                             <view class="carNum weui-select">从我的车牌中选取</view>
                         </picker>
@@ -205,7 +205,7 @@
                     </view>
                     <view class="weui-cell__bd">套餐选择</view>
                 </view>
-                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text" open-type="redirect">
+                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -326,7 +326,7 @@
         currentCarNum: "",
         currentProvince: "粤B",
         carNum: "", //輸入框内的字符串
-        carNumList: ['粤B XXX0', '粤B XXX1', '粤C XXX2', '粤B XXX3'],
+        carNumList: [],
         carNumIndex: 0,
       },
 

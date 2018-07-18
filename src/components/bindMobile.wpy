@@ -117,7 +117,7 @@
             <view class="main">
                 <view class="mobile">
                     <input type="number" maxlength="11" placeholder="请输入手机号" @input="bindPhone" class="number" value="{{ number }}" />
-                    <view class="doSend" @tap="sendSms" >发送验证码</view>
+                    <view class="doSend" @tap="sendSms" >{{ time }}</view>
                 </view>
                 <view class="code">
                     <input style="margin-left: -46rpx" type="number" maxlength="4" placeholder="请输入验证码"  @input="bindCode" class="number" value="{{ code }}" />
@@ -144,7 +144,9 @@
     data = {
       number: '',
       code: '',
-      title: "绑定手机"
+      title: "绑定手机",
+      time: '获取验证码', //倒计时
+      currentTime: 61
     }
 
     props = {
@@ -209,14 +211,35 @@
         }
       },
       async sendSms () {
+        if (!this.number){
+          tip.error('手机号码不能为空')
+          return
+        }
+        let interval = null //倒计时函数
         const res = await api.sendverifycode({
           query: {
             phoneNumber: this.number
           },
           method: 'POST'
         });
-        if (res.data.status){
-          tip.toast("發送成功")
+        if (!res.data.status){
+          tip.toast("发送成功")
+          let currentTime = this.currentTime
+          interval = setInterval(function () {
+            let that = this
+            currentTime--
+            that.time = currentTime+'秒'
+            that.$apply()
+            if (currentTime <= 0) {
+              clearInterval(interval)
+              that.time = '重新发送'
+              that.currentTime = 61
+              that.disabled = false
+            }
+            that.$apply()
+          }, 100)
+        }else {
+          tip.toast("发送失败")
         }
       }
 

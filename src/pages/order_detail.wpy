@@ -267,9 +267,9 @@
             </view>
             <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;padding-bottom: 100px">
                 <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
-                <button wx:if="{{ orderDetail.cannot_cancel <= 0 }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
                 <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">正在洗车</button>
                 <button wx:if="{{ 3 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
                 <view style="text-align: center;" wx:if="{{ 4 == orderDetail.order_status }}">
                     <rate @change.user="callbackStart"></rate>
                 </view>
@@ -361,6 +361,7 @@
         this.orderIndex = this.orderIndex - 1
         this.step = this.orderIndex + 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
+        this.order_id = order_id
         await this.getorderinfo(order_id)
         this.$apply()
       },
@@ -368,6 +369,7 @@
         this.orderIndex = this.orderIndex + 1
         this.step = this.orderIndex + 1
         let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
+        this.order_id = order_id
         await this.getorderinfo(order_id)
         this.$apply()
       },

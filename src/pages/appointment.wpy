@@ -153,20 +153,20 @@
                 </view>
             </view>
 
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/washing.png" ></image>
-                    </view>
-                    <view class="weui-cell__bd">洗车进行中…</view>
-                </view>
-                <view class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view>预计结束时间 {{ end_time }}</view>
-                </view>
-            </view>
+            <!--<view class="weui-cells weui-cells_after-title">-->
+                <!--<view class="weui-cell">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<image class="img-format" src="../images/appointment/washing.png" ></image>-->
+                    <!--</view>-->
+                    <!--<view class="weui-cell__bd">洗车进行中…</view>-->
+                <!--</view>-->
+                <!--<view class="weui-cell input-text">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<image class="img-format" src="" ></image>-->
+                    <!--</view>-->
+                    <!--<view>预计结束时间 {{ end_time }}</view>-->
+                <!--</view>-->
+            <!--</view>-->
 
 
             <view class="weui-cells weui-cells_after-title">

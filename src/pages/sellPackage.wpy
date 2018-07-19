@@ -73,7 +73,7 @@
         <!--頂部-->
         <view>
             <view class="page_box" wx:for="{{dateList}}" wx:key="item">
-                <view class="img_box">
+                <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="img_box">
                     <image class="img" src="../images/slices/168.png" alt="" />
                     <view class="mainTitle">
                         {{ item.product_price }}
@@ -81,13 +81,13 @@
                     <view class="product_name">
                         {{ item.product_name }}
                     </view>
-                </view>
+                </navigator>
                 <view class="detail">
-                    <view class="title font-weight">
+                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="title font-weight">
                         {{ item.product_subtitle }}
-                    </view>
-                    <view class="tips">耗时约{{ item.product_cost_time }}小时, 开始前{{ item.product_cancel_limit_time }}分钟内不可取消</view>
-                    <view class="main">包含：{{ item.product_intro }}</view>
+                    </navigator>
+                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内不可取消</navigator>
+                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
                     <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
                     <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情</navigator>
                 </view>

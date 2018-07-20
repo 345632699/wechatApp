@@ -188,9 +188,9 @@
                         </picker>
                     </view>
                     <view style="width: 28%">
-                        <input style="padding-left: 16rpx" class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
+                        <input disabled="{{ pay_success >= 1 }}" style="padding-left: 16rpx" class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
-                    <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList != false }}">
+                    <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
                         <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
                             <view class="carNum weui-select">从我的车牌中选取</view>
                         </picker>
@@ -205,7 +205,7 @@
                     </view>
                     <view class="weui-cell__bd">套餐选择</view>
                 </view>
-                <navigator url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
+                <navigator wx:if="{{ pay_success < 1 }}" url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
@@ -214,6 +214,12 @@
                         <view class="weui-select-right"></view>
                     </view>
                 </navigator>
+                <view wx:else class="weui-cell input-text">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="" ></image>
+                    </view>
+                    <view class="{{ (product.name != '请选择套餐') ? '':'brightGrey'}}">{{ product.name }}</view>
+                </view>
                 <view class="weui-cell input-text" style="padding-bottom: 0;margin-top: -20rpx;" hidden="{{ product.detail ? '':'false'}}">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
@@ -241,20 +247,21 @@
                     </view>
                     <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone > 0 }}">{{ phone }}</view>
                     <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone <= 0 }}">绑定手机以便我们与您取得联系</view>
-                    <view class="weui-cell__bd">
+                    <view class="weui-cell__bd" wx:if="{{ pay_success < 1 }}">
                         <view class="weui-select-right"></view>
                     </view>
                 </view>
             </view>
-
-
 
             <view class="weui-cells weui-cells_after-title" wx:if="{{ product.id }}">
                 <view class="weui-cell money">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="../images/appointment/money.png" ></image>
                     </view>
-                    <view class="weui-cell__bd font14">定金</view>
+                    <view class="weui-cell__bd font14">
+                        定金
+                       {{ pay_success < 1 ? "" : "(已支付)" }}
+                    </view>
                     <view class="weui-cell__ft">￥{{ product.deposite }}</view>
                 </view>
                 <view class="weui-cell money">
@@ -274,14 +281,14 @@
             </view>
             <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
                 <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
                 <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
             </view>
         </scroll-view>
     </view>
     <tips :step.sync="step" :title.sync="title"></tips>
     <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
-    <pay :pay_active.sync="pay_active"></pay>
+    <pay :pay_active.sync="pay_active" :product.sync="product"></pay>
     <mobile :bind_active.sync="bind_active" @change.user="changePhone"></mobile>
 
 </template>
@@ -417,6 +424,15 @@
       },
 
       async payPre() {
+        if (!this.carInfo.currentCarNum){
+          tip.error('车牌号不能为空')
+          return
+        }
+        if (!this.product.id){
+          tip.error('请选择套餐')
+          return
+        }
+
         this.pay_active = 1
         const res = await api.Order({
           query: {
@@ -435,7 +451,8 @@
       },
 
       bindMobile() {
-        this.bind_active = 1
+        if (this.pay_success < 1)
+            this.bind_active = 1
       }
 
     }
@@ -468,6 +485,8 @@
         });
         if(res.data.status){
           this.pay_success = 1
+          this.step = 4
+          this.title = "支付尾款"
           this.$apply()
           tip.success('支付成功')
         }else {
@@ -478,7 +497,7 @@
         const res = await api.wxdepositpayment({
           query: {
             userId: wepy.getStorageSync('userid'),
-            appId: "wx3a8aa895f494599a",
+            appId: APPID,
             orderId: this.order_id,
             feeType: "CNY",
             goodsTag: "",

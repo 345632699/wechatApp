@@ -281,10 +281,10 @@
                 <button class="weui-btn mybtn" type="primary" @tap="backToIndex" plain="true">返回</button>
             </view>
             <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;padding-bottom: 100px">
-                <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">導航出發</button>
+                <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
                 <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">正在洗车</button>
                 <button wx:if="{{ 3 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消訂單</button>
+                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消订单</button>
                 <view style="text-align: center;" wx:if="{{ 4 == orderDetail.order_status }}">
                     <rate @change.user="callbackStart"></rate>
                 </view>

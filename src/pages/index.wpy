@@ -105,7 +105,7 @@
           <view>账户余额：￥{{ account.balance }}</view>
         </view>
         <view class="weui-cell">
-          <view style="color:#E64340" wx:if="{{ account.have_recent_book }}">*您预约的洗车服务将于5.23日下午3点</view>
+          <view style="color:#E64340" wx:if="{{ account.have_recent_book }}">*您预约的洗车服务将于{{ account.recent_book_time }}开始</view>
           <view wx:else="{{ account.have_recent_book }}">蓝卡会员</view>
         </view>
       </view>
@@ -113,7 +113,7 @@
     <view class="weui-cell middle-flex">
       <picker style="width: 100%;" @change="bindBranchChange" value="{{ branchIndex }}" range="{{ branchList }}">
         <view style="text-align: center;margin: auto;">
-          约洗车：{{ defaultBranch.name }}
+          预约洗车：{{ defaultBranch.name }}
           <image src="../images/appointment/down.svg" style="display:inline-block;width:18rpx;height: 18rpx;"></image>
         </view>
       </picker>
@@ -304,7 +304,9 @@
       this.account.order_id_list = res.data.data[0].order_id_list
       wepy.setStorageSync('order_id_list',res.data.data[0].order_id_list)
       this.account.have_recent_book = res.data.data[0].have_recent_book
+      this.account.recent_book_time = res.data.data[0].recent_book_time
       wepy.setStorageSync('user_type',res.data.data[0].user_type)
+      wepy.setStorageSync('user_balance',res.data.data[0].balance)
 
       //分店信息
       this.branchInfo = res.data.data[0].branch_list

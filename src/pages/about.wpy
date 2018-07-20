@@ -61,11 +61,11 @@
                     <view class="weui-article__h1" style="font-size: 48rpx;margin-bottom: 0">地址信息</view>
                     <view class="weui-article__section">
                         <view class="weui-article__h3" style="margin-bottom: 0">{{ defaultBranch.name }}</view>
-                        <view class="weui-cell weui-cell_access">
+                        <view class="weui-cell weui-cell_access" @tap="lead">
                             <view class="weui-cell__bd">
                                 <view style="vertical-align: middle">{{ defaultBranch.location }}</view>
                             </view>
-                            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                            <view class="weui-cell__ft weui-select-right" style="position: static "></view>
                         </view>
                         <view class="weui-article__h3">电话</view>
                         <view class="weui-article__h3" data-phone="{{ defaultBranch.phone_number }}" @tap="makeCall">
@@ -118,7 +118,17 @@
             console.log("拨打电话失败！")
           }
         })
-      }
+      },
+      //導航
+      lead () {
+        wepy.openLocation({
+          latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
+          longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
+          name: this.defaultBranch.name,
+          address:this.defaultBranch.location,
+          scale: 28
+        })
+      },
     }
 
 

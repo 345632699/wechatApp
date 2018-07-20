@@ -259,8 +259,7 @@
                         <image class="img-format" src="../images/appointment/money.png" ></image>
                     </view>
                     <view class="weui-cell__bd font14">
-                        定金
-                       {{ pay_success < 1 ? "" : "(已支付)" }}
+                        定金 {{  pay_success > 0  ? "(已支付)" : ""}}
                     </view>
                     <view class="weui-cell__ft">￥{{ product.deposite }}</view>
                 </view>
@@ -288,7 +287,7 @@
     </view>
     <tips :step.sync="step" :title.sync="title"></tips>
     <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
-    <pay :pay_active.sync="pay_active" :product.sync="product"></pay>
+    <pay :pay_active.sync="pay_active" :user_balance.sync="user_balance" :product.sync="product"></pay>
     <mobile :bind_active.sync="bind_active" @change.user="changePhone"></mobile>
 
 </template>
@@ -367,6 +366,8 @@
       phone: wx.getStorageSync('phone_number'),
 
       defaultBranch: {},
+
+      user_balance: 0,
     }
 
 
@@ -509,7 +510,32 @@
         let that = this
         await this.wxpay(wxpayData,that)
       }
-    };
+    }
+
+    async wxpay(param,that) {
+      wx.requestPayment({
+        timeStamp: param.timeStamp,
+        nonceStr: param.nonceStr,
+        package: param.package,
+        signType: param.signType,
+        paySign: param.paySign,
+        success: function (res) {
+          // success
+          console.log(param)
+          that.pay_success = 1
+          that.$apply()
+
+        },
+        fail: function (res) {
+          // fail
+          console.log("fail");
+        },
+        complete: function () {
+          // complete
+          console.log("done");
+        }
+      })
+    }
 
     onLoad(option) {
       this.product.id = option.package_id
@@ -543,31 +569,6 @@
 
     }
 
-    async wxpay(param,that) {
-      wx.requestPayment({
-        timeStamp: param.timeStamp,
-        nonceStr: param.nonceStr,
-        package: param.package,
-        signType: param.signType,
-        paySign: param.paySign,
-        success: function (res) {
-          // success
-          console.log(param)
-          that.pay_success = 1
-          that.$apply()
-
-        },
-        fail: function (res) {
-          // fail
-          console.log("fail");
-        },
-        complete: function () {
-          // complete
-          console.log("done");
-        }
-      })
-    }
-
     async onShow () {
       if (wepy.getStorageSync('carNum') || wepy.getStorageSync('currentProvince') ){
         this.carInfo.carNum = wepy.getStorageSync('carNum')
@@ -585,6 +586,8 @@
       this.carInfo.carNumList = res.data.data[0].car_numbers
       this.phone = res.data.data[0].phone_number
       this.defaultBranch = wepy.getStorageSync('defaultBranch')
+      this.user_balance = wepy.getStorageSync('user_balance')
+      console.log(this.user_balance)
       this.$apply()
     }
   }

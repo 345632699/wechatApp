@@ -151,7 +151,7 @@
     <view class="page">
         <!--頂部-->
         <scroll-view scroll-y scroll-with-animation="true" class="page__bd">
-            <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cells weui-cells_after-title" wx:if="{{ orderDetail.order_status == 1 }}">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="../images/appointment/time.png" style=""></image>
@@ -166,7 +166,7 @@
                 </view>
             </view>
 
-            <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cells weui-cells_after-title"  wx:if="{{ orderDetail.order_status == 2 }}">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
                         <image class="img-format" src="../images/appointment/washing.png" ></image>
@@ -177,7 +177,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>预计结束时间 {{ end_time }}</view>
+                    <view>预计结束时间 {{ orderDetail.end_time }}</view>
                 </view>
             </view>
 
@@ -282,9 +282,9 @@
             </view>
             <view wx:else class="weui-cells weui-cells_after-title" style="padding-top: 32rpx;padding-bottom: 100px">
                 <button wx:if="{{ 1 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="lead">导航出发</button>
-                <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">正在洗车</button>
+                <button wx:if="{{ 2 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true">正在洗车</button>
                 <button wx:if="{{ 3 == orderDetail.order_status }}" class="weui-btn mybtn" type="primary" plain="true" @tap="wxTotalPayment">支付尾款</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消订单</button>
+                <button wx:if="{{ orderDetail.order_status < 2 }}" class="weui-btn mybtn" type="primary" plain="true" @tap="cancelOrder">取消订单</button>
                 <view style="text-align: center;" wx:if="{{ 4 == orderDetail.order_status }}">
                     <rate @change.user="callbackStart"></rate>
                 </view>

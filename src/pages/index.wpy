@@ -242,7 +242,7 @@
         let dateInfo = res.data.data[0]
 
         wepy.navigateTo({
-          url: "/pages/appointment?selectDate="+dateInfo.date+"&start_time="+ dateInfo.start_time +"&end_time="+dateInfo.end_time
+          url: "/pages/appointment?selectDate="+dateInfo.date+"&start_time="+ dateInfo.start_time +"&end_time="+dateInfo.end_time +"&branch_id="+this.defaultBranch.id
         })
       },
       display (e) {

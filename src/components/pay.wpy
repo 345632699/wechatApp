@@ -47,6 +47,9 @@
                 }
             }
         }
+        .weui-select-right{
+            margin-top: 40rpx;
+        }
     }
 </style>
 <template>
@@ -66,11 +69,11 @@
             </view>
             <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">微信支付</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="weui-cell__ft weui-select-right"></view>
             </view>
             <view  wx:if="{{ user_balance > 0 }}" @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">余额支付</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="weui-cell__ft weui-select-right"></view>
             </view>
         </view>
     </view>

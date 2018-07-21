@@ -106,16 +106,16 @@
 
       confirmText: {
         type:String,
-        default: '確認'
+        default: '确认'
       },
 
       alertInfo: {
         type:Object,
         default: {
-          alert_title: "取消訂單",
+          alert_title: "取消订单",
           msg: "确认要取消预约吗？取消后可能无法选择同一时间\n",
           comfirm: 0,
-          confirmText: '確認取消',
+          confirmText: '确认取消',
         }
       }
     };

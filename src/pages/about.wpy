@@ -29,57 +29,60 @@
             float: right;
             top:-64rpx;
         }
-
+        overflow-x: hidden;
+        overflow-y: auto;
     }
+
     image{
         margin: 4px 0;
     }
 </style>
 <template>
     <view class="page" style="background: #000000">
-        <view ></view>
-        <view class="page__hd" style="padding-bottom: 0">
-            <view class="weui-article__p" style="text-align: center;margin-bottom: 0">
-                <image class="weui-article__img" src="../images/discover/logo.png" style="width: 292rpx;height: 260rpx" />
+        <scroll-view>
+            <view class="page__hd" style="padding-bottom: 0">
+                <view class="weui-article__p" style="text-align: center;margin-bottom: 0">
+                    <image class="weui-article__img" src="../images/discover/logo.png" style="width: 292rpx;height: 260rpx" />
+                </view>
             </view>
-        </view>
-        <view class="page__bd" style="padding-top: 0;">
-            <view class="weui-article" style="padding-top: 0">
-                <view class="weui-article__h1" style="font-size: 48rpx">介绍</view>
-                <view class="weui-article__section">
+            <view class="page__bd" style="padding-top: 0;">
+                <view class="weui-article" style="padding-top: 0">
+                    <view class="weui-article__h1" style="font-size: 48rpx">介绍</view>
                     <view class="weui-article__section">
-                        <view class="weui-article__p">
-                            C&Y·1993专业汽车洗车中心是一家专注于专业的技术，高效的服务的汽车洗车中心。专心致志，全心全意地服务大众，实现100%的客户满意度是我们的宗旨。C&Y·1993专业汽车洗车中心以顾客为本，竭尽全力打造深圳信誉店。
-                        </view>
-                        <view class="weui-article__p">
-                            “青春如初春，如朝日，如百卉之萌动。”我们是一群有梦想的年轻人，我们拥有活力、拥有激情，我们敢于挑战，善于创新。在这群拥有梦想的年轻人日以继夜辛勤劳作的背景之下，一家专注为汽车精洗、内饰清洁，并配有专业机洗车的汽车洗车中心——C&Y·1993，于2016年12月踏上启程之路，正式运营！迄今为止，我们也经历了一个多年头，时间并没有消磨我们的激情，而是让我们更加专业细心。
-                        </view>
-                        <view class="weui-article__p">
-                            C&Y·1993——让您的爱车灰尘仆仆而来，白白净净而归
-                        </view>
-                    </view>
-                    <view class="weui-article__h1" style="font-size: 48rpx;margin-bottom: 0">地址信息</view>
-                    <view class="weui-article__section">
-                        <view class="weui-article__h3" style="margin-bottom: 0">{{ defaultBranch.name }}</view>
-                        <view class="weui-cell weui-cell_access" @tap="lead">
-                            <view class="weui-cell__bd">
-                                <view style="vertical-align: middle">{{ defaultBranch.location }}</view>
+                        <view class="weui-article__section">
+                            <view class="weui-article__p">
+                                C&Y·1993专业汽车洗车中心是一家专注于专业的技术，高效的服务的汽车洗车中心。专心致志，全心全意地服务大众，实现100%的客户满意度是我们的宗旨。C&Y·1993专业汽车洗车中心以顾客为本，竭尽全力打造深圳信誉店。
                             </view>
-                            <view class="weui-cell__ft weui-select-right" style="position: static "></view>
-                        </view>
-                        <view class="weui-article__h3">电话</view>
-                        <view class="weui-article__h3" data-phone="{{ defaultBranch.phone_number }}" @tap="makeCall">
-                            <view>
-                                {{ defaultBranch.phone_number }}
+                            <view class="weui-article__p">
+                                “青春如初春，如朝日，如百卉之萌动。”我们是一群有梦想的年轻人，我们拥有活力、拥有激情，我们敢于挑战，善于创新。在这群拥有梦想的年轻人日以继夜辛勤劳作的背景之下，一家专注为汽车精洗、内饰清洁，并配有专业机洗车的汽车洗车中心——C&Y·1993，于2016年12月踏上启程之路，正式运营！迄今为止，我们也经历了一个多年头，时间并没有消磨我们的激情，而是让我们更加专业细心。
                             </view>
-                            <image class="phone" src="../images/discover/phone.png" style="height: 56rpx;width: 56rpx"></image>
+                            <view class="weui-article__p">
+                                C&Y·1993——让您的爱车灰尘仆仆而来，白白净净而归
+                            </view>
                         </view>
-                        <view class="weui-article__p">
+                        <view class="weui-article__h1" style="font-size: 48rpx;margin-bottom: 0">地址信息</view>
+                        <view class="weui-article__section">
+                            <view class="weui-article__h3" style="margin-bottom: 0">{{ defaultBranch.name }}</view>
+                            <view class="weui-cell weui-cell_access" @tap="lead">
+                                <view class="weui-cell__bd">
+                                    <view style="vertical-align: middle">{{ defaultBranch.location }}</view>
+                                </view>
+                                <view class="weui-cell__ft weui-select-right" style="position: static "></view>
+                            </view>
+                            <view class="weui-article__h3">电话</view>
+                            <view class="weui-article__h3" data-phone="{{ defaultBranch.phone_number }}" @tap="makeCall">
+                                <view>
+                                    {{ defaultBranch.phone_number }}
+                                </view>
+                                <image class="phone" src="../images/discover/phone.png" style="height: 56rpx;width: 56rpx"></image>
+                            </view>
+                            <view class="weui-article__p">
+                            </view>
                         </view>
                     </view>
                 </view>
             </view>
-        </view>
+        </scroll-view>
     </view>
 </template>
 

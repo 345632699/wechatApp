@@ -119,7 +119,7 @@
       </picker>
     </view>
 
-    <view class="weui-cells weui-cells_after-title" wx:for="{{dateList}}" wx:for-item="listItem" @tap="changeCate" data-code="{{listItem.date}}">
+    <view class="weui-cells weui-cells_after-title" wx:for="{{dateList}}" wx:key="index" wx:for-item="listItem" @tap="changeCate" data-code="{{listItem.date}}">
       <view class="weui-cell weui-cell_access" @tap="display">
         <view class="weui-cell__bd">{{listItem.dateFormat}} {{ listItem.weekday }}</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0;">

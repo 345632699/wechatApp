@@ -92,7 +92,8 @@
   } from '../utils/constant';
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '关于我们'
+      navigationBarTitleText: '关于我们',
+      backgroundColor: "#000000"
     }
     components = {
 

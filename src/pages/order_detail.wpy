@@ -181,6 +181,21 @@
                 </view>
             </view>
 
+            <view class="weui-cells weui-cells_after-title"  wx:if="{{ orderDetail.order_status == 3 }}">
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="../images/appointment/done.png" ></image>
+                    </view>
+                    <view class="weui-cell__bd">洗车已完成</view>
+                </view>
+                <view class="weui-cell input-text">
+                    <view class="weui-cell__hd">
+                        <image class="img-format" src="" ></image>
+                    </view>
+                    <view>耗时 {{ orderDetail.product_cost_time }}分钟</view>
+                </view>
+            </view>
+
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__hd">
@@ -239,12 +254,8 @@
                     </view>
                     <view class="weui-flex">
                         <view>
-                            <image wx:for="{{ orderDetail.image_list }}" @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx" data-src="{{ item }}" src="{{ item }}" class="placeholder size78"></image>
+                            <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" style="width: 156rpx;height: 156rpx;padding-right: 10rpx"  data-index="{{ index }}" data-src="{{ item }}" src="{{ item }}" class="placeholder size78"></image>
                         </view>
-
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
-                        <!--<view class="weui-flex__item"><image @tap="previewImage" data-src="../images/tc.png" src="../images/tc.png" class="placeholder size78"></image></view>-->
                     </view>
                 </view>
             </view>
@@ -294,7 +305,7 @@
     </view>
     <tips :step.sync="step" :title.sync="tipContent" :type.sync="tipType" :order_count.sync="orderCount"></tips>
     <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo" ></alert>
-    <pay :pay_active.sync="pay_active"></pay>
+    <pay :pay_active.sync="pay_active" :title.sync="payTitle" :user_balance.sync="user_balance" :amount.sync="amount"></pay>
     <view class="brightMask">
         <view class="pre" @tap="pre" wx:if="{{ orderIndex > 0 }}">
             <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg" >左</image>
@@ -362,8 +373,10 @@
       //评价分数
       evaluate: 5,
 
-      defaultBranch: {}
-
+      defaultBranch: {},
+      payTitle: "尾款",
+      user_balance: 0,
+      amount:0,
     }
 
 
@@ -392,7 +405,8 @@
         console.log('parent received emit event, number is: ' + num)
       },
       previewImage (e) {
-        var current = e.target.dataset.src;
+        var index = e.target.dataset.index
+        var current = this.orderDetail.image_list[index]
         wepy.previewImage({
           current: current, // 当前显示图片的http链接
           urls: [current] // 需要预览的图片http链接列表
@@ -449,6 +463,7 @@
         method: 'POST'
       });
       this.orderDetail = res.data.data[0]
+      this.amount = this.orderDetail.product_price - this.orderDetail.product_deposit
       this.$apply()
     }
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
@@ -539,6 +554,8 @@
     }
 
     async onShow () {
+      this.user_balance = wepy.getStorageSync('user_balance')
+      this.$apply()
     }
   }
 </script>

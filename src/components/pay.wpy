@@ -55,7 +55,7 @@
         <view class="wepy-api-dialog__main_pay">
             <view class="wepy-api-dialog__hd_pay">
                 <view class="wepy-api-dialog__title_pay">
-                    定金金额：¥{{ product.deposite }}
+                    {{ title }}：¥{{ amount }}
                 </view>
                 <view class="wepy-api-dialog__title_pay" wx:if="{{ user_balance > 0 }}">
                     账户余额：¥{{ user_balance }}
@@ -88,7 +88,7 @@
       // 静态传值
       title: {
         type:String,
-        default: ''
+        default: '定金'
       },
 
       msg: {
@@ -102,19 +102,13 @@
         default: 0,
         twoWay: true
       },
-      product: {
-        type: Object,
-        default: {
-          id: 0,
-          detail: "",
-          name:"请选择套餐",
-          price:0,
-          deposite:0,
-        },
-        twoWay: true
-      },
 
       user_balance: {
+        type:Number,
+        default:0
+      },
+
+      amount: {
         type:Number,
         default:0
       },

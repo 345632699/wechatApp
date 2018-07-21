@@ -47,6 +47,9 @@
                 }
             }
         }
+        .weui-select-right{
+            margin-top: 40rpx;
+        }
     }
 </style>
 <template>
@@ -55,10 +58,10 @@
         <view class="wepy-api-dialog__main_pay">
             <view class="wepy-api-dialog__hd_pay">
                 <view class="wepy-api-dialog__title_pay">
-                    定金金额：¥50
+                    {{ title }}：¥{{ amount }}
                 </view>
-                <view class="wepy-api-dialog__title_pay">
-                    账户余额：¥9999
+                <view class="wepy-api-dialog__title_pay" wx:if="{{ user_balance > 0 }}">
+                    账户余额：¥{{ user_balance }}
                 </view>
                 <view class="wepy-api-dialog__title_pay">
                     请选择支付方式
@@ -66,11 +69,11 @@
             </view>
             <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">微信支付</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="weui-cell__ft weui-select-right"></view>
             </view>
-            <view @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+            <view  wx:if="{{ user_balance > 0 }}" @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">余额支付</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="weui-cell__ft weui-select-right"></view>
             </view>
         </view>
     </view>
@@ -88,7 +91,7 @@
       // 静态传值
       title: {
         type:String,
-        default: ''
+        default: '定金'
       },
 
       msg: {
@@ -101,6 +104,16 @@
         type: Number,
         default: 0,
         twoWay: true
+      },
+
+      user_balance: {
+        type:Number,
+        default:0
+      },
+
+      amount: {
+        type:Number,
+        default:0
       },
 
       confirmText: {
@@ -124,7 +137,6 @@
     }
 
     onload () {
-      console.log(this.title);
     }
 
   }

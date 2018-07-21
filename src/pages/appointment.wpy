@@ -522,7 +522,8 @@
         paySign: param.paySign,
         success: function (res) {
           // success
-          console.log(param)
+          that.step = 4
+          that.title = "支付尾款"
           that.pay_success = 1
           that.$apply()
 
@@ -544,7 +545,7 @@
       this.product.name = option.package_name
       this.product.deposite = option.product_deposite
       this.product.price = option.product_price
-      this.amount = option.product_price
+      this.amount = option.product_deposite
       if (option.package_id) {
         this.step = 3
         this.title = "支付定金"

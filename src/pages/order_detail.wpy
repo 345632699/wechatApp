@@ -237,7 +237,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>{{ orderDetail.product_name }}  预计用时：{{ orderDetail.product_cost_time }}小时</view>
+                    <view>{{ orderDetail.product_name }}  预计用时：{{ orderDetail.product_cost_time / 60 }}小时</view>
                 </view>
             </view>
 

@@ -30,12 +30,12 @@
     <view class="page">
        <view class="container">
            <view class="imgs" wx:for="{{ imgList }}" wx:key="item">
-               <image @tap="previewImage" data-src="{{ item[0].image_url }}" class="img1" src="{{ item[0].image_url }}" mode="aspectFill" />
-               <image @tap="previewImage" data-src="{{ item[1].image_url }}" class="img2" src="{{ item[1].image_url }}" mode="aspectFill" />
-               <image @tap="previewImage" data-src="{{ item[2].image_url }}" class="img2" src="{{ item[2].image_url }}" mode="aspectFill" />
-               <image @tap="previewImage" data-src="{{ item[3].image_url }}" class="img2 last" src="{{ item[3].image_url }}" mode="aspectFill" />
-               <image @tap="previewImage" data-src="{{ item[4].image_url }}" class="img3" src="{{ item[4].image_url }}" mode="aspectFill" />
-               <image @tap="previewImage" data-src="{{ item[5].image_url }}" class="img3 last" src="{{ item[5].image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[0].image_url }}" class="img1" src="{{ item[0].thumbnail_image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[1].image_url }}" class="img2" src="{{ item[1].thumbnail_image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[2].image_url }}" class="img2" src="{{ item[2].thumbnail_image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[3].image_url }}" class="img2 last" src="{{ item[3].thumbnail_image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[4].image_url }}" class="img3" src="{{ item[4].thumbnail_image_url }}" mode="aspectFill" />
+               <image @tap="previewImage" data-src="{{ item[5].image_url }}" class="img3 last" src="{{ item[5].thumbnail_image_url }}" mode="aspectFill" />
            </view>
        </view>
     </view>
@@ -69,7 +69,8 @@
       },
       previewImage (e) {
         var current = e.target.dataset.src;
-        wepy.previewImage({
+        console.log(current)
+        wx.previewImage({
           current: current, // 当前显示图片的http链接
           urls: [current] // 需要预览的图片http链接列表
         })

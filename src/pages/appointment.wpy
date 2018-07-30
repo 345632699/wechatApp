@@ -224,7 +224,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view class=" font-red">*开始洗车前半小时内不可取消预约</view>
+                    <view class=" font-red">*开始洗车前24小时内取消不可退定金</view>
                 </view>
                 <view class="weui-cell input-text" hidden="{{ product.detail ? '':'false'}}">
                     <view class="weui-cell__hd">

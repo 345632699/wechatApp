@@ -86,7 +86,7 @@
                     <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="title font-weight">
                         {{ item.product_subtitle }}
                     </navigator>
-                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内不可取消</navigator>
+                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</navigator>
                     <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
                     <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
                     <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情</navigator>

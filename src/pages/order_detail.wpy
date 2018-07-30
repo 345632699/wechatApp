@@ -192,7 +192,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>耗时 {{ orderDetail.product_cost_time }}分钟</view>
+                    <view>耗时 {{ orderDetail.actual_cost_time / 60 | Int }}小时 {{ orderDetail.actual_cost_time % 60 | Int }}分钟 </view>
                 </view>
             </view>
 
@@ -237,7 +237,7 @@
                     <view class="weui-cell__hd">
                         <image class="img-format" src="" ></image>
                     </view>
-                    <view>{{ orderDetail.product_name }}  预计用时：{{ orderDetail.product_cost_time / 60 }}小时</view>
+                    <view>{{ orderDetail.product_name }}  预计用时：{{ orderDetail.predict_cost_time / 60 | Int }}小时</view>
                 </view>
             </view>
 
@@ -446,6 +446,9 @@
 
       async cancelOrder () {
         this.is_active = 1
+        if (this.orderDetail.cannot_cancel)
+            this.alertInfo.msg = "现在取消预约将无法退还定金，是否还要取消预约？"
+        this.$apply()
       },
       //支付尾款
       async wxTotalPayment () {

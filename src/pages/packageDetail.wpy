@@ -1,164 +1,207 @@
 <style lang="less">
-    .page{
-        background: #FFFFFF;
-        padding: 32rpx;
-    }
-    .page_box{
-        border: 1px solid #D8D8D8;
-        /*height: 758rpx;*/
-        border-radius: 20rpx;
-        margin-bottom: 20rpx;
-        .img_box{
-            height: 388rpx;
-            border-top-left-radius: 20rpx;
-            border-top-right-radius: 20rpx;
-            width: 100%;
-            .img{
-                border-top-left-radius: 20rpx;
-                border-top-right-radius: 20rpx;
-                width: 100%;
-                height: 100%;
-            }
-            .mainTitle{
-                color: #FFFFFF;
-                font-size: 70rpx;
-                position: relative;
-                top: -200rpx;
-                left: 16rpx;
-            }
-            .product_name{
-                color: #FFFFFF;
-                font-size: 70rpx;
-                position: relative;
-                top: -240rpx;
-                left: 16rpx;
-            }
-        }
-        .detail{
-            padding: 36rpx 32rpx 36rpx 32rpx;
-            .title{
-                color: #000000;
-                font-size: 40rpx;
-                font-weight: bold;
-            }
-            .tips{
-                color: #000000;
-                font-size:28rpx;
-                padding-bottom: 40rpx;
-            }
-            .main{
-                padding-top: 16rpx;
-                padding-bottom: 16rpx;
-                border-top:1px solid #D8D8D8;
-                &.border-none{
-                    border:none;
-                }
-                .title{
-                    font-size: 40rpx;
-                    color: #000000;
-                }
-                .content{
-                    color:rgba(0,0,0,0.6);
-                    font-size: 28rpx;
-                }
-            }
-        }
-        .font-weight{
-            font-weight: bold;
-        }
-    }
-</style>
-<template>
-    <view class="page">
-        <!--頂部-->
-        <view>
-            <view class="page_box">
-                <view class="img_box">
-                    <image class="img" src="../images/slices/168.png" alt="" />
-                    <view class="mainTitle">
-                        {{ product.product_price }}
-                    </view>
-                    <view class="product_name">
-                        {{ product.product_name }}
-                    </view>
-                </view>
-                <view class="detail">
-                    <view class="title font-weight">
-                        {{ product.product_subtitle }}
-                    </view>
-                    <view class="tips">耗时约{{ product.product_cost_time / 60 }}小时, 开始前{{ product.product_cancel_limit_time }}分钟内不可取消</view>
+@import '../style/common.less';
+.page{
+   padding: 60rpx 24rpx 60rpx 26rpx;
 
-                    <view wx:for="{{product.product_details}}" wx:key="item">
-                        <view class="main {{ (0 == index) ? 'border-none':''}}" >
-                            <view class="title">
-                                {{ item.title }}
-                            </view>
-                            <view class="content">
-                                <view wx:for="{{ item.content }}">{{ item }}</view>
-                            </view>
-                        </view>
-                    </view>
+  .page_box{
+    background: @cellsBgColor;
+    box-shadow:0px 4px 12px 2px #000000;
+    border-radius: 12rpx;
+    margin-bottom: 20rpx;
 
-                </view>
-            </view>
-            <!--<icon type="succe面深度清o_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
-        </view>
-    </view>
-</template>
-
-<script>
-  import wepy from 'wepy'
-  import util from '../utils/util'
-  import {
-    SYSTEM_INFO,
-    SEL_CLASS_CODE
-  } from '../utils/constant';
-  import api from '../api/api'
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '套餐详情'
-    }
-    components = {
-
-    }
-
-    data = {
-      dateList: [1,2,3,4,5],
-      product: [],
-
-    }
-
-    computed = {
-    }
-
-    methods = {
-      selectPackage (e) {
-        let pacakge_id = e.currentTarget.dataset.code
-        let package_detail = "*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就"
-        let package_name = "168套餐 预计用时：3小时"
-        wepy.navigateTo({
-          url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
-        })
+    .img_box{
+      height: 388rpx;
+      border-top-left-radius: 20rpx;
+      border-top-right-radius: 20rpx;
+      width: 100%;
+      .img{
+        border-top-left-radius: 20rpx;
+        border-top-right-radius: 20rpx;
+        width: 100%;
+        height: 100%;
+      }
+      .mainTitle,.product_name{
+        color: #FFFFFF;
+        font-size: 60rpx;
+        line-height:72rpx;
+        position: relative;
+        left: 16rpx;
+        top: -200rpx;
       }
     }
 
-
-    async onLoad(option) {
-      let product_id = option.product_id
-      const res = await api.getproductdetails({
-        query: {
-          product_id: product_id
-        },
-        method: 'POST'
-      });
-      this.product = res.data.data[0]
-      this.$apply()
+    .detail{
+      padding: 34rpx 40rpx 0 28rpx;
+      .title{
+        color: @txtColor;
+        font-size: 32rpx;
+        line-height: 44rpx;
+      }
+      .tips{
+        color: @txtColor;
+        font-size: @normalFontSize;
+        line-height: 34rpx;
+        padding: 8rpx 0 40rpx 0;
+      }
+      .main{
+        padding-top: 16rpx;
+        padding-bottom: 16rpx;
+        border-top:1px solid @cellsBorder;
+        &.border-none{
+          border:none;
+        }
+        .title{
+          padding-bottom: 18rpx;
+          font-size: 32rpx;
+          line-height: 44rpx;
+          color: @normalFontSize;
+        }
+        .content{
+          color: #9B9B9B;
+          font-size: @normalFontSize;
+          line-height: 34rpx;
+        }
+      }
     }
 
-    onShow() {
+    .hidden-box{
+      overflow: hidden;
+      height: 470rpx;
     }
 
+    .omit{
+      color: #9B9B9B;
+      font-size: @normalFontSize;
+      line-height: 34rpx;
+      padding: 8rpx 40rpx 32rpx 28rpx;
+      letter-spacing: 4rpx;
+    }
 
+    .tap{
+      line-height: 40rpx;
+      display: inline-block;
+      padding: 34rpx 40rpx 32rpx 28rpx;
+      color: @txtColor;
+      font-size: 28rpx;
+
+      &:last-child{
+        color: #9B9B9B;
+      }
+
+      image{
+        position: relative;
+        top: -2rpx;
+        left: 11rpx;
+        width: 17rpx;
+        height: 10rpx;
+      }
+
+      .rotation{
+        .rotate(180deg);
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="page">
+    <!--頂部-->
+    <view>
+      <view class="page_box">
+        <view class="img_box">
+          <image class="img" src="../images/slices/168.png" alt="" />
+          <view class="mainTitle">
+            {{ product.product_price }}
+          </view>
+          <view class="product_name">
+            {{ product.product_name }}
+          </view>
+        </view>
+        <view class="detail {{hiddenFlag ? 'hidden-box' : ''}}">
+          <view class="title">
+            {{ product.product_subtitle }}
+          </view>
+          <view class="tips">耗时约{{ product.product_cost_time / 60 }}小时, 开始前{{ product.product_cancel_limit_time }}分钟内不可取消</view>
+
+          <view wx:for="{{product.product_details}}" wx:key="item">
+            <view class="main {{ (0 == index) ? 'border-none':''}}" >
+              <view class="title">
+                {{ item.title }}
+              </view>
+              <view class="content">
+                <view wx:for="{{ item.content }}">{{ item }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="omit" hidden="{{hiddenFlag? '' : 'false'}}">...</view>
+        <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
+        <view class="tap" @tap="hidden">
+          {{hiddenFlag? '展开详情' : '收起详情'}}
+          <image class="{{hiddenFlag? '' : 'rotation'}}" src="../images/appointment/down.svg"></image>
+        </view>
+      </view>
+      <!--<icon type="succe面深度清o_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import util from '../utils/util'
+import {
+  SYSTEM_INFO,
+  SEL_CLASS_CODE
+} from '../utils/constant';
+import api from '../api/api'
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '套餐详情'
+  }
+  components = {
 
   }
+
+  data = {
+    dateList: [1,2,3,4,5],
+    product: [],
+    hiddenFlag: true,
+  }
+
+  computed = {
+  }
+
+  methods = {
+    hidden(){
+      this.hiddenFlag = !this.hiddenFlag;
+    },
+    selectPackage (e) {
+      let pacakge_id = e.currentTarget.dataset.code
+      let package_detail = "*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就"
+      let package_name = "168套餐 预计用时：3小时"
+      wepy.navigateTo({
+        url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
+      })
+    }
+  }
+
+
+  async onLoad(option) {
+    let product_id = option.product_id
+    const res = await api.getproductdetails({
+      query: {
+        product_id: product_id
+      },
+      method: 'POST'
+    });
+    this.product = res.data.data[0]
+    this.$apply()
+  }
+
+  onShow() {
+  }
+
+
+
+}
 </script>

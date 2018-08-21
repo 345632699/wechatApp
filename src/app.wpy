@@ -1,5 +1,7 @@
 <style lang="less">
-.container {
+@import './style/weui.less';
+
+/*.container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
-@import './style/weui.less';
+
 .page{
     background-color: #F8F8F8;
     font-size: 16px;
@@ -37,7 +39,7 @@
     color: #888888;
     text-align: left;
     font-size: 14px;
-}
+} */
 </style>
 
 <script>
@@ -71,17 +73,17 @@ export default class extends wepy.app {
     ],
     window: {
       backgroundTextStyle: 'dark',
-      navigationBarBackgroundColor: '#FFFFFF',
+      navigationBarBackgroundColor: '#212121',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
+      navigationBarTextStyle: '#FFFFFF',
       enablePullDownRefresh: false,
-      backgroundColor: '#FFFFFF'
+      backgroundColor: '#212121'
 
     },
     "tabBar": {
-      "color": "#838683",
+      "color": "#9B9B9B",
       "selectedColor": "#FFFFFF",
-      "backgroundColor": "#373C38",
+      "backgroundColor": "#212121",
       "borderStyle": "black",
       "list": [{
         "pagePath": "pages/index",

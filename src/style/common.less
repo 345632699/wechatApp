@@ -1,0 +1,52 @@
+/* 全局变量 */
+@bgColor: #212121;//背景颜色
+@titleColor: #FFFFFF;//标题颜色
+@txtColor: #FAFAFA;//一般字体颜色
+@normalFontSize: 24rpx;//一般字体大小
+@normalBtnBgColor: #C42B2B;//正常按钮背景色
+@normalBtnBorderColor: #7E1919;//正常按钮边框色
+@cancelBtnBgColor: #4A4A4A;//取消按钮背景色
+
+@cellsBgColor: #2E2E2E;
+@cellsBorder: #4A4A4A;
+
+/* 全局css */
+.blur{//背景虚化,高斯模糊+暗度
+  -webkit-filter: blur(5px) brightness(50%);
+  -moz-filter: blur(5px) brightness(50%);
+  -o-filter: blur(5px) brightness(50%);
+  -ms-filter: blur(5px) brightness(50%);
+  filter: blur(5px) brightness(50%);
+}
+.centerBox{//水平垂直居中
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.betweenBox{
+  display: flex;
+  justify-content: space-between;
+}
+.longBtn(@bgColr,@borderColor:transparent){//按钮
+  background: @bgColr;
+  color: @txtColor;
+  border: 1px solid @borderColor;
+}
+.rotate(@rotate){
+  /* 旋转@rotate度 */
+  transform:rotate(@rotate);
+  -ms-transform:rotate(@rotate); /* Internet Explorer */
+  -moz-transform:rotate(@rotate); /* Firefox */
+  -webkit-transform:rotate(@rotate); /* Safari 和 Chrome */
+  -o-transform:rotate(@rotate); /* Opera */
+}
+.bottom(@height){
+  padding-bottom: @height;
+}
+button:after{
+  border:0px;
+}
+page,.page{
+  font-family:PingFangSC-Regular;
+  background: @bgColor;
+}

@@ -1,11 +1,129 @@
+<style type="less">
+@import '../style/common.less';
+  .page{
+    .tip-buttom{
+      color:#9B9B9B;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 96rpx;
+      box-shadow:0px -2px 24px 0px #000000;
+      .weui-cell{
+        padding:0 32rpx 0 32rpx;
+        background: @cellsBgColor;
+        font-size: 24rpx;
+        height: 100%;
+
+        .weui-cell__hd{
+          padding: 0 38rpx 0 24rpx;
+          image{
+            width:12rpx;
+            height: 20rpx;
+          }
+          .stepper{
+            .rotate(90deg);
+          }
+        }
+        .weui-cell__ft{
+          color:#9B9B9B;
+        }
+      }
+    }
+    .weui-mask{
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .weui-actionsheet{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      z-index: 5000;
+      width: 100%;
+      background-color: @cellsBgColor;
+      -webkit-transition: -webkit-transform .3s;
+      transition: -webkit-transform .3s;
+      transition: transform .3s;
+      transition: transform .3s,
+      -webkit-transform .3s;
+      &.weui-actionsheet_toggle{
+         -webkit-transform: translate(0, 0);
+         transform: translate(0, 0);
+      }
+      .weui-actionsheet__menu{
+        background: @cellsBgColor;
+        height: 482rpx;
+
+        .hide-mask{
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          height: 100%;
+          width: 100%;
+          background: rgba(0, 0, 0, 0);
+        }
+
+        .weui-actionsheet__title{
+          display: flex;
+          justify-content: flex-start;
+          line-height:34rpx;
+          padding: 36rpx 70rpx 22rpx;
+          font-size: @normalFontSize;
+          color: #9B9B9B;
+
+          .img{
+            padding-right: 24rpx;
+            image{
+              width:20rpx;
+              height: 12rpx;
+            }
+          }
+        }
+      }
+
+      .weui-actionsheet__cell{
+        .betweenBox;
+        line-height:44rpx;
+        margin: 20rpx 40rpx 0 82rpx;
+        padding-bottom: 18rpx;
+        border-bottom: 2rpx solid @cellsBorder;
+        font-size: 32rpx;
+        color: #6D6E71;
+
+        .left{
+          padding-left: 32rpx;
+        }
+
+        .right{
+          padding-right: 26rpx;
+        }
+        &:last-child{
+          border-bottom: 0;
+        }
+      }
+      .active{
+        color: #FFFFFF !important;
+      }
+    }
+  }
+</style>
 <template>
   <view class="page">
     <!--按钮导航栏-->
     <view class="weui-cells_after-title tip-buttom" wx:if="{{ 1 == type }}" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="../images/appointment/myorder.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:if="{{ type >1 }}"></image>
-          <image src="../images/appointment/stepper.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:else></image>
+          <image src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
+          <image class="stepper" src="../images/appointment/left-rounded.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
         <view class="weui-cell__ft">{{ step }}/4</view>
@@ -14,8 +132,8 @@
     <view class="weui-cells_after-title tip-buttom" wx:if="{{ 2 == type }}" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="../images/appointment/myorder.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:if="{{ type >1 }}"></image>
-          <image src="../images/appointment/stepper.png" style="margin-right: 5px;margin-top: -6rpx;vertical-align: middle;width:20px; height: 20px;" wx:else></image>
+          <image src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
+          <image class="stepper" src="../images/appointment/left-rounded.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
         <view class="weui-cell__ft">{{ step }}/ {{ order_count }}</view>
@@ -27,38 +145,28 @@
       </view>
       <view class="weui-actionsheet {{ active ? 'weui-actionsheet_toggle' : '' }} ">
         <view class="weui-actionsheet__menu">
-          <view class="weui-actionsheet__cell" @tap="hideAct">
-            <view class="first">
-              <image style="width: 30rpx;height: 20rpx;padding: 8rpx;" src="../images/appointment/sheet.svg" ></image>
+          <view class="hide-mask" @tap="hideAct"></view>
+          <view class="weui-actionsheet__title">
+            <view class="img">
+              <image src="../images/appointment/sheet.svg" ></image>
             </view>
-            <view class="left {{ 1 == step ? 'active' : '' }}">
-              1
-            </view>
-            <view class="right">选择时间</view>
+            <view>预订流程</view>
           </view>
-          <view class="weui-actionsheet__cell {{ 2 == step ? 'active' : '' }}" @tap="hideAct">
-            <view class="first">
-            </view>
-            <view class="left">
-              2
-            </view>
-            <view class="right">选择套餐</view>
+          <view class="weui-actionsheet__cell {{ 1 == step ? 'active' : '' }}">
+            <view class="left">选择时间</view>
+            <view class="right">1/4</view>
           </view>
-          <view class="weui-actionsheet__cell {{ 3 == step ? 'active' : '' }}" @tap="hideAct">
-            <view class="first">
-            </view>
-            <view class="left">
-              3
-            </view>
-            <view class="right">支付定金</view>
+          <view class="weui-actionsheet__cell {{ 2 == step ? 'active' : '' }}">
+            <view class="left">选择套餐</view>
+            <view class="right">2/4</view>
           </view>
-          <view class="weui-actionsheet__cell {{ 4 == step ? 'active' : '' }}" @tap="hideAct">
-            <view class="first">
-            </view>
-            <view class="left">
-              4
-            </view>
-            <view class="right">支付尾款</view>
+          <view class="weui-actionsheet__cell {{ 3 == step ? 'active' : '' }}">
+            <view class="left">支付定金</view>
+            <view class="right">3/4</view>
+          </view>
+          <view class="weui-actionsheet__cell {{ 4 == step ? 'active' : '' }}">
+            <view class="left">支付尾款</view>
+            <view class="right">4/4</view>
           </view>
         </view>
       </view>
@@ -106,94 +214,3 @@
 
   }
 </script>
-<style type="less">
-  .page{
-    .tip-buttom{
-      color:#FFFFFF;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 112rpx;
-      .weui-cell{
-        padding:0 32rpx 0 32rpx;
-        background: #5A5B5E;
-        font-size: 24rpx;
-        line-height: 112rpx;
-        .weui-cell__ft{
-          color:#FFFFFF;
-        }
-      }
-    }
-    .weui-mask{
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-    }
-    .weui-actionsheet{
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      -webkit-transform: translate(0, 100%);
-      transform: translate(0, 100%);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      z-index: 5000;
-      width: 100%;
-      background-color: #EFEFF4;
-      -webkit-transition: -webkit-transform .3s;
-      transition: -webkit-transform .3s;
-      transition: transform .3s;
-      transition: transform .3s,
-      -webkit-transform .3s;
-      &.weui-actionsheet_toggle{
-         -webkit-transform: translate(0, 0);
-         transform: translate(0, 0);
-      }
-      .weui-actionsheet__menu{
-        color:rgba(255,255,255,0.4);
-        background: #5A5B5E;
-        .weui-actionsheet__cell{
-          position: relative;
-          padding: 10px 0;
-          text-align: center;
-          font-size: 24rpx;
-          .first{
-            width: 10%;
-            display: inline-block;
-            padding-right: 72rpx;
-            padding-left: 40rpx;
-          }
-          .left{
-            display:inline-block;
-            border-radius: 50%;
-            height: 60rpx;
-            width: 60rpx;
-            border:2px solid rgba(255,255,255,0.4);
-            line-height: 60rpx;
-            font-weight: bold;
-          }
-          .right{
-            display:inline-block;
-            width: 55%;
-            height: 60rpx;
-            line-height:60rpx;
-            text-align: right;
-            padding-right: 64rpx;
-          }
-          &.active{
-             color: #FFFFFF;
-             .left{
-               border: 2px solid #FFFFFF;
-             }
-          }
-        }
-      }
-    }
-  }
-
-</style>

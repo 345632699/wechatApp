@@ -1,298 +1,253 @@
 <style lang="less">
-    page {
-        background-color: #FFFFFF;
-        height: 100%;
-    }
-    .page__hd{
-        padding: 50rpx 50rpx 100rpx 50rpx;
-        text-align: center;
-        font-size: 24rpx;
-        background-color: #FFFFFF;
-    }
-    .page__title{
-        display: inline-block;
-        padding: 20rpx 40rpx;
-        font-size: 24rpx;
-        color: #AAAAAA;
-        border-bottom: 1px solid #CCCCCC;
-    }
-    .page__desc{
-        display: none;
-        margin-top: 20rpx;
-        font-size: 24rpx;
-        color: #BBBBBB;
-    }
-    .section{
-        margin-bottom: 80rpx;
-    }
-    .section__title{
-        margin-bottom: 16rpx;
-        padding-left: 30rpx;
-        padding-right: 30rpx;
-    }
-    .picker{
-        background-color: #FFFFFF;
-    }
-    .weui-cells{
-        padding-left: 10rpx;
-        padding-right: 10rpx;
-        padding-top: 16rpx;
-        &:before {
-            margin-right:48rpx;
-            margin-left: 48rpx;
-        }
-        .weui-btn{
-            &.mybtn{
-                border:none;
-                margin:0 32rpx 0 32rpx;
-                background: #373C38;
-                border-radius: 1.5rem;
-                height:72rpx;
-                font-size:28rpx;
-                color:rgba(255,255,255,1);
-                line-height:72rpx;
-                width: 610rpx;
-                margin: auto;
-                margin-bottom: 32rpx;
-            }
+@import '../style/common.less';
+page,
+.page{
+  color: @txtColor;
+
+  .page-bd{
+    margin: 60rpx 26rpx 30rpx 24rpx;
+    background: @cellsBgColor;
+    box-shadow:0 4rpx 8rpx 0 #000000;
+    border-radius:12rpx;
+
+    .cells{
+      padding: 0 36rpx;
+      .cell{
+        border-bottom: 2rpx solid @cellsBorder;
+        padding: 48rpx 0 24rpx 0;
+        .betweenBox;
+
+        .cell-left{
+          padding: 14rpx 0 0 18rpx;
+
+          image{
+            width: 46rpx;
+            height: 46rpx;
+          }
         }
 
-    }
-    .weui-cell{
-        padding-top: 32rpx;
-        padding-bottom: 0;
-        font-size: 24rpx;
-        line-height: 24rpx;
-        &.money{
-            &:before {
-                display: none;
+        .cell-right{
+          width: 528rpx;
+          align-items: center;
+          display: flex;
+
+          .txt{
+            width: 510rpx;
+            .betweenBox;
+            flex-direction: column;
+
+            .title{
+              color: @txtColor;
+              font-size: 32rpx;
+              line-height:44rpx;
+              padding-bottom: 8rpx;
             }
-        }
-        &.input-text{
-            padding-bottom: 24rpx;
-            padding-top: 16rpx;
-            &:before {
-                display: none;
-            }
-            .weui-flex__item{
-                .size78{
-                    height: 156rpx;
-                    width: 95%;
-                    padding-left: 10rpx;
+
+            .subtitle{
+              color: #9B9B9B;
+              font-size: @normalFontSize;
+              line-height:34rpx;
+
+              .sub-item{
+                .betweenBox;
+                padding: 14rpx 0;
+
+                &:first-child{
+                  padding-top: 20rpx;
                 }
+
+                &:last-child{
+                  padding-bottom: 0;
+                }
+              }
+
+              .sel-car{
+                height: 34rpx;
+
+                image{
+                  margin-left: 8rpx;
+                  width:20rpx; 
+                  height: 12rpx;
+                }
+              }
             }
-        }
-        .carNum{
-            font-size: 24rpx;
-            &.weui-select{
-                border: none;
-                padding-right:1.8rem;
-                color: #B1B4B2;
-                margin-top: -1.3rem;
-                text-align: right;
-            }
-        }
-        .weui-cell__bd{
-            font-size: 32rpx;
-            line-height: 32rpx;
-            margin-right: 20rpx;
-            &.font14{
-                font-size: 28rpx;
-                height: 48rpx;
-                line-height: 48rpx;
-            }
+          }
+
+          .skip{
+            width: 12rpx;
+            height: 20rpx;
+            .rotate(-180deg);
+          }
+
+          .hint{
+            color: #C42B2B;
+            font-size: @normalFontSize;
+            width: 100%;
+            text-align: left;
+            margin-top: 8rpx;
+          }
         }
 
+        &:last-child{
+          border-bottom: 0;
+        }
+      }
     }
-    .font-gray{
-        color: #B1B4B2;
+
+    .pay-btn{
+      padding: 14rpx 46rpx 96rpx;
+
+      .nomalBtn{
+        .longBtn(@normalBtnBgColor,@normalBtnBorderColor);
+      }
+
+      .cancelBtn{
+        .longBtn(@cancelBtnBgColor,@cancelBtnBgColor);
+      }
     }
-    .font-red{
-        color: #E64340;
-    }
-    .img-format{
-        margin-right: 5px;
-        vertical-align: middle;
-        width:32rpx;
-        height: 32rpx;
-    }
-    .margin-format{
-        margin-top: -5px;
-    }
-    .text-format{
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-    }
-    .weui-api-dialog__hd{
-        border: 1px solid red;
-        background: red;
-        color:rgba(0,0,0,0.87);
-    }
-    .brightGrey{
-        color:#E0E0E0;
-    }
+  }
+
+  .page-fd{
+    .bottom(100rpx);
+  }
+}
 
 </style>
 <template>
-    <view class="page">
-        <!--頂部-->
-        <scroll-view scroll-y scroll-with-animation="true" class="page__bd">
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/time.png" style=""></image>
-                    </view>
-                    <view class="weui-cell__bd">预约时间</view>
-                </view>
-                <view class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view>{{ selectDate }} {{start_time}}</view>
-                </view>
-            </view>
+  <view class="page">
+    <!-- <navigator  url="/pages/appointment0">dddd</navigator> -->
+    <!--頂部-->
+    <view class="page-bd">
+      <view class="cells">
 
-            <!--<view class="weui-cells weui-cells_after-title">-->
-                <!--<view class="weui-cell">-->
-                    <!--<view class="weui-cell__hd">-->
-                        <!--<image class="img-format" src="../images/appointment/washing.png" ></image>-->
-                    <!--</view>-->
-                    <!--<view class="weui-cell__bd">洗车进行中…</view>-->
-                <!--</view>-->
-                <!--<view class="weui-cell input-text">-->
-                    <!--<view class="weui-cell__hd">-->
-                        <!--<image class="img-format" src="" ></image>-->
-                    <!--</view>-->
-                    <!--<view>预计结束时间 {{ end_time }}</view>-->
-                <!--</view>-->
-            <!--</view>-->
+        <!-- 预约时间 -->
+        <view class="cell">
+          <view class="cell-left">
+            <image src="../images/appointment/time.png"></image>
+          </view>
 
+          <view class="cell-right">
+            <view class="txt">
+              <view class="title">预约时间</view>
+              <view class="subtitle">{{ selectDate }} {{start_time}}</view>
+            </view>
+          </view>
+        </view>
 
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/bus.png" ></image>
-                    </view>
-                    <view class="weui-cell__bd">车牌号码</view>
-                </view>
-                <view class="weui-cell input-text" style="margin-top: -12rpx;padding-bottom: 5px">
-                    <view class="weui-cell__hd margin-format" style="padding-top: 7rpx;padding-left: 4rpx">
-                        <image class="img-format" style="width: 15rpx;height: 15rpx;padding: 8rpx;" src="../images/appointment/down.svg" ></image>
-                    </view>
-                    <view style="width: 60rpx;padding-left: 0">
-                        <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
-                            <view class="picker" style="border-right: 1px solid #B1B4B2">
-                                {{carInfo.currentProvince}}
-                            </view>
-                        </picker>
-                    </view>
-                    <view style="width: 28%">
-                        <input disabled="{{ pay_success >= 1 }}" style="padding-left: 16rpx" class="weui-input" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
-                    </view>
-                    <view class="weui-cell__bd"  wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
-                        <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
-                            <view class="carNum weui-select">从我的车牌中选取</view>
-                        </picker>
-                    </view>
-                </view>
-            </view>
+        <!-- 车牌号码 -->
+        <view class="cell" style="padding-bottom:16rpx;">
+          <view class="cell-left">
+            <image src="../images/appointment/bus.png"></image>
+          </view>
 
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/select.png" ></image>
+          <view class="cell-right">
+            <view class="txt" style="width:100%">
+              <view class="title" style="padding-bottom:0">车牌号码</view>
+              <view class="subtitle" style="display:flex;justify-content: flex-start;align-items: center;">
+                <!-- 选择车牌地区 -->
+                <view style="margin-right:24rpx">
+                  <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
+                    <view class="picker">
+                      {{carInfo.currentProvince}}
                     </view>
-                    <view class="weui-cell__bd">套餐选择</view>
+                  </picker>
                 </view>
-                <navigator wx:if="{{ pay_success < 1 }}" url="/pages/sellPackage" hover-class="none" class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="{{ (product.name != '请选择套餐') ? '':'brightGrey'}}">{{ product.name }}</view>
-                    <view class="weui-cell__bd">
-                        <view class="weui-select-right"></view>
-                    </view>
-                </navigator>
-                <view wx:else class="weui-cell input-text">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="{{ (product.name != '请选择套餐') ? '':'brightGrey'}}">{{ product.name }}</view>
+                <!-- 车牌号码输入 -->
+                <view style="max-width:{{pay_success >= 1?'230rpx':'450rpx'}}">
+                  <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                 </view>
-                <view class="weui-cell input-text" style="padding-bottom: 0;margin-top: -20rpx;" hidden="{{ product.detail ? '':'false'}}">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
+                <!-- 从已有的车牌号码中选取 -->
+                <view class="sel-car"  wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
+                  <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
+                    <view>
+                      从我的车牌中选取
+                      <image src="../images/appointment/sheet.svg" ></image>
                     </view>
-                    <view class=" font-red">*开始洗车前24小时内取消不可退定金</view>
+                  </picker>
                 </view>
-                <view class="weui-cell input-text" hidden="{{ product.detail ? '':'false'}}">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class=" font-gray text-format">*包含: {{ product.detail }}</view>
-                </view>
+              </view>
             </view>
+          </view>
+        </view>
 
-            <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/addPhone.svg" ></image>
-                    </view>
-                    <view class="weui-cell__bd">手机号码</view>
-                </view>
-                <view class="weui-cell input-text" @tap="bindMobile">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone > 0 }}">{{ phone }}</view>
-                    <view class="{{ (phone > 0) ? '':'brightGrey'}}" wx:if="{{ phone <= 0 }}">绑定手机以便我们与您取得联系</view>
-                    <view class="weui-cell__bd" wx:if="{{ pay_success < 1 }}">
-                        <view class="weui-select-right"></view>
-                    </view>
-                </view>
-            </view>
+        <!-- 绑定手机号码 -->
+        <view class="cell" @tap="bindMobile">
+          <view class="cell-left">
+            <image src="../images/appointment/addPhone.svg"></image>
+          </view>
 
-            <view class="weui-cells weui-cells_after-title" wx:if="{{ product.id }}">
-                <view class="weui-cell money">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="../images/appointment/money.png" ></image>
-                    </view>
-                    <view class="weui-cell__bd font14">
-                        定金 {{  pay_success > 0  ? "(已支付)" : ""}}
-                    </view>
-                    <view class="weui-cell__ft">￥{{ product.deposite }}</view>
-                </view>
-                <view class="weui-cell money">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="weui-cell__bd font14">尾款</view>
-                    <view class="weui-cell__ft">￥{{ product.price - product.deposite }}</view>
-                </view>
-                <view class="weui-cell money" style="padding-bottom: 32rpx">
-                    <view class="weui-cell__hd">
-                        <image class="img-format" src="" ></image>
-                    </view>
-                    <view class="weui-cell__bd font14">总计</view>
-                    <view class="weui-cell__ft">￥{{ product.price }}</view>
-                </view>
+          <view class="cell-right">
+            <view class="txt">
+              <view class="title">手机号码</view>
+              <view class="subtitle">{{phone > 0 ? phone : '绑定手机以便我们与您取得联系'}}</view>
             </view>
-            <view class="weui-cells weui-cells_after-title" style="padding-top: 64rpx;padding-bottom: 100px">
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success<1 }}" @tap="payPre">支付定金</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
-                <button class="weui-btn mybtn" type="primary" plain="true" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
+            <image class="skip" wx:if="{{ pay_success < 1 }}" src="../images/appointment/left-rounded.png"></image>
+          </view>
+        </view>
+
+        <!-- 选择套餐 -->
+        <view class="cell" @tap="toSelPackage">
+          <view class="cell-left">
+            <image src="../images/appointment/select.png"></image>
+          </view>
+
+          <view class="cell-right" style="flex-direction: column;">
+            <view style="width:100%;display:flex;align-items:center;">
+              <view class="txt">
+                <view class="title">套餐选择</view>
+                <view class="subtitle">{{ product.name }}</view>
+              </view>
+              <image wx:if="{{ pay_success < 1 }}" class="skip" src="../images/appointment/left-rounded.png"></image>
             </view>
-        </scroll-view>
+            <view class="hint"  hidden="{{ product.detail ? '':'false'}}">*开始洗车前24小时内取消不可退定金</view>
+            <view class="hint"  style="color:#9B9B9B" hidden="{{ product.detail ? '':'false'}}">*包含: {{ product.detail }}</view>
+          </view>
+        </view>
+
+        <view class="cell" wx:if="{{ product.id }}">
+          <view class="cell-left" style="padding-top:0">
+            <image src="../images/appointment/money.png"></image>
+          </view>
+
+          <view class="cell-right">
+            <view class="txt" style="width:518rpx">
+              <view class="title">支付费用</view>
+              <view class="subtitle">
+                <view class="sub-item">
+                  <text>定金 {{  pay_success > 0  ? "(已支付)" : ""}}</text>
+                  <text>￥{{ product.deposite }}</text>
+                </view>
+                <view class="sub-item">
+                  <text>尾款</text>
+                  <text>￥{{ product.price - product.deposite }}</text>
+                </view>
+                <view class="sub-item">
+                  <text>总计</text>
+                  <text>￥{{ product.price }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="pay-btn">
+        <button class="nomalBtn" type="default" wx:if="{{ pay_success < 1 }}" @tap="payPre">支付定金</button>
+          <button class="nomalBtn" type="default" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
+          <button class="cancelBtn" type="default" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
+        </view>
+      </view>
+
+      <view class="page-fd"></view>
     </view>
     <tips :step.sync="step" :title.sync="title"></tips>
     <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
     <pay :pay_active.sync="pay_active" :user_balance.sync="user_balance" :amount.sync="amount"></pay>
     <mobile :bind_active.sync="bind_active" @change.user="changePhone"></mobile>
 
-</template>
+  </template>
 
-<script>
+  <script>
   import wepy from 'wepy'
   import util from '../utils/util'
   import {
@@ -373,6 +328,18 @@
 
 
     methods = {
+      //----------------------------------------------
+      toSelPackage () {
+        if(this.pay_success < 1){
+          wepy.navigateTo({
+            url: `/pages/sellPackage`
+          });
+        }else{
+          return false;
+        }
+      },
+
+      //----------------------------------------------
       bindProvinceChange (e) {
         this.multiIndex =  e.detail.value
         this.carInfo.currentProvince = this.province[0][this.multiIndex[0]]+this.province[1][this.multiIndex[1]]
@@ -454,73 +421,73 @@
 
       bindMobile() {
         if (this.pay_success < 1)
-            this.bind_active = 1
+          this.bind_active = 1
       }
 
     }
 
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
-     events = {
-       'comfirmAction': async  (comfirm) => {
-         if (comfirm == 1){
-           const res = await api.cancelorder({
-             query: {
-               orderId: parseInt(this.order_id),
-               appid:APPID,
-             },
-             method: 'POST'
-           });
-           if (res.data.status){
-             this.cancel = 1
-             this.$apply()
-             wepy.navigateBack()
-             tip.toast("取消成功")
-           }
+    events = {
+     'comfirmAction': async  (comfirm) => {
+       if (comfirm == 1){
+         const res = await api.cancelorder({
+           query: {
+             orderId: parseInt(this.order_id),
+             appid:APPID,
+           },
+           method: 'POST'
+         });
+         if (res.data.status){
+           this.cancel = 1
+           this.$apply()
+           wepy.navigateBack()
+           tip.toast("取消成功")
          }
-       },
-      'payByBalance' : async (e) => {
-        const res = await api.balancedepositpayment({
-          query: {
-            orderId: this.order_id,
-          },
-          method: 'POST'
-        });
-        if(res.data.status){
-          this.pay_success = 1
-          this.step = 4
-          this.title = "支付尾款"
-          this.$apply()
-          tip.success('支付成功')
-        }else {
-          tip.error(res.data.errmsg)
-        }
-      },
-      'payByWechat' : async (e) => {
-        const res = await api.wxdepositpayment({
-          query: {
-            userId: wepy.getStorageSync('userid'),
-            appId: APPID,
-            orderId: this.order_id,
-            feeType: "CNY",
-            goodsTag: "",
-            limitPay: "",
-          },
-          method: 'POST'
-        });
-        let wxpayData = res.data.data[0]
-        let that = this
-        await this.wxpay(wxpayData,that)
+       }
+     },
+     'payByBalance' : async (e) => {
+      const res = await api.balancedepositpayment({
+        query: {
+          orderId: this.order_id,
+        },
+        method: 'POST'
+      });
+      if(res.data.status){
+        this.pay_success = 1
+        this.step = 4
+        this.title = "支付尾款"
+        this.$apply()
+        tip.success('支付成功')
+      }else {
+        tip.error(res.data.errmsg)
       }
+    },
+    'payByWechat' : async (e) => {
+      const res = await api.wxdepositpayment({
+        query: {
+          userId: wepy.getStorageSync('userid'),
+          appId: APPID,
+          orderId: this.order_id,
+          feeType: "CNY",
+          goodsTag: "",
+          limitPay: "",
+        },
+        method: 'POST'
+      });
+      let wxpayData = res.data.data[0]
+      let that = this
+      await this.wxpay(wxpayData,that)
     }
+  }
 
-    async wxpay(param,that) {
-      wx.requestPayment({
-        timeStamp: param.timeStamp,
-        nonceStr: param.nonceStr,
-        package: param.package,
-        signType: param.signType,
-        paySign: param.paySign,
-        success: function (res) {
+  async wxpay(param,that) {
+    wx.requestPayment({
+      timeStamp: param.timeStamp,
+      nonceStr: param.nonceStr,
+      package: param.package,
+      signType: param.signType,
+      paySign: param.paySign,
+      success: function (res) {
           // success
           that.step = 4
           that.title = "支付尾款"
@@ -537,25 +504,33 @@
           console.log("done");
         }
       })
-    }
+  }
 
-    onLoad(option) {
+  onLoad(option) {
+    console.log("option:",option);
+    if(option.package_id){
       this.product.id = option.package_id
       this.product.detail = option.package_detail
       this.product.name = option.package_name
       this.product.deposite = option.product_deposite
       this.product.price = option.product_price
       this.amount = option.product_deposite
-      if (option.package_id) {
-        this.step = 3
-        this.title = "支付定金"
-        this.$apply()
-      }
-      if( typeof(option.package_id) == 'undefined' ){
-        this.selectDate = option.selectDate
-        this.start_time = option.start_time
-        this.end_time = option.end_time
-        this.branch_id = option.branch_id
+    }
+    
+    if (option.package_id) {
+      this.step = 3
+      this.title = "支付定金"
+      this.$apply()
+    }
+    if( typeof(option.package_id) == 'undefined' ){
+        // this.selectDate = option.selectDate
+        // this.start_time = option.start_time
+        // this.end_time = option.end_time
+        // this.branch_id = option.branch_id
+        this.selectDate = "2018-08-18"
+        this.start_time = "13:00"
+        this.end_time = "17:00"
+        this.branch_id = "1"
         wepy.setStorageSync('selectDate',option.selectDate)
         wepy.setStorageSync('start_time',option.start_time)
         wepy.setStorageSync('end_time',option.end_time)
@@ -593,4 +568,4 @@
       this.$apply()
     }
   }
-</script>
+  </script>

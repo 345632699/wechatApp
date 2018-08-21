@@ -1,162 +1,172 @@
 <style lang="less">
-    .page{
-        background: #FFFFFF;
-        padding: 32rpx;
+@import '../style/common.less';
+.page{
+  padding: 60rpx 24rpx 60rpx 26rpx;
+  .page_box{
+    background: @cellsBgColor;
+    box-shadow:0px 4px 12px 2px #000000;
+    border-radius: 12rpx;
+    margin-bottom: 20rpx;
+    .img_box{
+      height: 388rpx;
+      border-top-left-radius: 20rpx;
+      border-top-right-radius: 20rpx;
+      width: 100%;
+      .img{
+        border-top-left-radius: 20rpx;
+        border-top-right-radius: 20rpx;
+        width: 100%;
+        height: 100%;
+      }
+      .mainTitle,.product_name{
+        color: #FFFFFF;
+        font-size: 60rpx;
+        line-height:72rpx;
+        position: relative;
+        left: 16rpx;
+        top: -200rpx;
+      }
     }
-    .page_box{
-        border: 1px solid #D8D8D8;
-        height: 758rpx;
-        border-radius: 20rpx;
-        margin-bottom: 20rpx;
-        .img_box{
-            height: 388rpx;
-            border-top-left-radius: 20rpx;
-            border-top-right-radius: 20rpx;
-            width: 100%;
-            .img{
-                border-top-left-radius: 20rpx;
-                border-top-right-radius: 20rpx;
-                width: 100%;
-                height: 100%;
-            }
-            .mainTitle{
-                color: #FFFFFF;
-                font-size: 70rpx;
-                position: relative;
-                top: -200rpx;
-                left: 16rpx;
-            }
-            .product_name{
-                color: #FFFFFF;
-                font-size: 70rpx;
-                position: relative;
-                top: -240rpx;
-                left: 16rpx;
-            }
+    .detail{
+      padding: 34rpx 40rpx 0rpx 28rpx;
+      .title{
+        color: @txtColor;
+        font-size: 32rpx;
+        line-height: 44rpx;
+      }
+      .tips{
+        color: @txtColor;
+        font-size: @normalFontSize;
+        line-height: 34rpx;
+        padding: 8rpx 0 40rpx 0;
+      }
+      .main{
+        font-size: @normalFontSize;
+        line-height: 34rpx;
+        color: #9B9B9B;
+        text-align: justify;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-indent: 0;
+      }
+      .tap{
+        line-height: 40rpx;
+        display: inline-block;
+        padding: 44rpx 116rpx 32rpx 0;
+        color: @txtColor;
+        font-size: 28rpx;
+
+        &:last-child{
+          color: #9B9B9B;
         }
-        .detail{
-            padding: 36rpx 32rpx 36rpx 32rpx;
-            .title{
-                color: #000000;
-                font-size: 40rpx;
-                font-weight: bold;
-            }
-            .tips{
-                color: #000000;
-                font-size:28rpx;
-                padding-bottom: 40rpx;
-            }
-            .main{
-                font-size:28rpx;
-                color:rgba(0,0,0,0.6);
-                text-align: justify;
-                display: -webkit-box;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
-                text-indent: 0;
-            }
-            .tap{
-                display: inline-block;
-                padding-right: 48rpx;
-                padding-bottom: 36rpx;
-                padding-top: 40rpx;
-                color:#373C38;
-                font-size: 28rpx;
-            }
+
+        image{
+          position: relative;
+          top: -2rpx;
+          left: 11rpx;
+          width: 17rpx;
+          height: 10rpx;
+          //padding: 15rpx 11rpx;
         }
+      }
     }
+  }
+}
 </style>
 <template>
-    <view class="page">
-        <!--頂部-->
-        <view>
-            <view class="page_box" wx:for="{{dateList}}" wx:key="item">
-                <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="img_box">
-                    <image class="img" src="../images/slices/168.png" alt="" />
-                    <view class="mainTitle">
-                        {{ item.product_price }}
-                    </view>
-                    <view class="product_name">
-                        {{ item.product_name }}
-                    </view>
-                </navigator>
-                <view class="detail">
-                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="title font-weight">
-                        {{ item.product_subtitle }}
-                    </navigator>
-                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</navigator>
-                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
-                    <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
-                    <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情</navigator>
-                </view>
-            </view>
-            <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+  <view class="page">
+    <!--頂部-->
+    <view>
+      <view class="page_box" wx:for="{{dateList}}" wx:key="item">
+        <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="img_box">
+          <image class="img" src="../images/slices/168.png" alt="" />
+          <view class="mainTitle">
+            {{ item.product_price }}
+          </view>
+          <view class="product_name">
+            {{ item.product_name }}
+          </view>
+        </navigator>
+        <view class="detail">
+          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="title font-weight">
+            {{ item.product_subtitle }}
+          </navigator>
+          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</navigator>
+          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
+          <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
+          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情
+            <image src="../images/appointment/down.svg"></image>
+          </navigator>
         </view>
+      </view>
+      <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
     </view>
+  </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import util from '../utils/util'
-  import {
-    SYSTEM_INFO,
-    SEL_CLASS_CODE
-  } from '../utils/constant';
-  import api from "../api/api"
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '套餐选择'
-    }
-    components = {
-
-    }
-
-    data = {
-      dateList: []
-    }
-
-    computed = {
-    }
-
-    methods = {
-      selectPackage (e) {
-        let pacakge_id = e.currentTarget.dataset.code
-        let package_detail =  e.currentTarget.dataset.info.product_subtitle
-        let package_name = e.currentTarget.dataset.info.product_name
-        let product_deposite = e.currentTarget.dataset.info.product_deposite
-        let product_price = e.currentTarget.dataset.info.product_price
-
-        wepy.redirectTo({
-          url:'/pages/appointment?package_id='+pacakge_id+
-          '&package_detail='+package_detail+
-          '&product_price='+product_price+
-          '&product_deposite='+product_deposite+
-          '&package_name='+package_name,
-        })
-      }
-    }
-
-
-    onLoad() {
-
-    }
-
-    async onShow() {
-      const json = await api.getavailableproduct({
-        query: {
-          branch_id: "1"
-        },
-        method: 'POST'
-      });
-      this.dateList = json.data.data
-      this.$apply()
-    }
-
-    onReachBottom() {
-    }
-
+import wepy from 'wepy'
+import util from '../utils/util'
+import {
+  SYSTEM_INFO,
+  SEL_CLASS_CODE
+} from '../utils/constant';
+import api from "../api/api"
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '套餐选择'
+  }
+  components = {
 
   }
+
+  data = {
+    dateList: []
+  }
+
+  computed = {
+  }
+
+  methods = {
+    selectPackage (e) {
+      let pacakge_id = e.currentTarget.dataset.code
+      let package_detail =  e.currentTarget.dataset.info.product_subtitle
+      let package_name = e.currentTarget.dataset.info.product_name
+      let product_deposite = e.currentTarget.dataset.info.product_deposite
+      let product_price = e.currentTarget.dataset.info.product_price
+
+      wepy.redirectTo({
+        url:'/pages/appointment?package_id='+pacakge_id+
+        '&package_detail='+package_detail+
+        '&product_price='+product_price+
+        '&product_deposite='+product_deposite+
+        '&package_name='+package_name,
+      })
+    }
+  }
+
+
+  onLoad() {
+
+  }
+
+  async onShow() {
+    const json = await api.getavailableproduct({
+      query: {
+        branch_id: "1"
+      },
+      method: 'POST'
+    });
+    this.dateList = json.data.data
+    this.$apply()
+  }
+
+  onReachBottom() {
+  }
+
+
+}
 </script>

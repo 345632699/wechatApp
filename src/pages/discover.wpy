@@ -183,10 +183,9 @@
               width: 145rpx;
               height: 55rpx;
               margin-right: 20rpx;
-              font-size: 20rpx;
-              // line-height: 28rpx;
+              line-height: 55rpx;
               .longBtn(@normalBtnBgColor, @normalBtnBgColor);
-
+              font-size: 20rpx;
               &:last-child {
                 margin-right: 0;
               }

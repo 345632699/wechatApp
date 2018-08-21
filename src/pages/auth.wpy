@@ -18,7 +18,8 @@
         请允许授权我们，获取你的公开信息(头像，昵称)
     </view>
     <view class="page">
-        <button class="btn" open-type="getUserInfo" @getuserinfo="bindGetUserInfo">用戶授权</button>
+        <button wx:if="userid" class="btn" open-type="getUserInfo" @getuserinfo="bindGetUserInfo">用戶授权</button>
+        <button wx:else class="btn" @tap="reLogin">重新登录</button>
     </view>
 </template>
 
@@ -33,6 +34,7 @@
     }
 
     data = {
+      userid: 0
     }
 
     computed = {
@@ -49,6 +51,11 @@
           //用户按了拒绝按钮
           console.log(3333)
         }
+      },
+      reLogin () {
+        wepy.switchTab({
+          url: './index'
+        })
       }
     }
 
@@ -58,6 +65,8 @@
     }
 
     onShow() {
+      this.userid = wepy.getStorageSync('userid')
+      this.$apply()
     }
 
 

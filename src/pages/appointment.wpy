@@ -523,14 +523,14 @@ page,
       this.$apply()
     }
     if( typeof(option.package_id) == 'undefined' ){
-        // this.selectDate = option.selectDate
-        // this.start_time = option.start_time
-        // this.end_time = option.end_time
-        // this.branch_id = option.branch_id
-        this.selectDate = "2018-08-18"
-        this.start_time = "13:00"
-        this.end_time = "17:00"
-        this.branch_id = "1"
+         this.selectDate = option.selectDate
+         this.start_time = option.start_time
+         this.end_time = option.end_time
+         this.branch_id = option.branch_id
+//        this.selectDate = "2018-08-18"
+//        this.start_time = "13:00"
+//        this.end_time = "17:00"
+//        this.branch_id = "1"
         wepy.setStorageSync('selectDate',option.selectDate)
         wepy.setStorageSync('start_time',option.start_time)
         wepy.setStorageSync('end_time',option.end_time)

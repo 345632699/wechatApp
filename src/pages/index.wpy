@@ -1,43 +1,48 @@
 <style lang="less">
 @import '../style/common.less';
 page,
-.page{
-  @cardHeight: 394rpx;//顶部div高
+.page {
+  @cardHeight: 394rpx; //顶部div高
   color: @titleColor;
 
-  .card{
+  .card {
     height: @cardHeight;
 
-    .card-blur{
+    .card-blur {
       height: @cardHeight;
       .blur;
     }
-    .card-content{
+
+    .card-content {
       height: @cardHeight;
       width: 100%;
-      position:absolute;
+      position: absolute;
       top: 0;
       .centerBox;
       flex-direction: column;
-      .userInfo-avatar{
-        display:block;
+
+      .userInfo-avatar {
+        display: block;
         /* margin-top: 60rpx; */
-        image{
+
+        image {
           width: 176rpx;
           height: 176rpx;
           border-radius: 50%;
         }
       }
-      .userInfo-txt{
+
+      .userInfo-txt {
         text-align: center;
         color: @titleColor;
 
-        .user-name{
+        .user-name {
           font-size: 40rpx;
           font-weight: Semibold;
           margin-top: 22rpx;
         }
-        .msg{
+
+        .msg {
           margin-top: 8rpx;
           font-size: @normalFontSize;
         }
@@ -45,92 +50,107 @@ page,
     }
   }
 
-  .booking-content{
+  .booking-content {
     height: 754rpx;
     text-align: center;
     font-size: @normalFontSize;
-    .booking-msg{
-    	line-height:34rpx;
-      padding: 5rpx 0 45rpx;
-      color:#C42B2B;
-    }
-    .booking-cells{
-        min-height: 672rpx;
-        background: @cellsBgColor;
-        border-radius:20rpx;
-        margin: 0 24rpx 28rpx;
-        .line{
-          border-bottom: 2rpx solid #4A4A4A;
-          margin: 0 38rpx 0 42rpx;
-        }
-        .booking-cell{
-            min-height: 118rpx;
-            margin-right:38rpx;
 
-            .cell-hd{
-                min-height: 80rpx;
-                padding-top: 38rpx;
-                margin-left: 42rpx;
-                .betweenBox;
-                .cell-title{
-                    font-size: 32rpx;
-                    color: @txtColor;
-                    line-height: 44rpx;
-                }
-                .cell-select{
-                    text{
-                        line-height: 34rpx;
-                        color: #9B9B9B;
-                    }
-                    image{
-                        width: 17px;
-                        height: 10px;
-                        margin-left: 32rpx;
-                    }
-                    .rotation{
-                        .rotate(-90deg);
-                    }
-                }
-            }
-            .cell-bd{
-                margin-bottom: 36rpx;
-                min-height: 60rpx;
-                flex-wrap: wrap;
-                display: flex;
-                justify-content:flex-start;
-                .no-data{
-                    width: 100%;
-                    text-align: center;
-                    color: #9B9B9B;
-                }
-                .select-item{
-                    .centerBox;
-                    width: 280rpx;
-                    height: 56rpx;
-                    margin:0 0 18rpx 42rpx;
-                    border: 2rpx solid #9B9B9B;
-                    border-radius: 12rpx;
-                    color: @titleColor;
-                }
-                .item-active{
-                    background: @normalBtnBgColor !important;
-                    border-color: @normalBtnBgColor !important;
-                }
-            }
-        }
-        .cells-btn {
-            margin-top: 32rpx;
-            padding: 60 rpx 46 rpx;
-            .nomalBtn {
-                .longBtn(@normalBtnBgColor, @normalBtnBorderColor);
-            }
-            .cancelBtn {
-                margin-top: 22 rpx;
-                .longBtn(@cancelBtnBgColor, @cancelBtnBgColor);
-            }
-        }
+    .booking-msg {
+      line-height: 34rpx;
+      padding: 5rpx 0 45rpx;
+      color: #C42B2B;
     }
-    .foot-space{
+
+    .booking-cells {
+      min-height: 672rpx;
+      background: @cellsBgColor;
+      border-radius: 20rpx;
+      margin: 0 24rpx 28rpx;
+
+      .line {
+        border-bottom: 2rpx solid #4A4A4A;
+        margin: 0 38rpx 0 42rpx;
+      }
+
+      .booking-cell {
+        min-height: 118rpx;
+        margin-right: 38rpx;
+
+        .cell-hd {
+          min-height: 80rpx;
+          padding-top: 38rpx;
+          margin-left: 42rpx;
+          .betweenBox;
+
+          .cell-title {
+            font-size: 32rpx;
+            color: @txtColor;
+            line-height: 44rpx;
+          }
+
+          .cell-select {
+            text {
+              line-height: 34rpx;
+              color: #9B9B9B;
+            }
+
+            image {
+              width: 17px;
+              height: 10px;
+              margin-left: 32rpx;
+            }
+
+            .rotation {
+              .rotate(-90deg);
+            }
+          }
+        }
+
+        .cell-bd {
+          margin-bottom: 36rpx;
+          min-height: 60rpx;
+          flex-wrap: wrap;
+          display: flex;
+          justify-content: flex-start;
+
+          .no-data {
+            width: 100%;
+            text-align: center;
+            color: #9B9B9B;
+          }
+
+          .select-item {
+            .centerBox;
+            width: 280rpx;
+            height: 56rpx;
+            margin: 0 0 18rpx 42rpx;
+            border: 2rpx solid #9B9B9B;
+            border-radius: 12rpx;
+            color: @titleColor;
+          }
+
+          .item-active {
+            background: @normalBtnBgColor !important;
+            border-color: @normalBtnBgColor !important;
+          }
+        }
+      }
+      .cells-btn {
+        margin-top: 32rpx;
+        padding: 60rpx 46rpx;
+
+        .nomalBtn {
+          .longBtn(@normalBtnBgColor, @normalBtnBorderColor);
+        }
+
+        .cancelBtn {
+          margin-top: 22rpx;
+          .longBtn(@cancelBtnBgColor, @cancelBtnBgColor);
+        }
+      }
+    }
+    
+    .foot-space {
       .bottom(30rpx);
     }
   }
@@ -138,406 +158,289 @@ page,
 
 </style>
 <template>
-    <view class="page">
-        <!-- 用户信息 -->
-        <view class="card">
-            <view class="card-blur"
-                  style="background:url('{{userInfo.avatarUrl}}') no-repeat;background-position:center;background-size: cover;">
-            </view>
-            <view class="card-content">
-                <view class="userInfo-avatar">
-                    <image src="{{ userInfo.avatarUrl }}" mode="scaleToFill"></image>
-                </view>
-                <view class="userInfo-txt">
-                    <view class="user-name">你好，{{userInfo.nickName}}</view>
-                    <view class="msg">
-                        <text wx:if="{{ account.order_id_list <= 0 }}">今天天气：{{account.weather}}</text>
-                        <text wx:else>账户余额：￥{{account.balance}}*您有一个洗车预约，请及时查看</text>
-                    </view>
-                </view>
-            </view>
+  <view class="page">
+
+    <!-- 用户信息 -->
+    <view class="card">
+      <view class="card-blur" style="background:url('{{userInfo.avatarUrl}}') no-repeat;background-position:center;background-size: cover;">
+      </view>
+      <view class="card-content">
+        <view class="userInfo-avatar">
+          <image src="{{ userInfo.avatarUrl }}" mode="scaleToFill"></image>
         </view>
-
-        <!-- 预约条件选择 -->
-        <view class="booking-content">
-            <view class="booking-msg">
-                <text wx:if="{{ account.order_id_list <= 0 }}">*欢迎您选择CY1993，请选择洗车服务</text>
-                <text wx:else>*您有一个洗车预约，请及时查看</text>
-            </view>
-
-            <!-- 选择门店 -->
-            <view class="booking-cells">
-                <view class="booking-cell">
-                    <view class="cell-hd" @tap="activeBranch">
-                        <view class="cell-title">预约门店</view>
-                        <view class="cell-select">
-                            <text wx:if="{{branchIndex == -1}}">请选择</text>
-                            <text wx:else>{{branchList[branchIndex]}}</text>
-                            <image class="{{activeBranch?'':'rotation'}}" src="../images/appointment/down.svg"></image>
-                        </view>
-                    </view>
-                    <view wx:if="{{activeBranch}}" class="cell-bd">
-                        <block wx:if="{{branchList}}">
-                            <repeat for="{{branchList}}" item="listItem" key="index">
-                                <view id="{{index}}" class="select-item {{branchIndex==index?'item-active':''}}"
-                                      @tap="selectBranch">
-                                    <text>{{listItem}}</text>
-                                </view>
-                            </repeat>
-                        </block>
-                        <view class="no-data" wx:else>
-                            <text>-- 无数据 --</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="line"></view>
-
-                <!-- 选择日期 -->
-                <view class="booking-cell">
-                    <view class="cell-hd" @tap="activeDate">
-                        <view class="cell-title">预约日期</view>
-                        <view class="cell-select">
-                            <text wx:if="{{dateIndex == -1}}">请选择</text>
-                            <text wx:else>{{dateList[dateIndex].date}}</text>
-                            <image class="{{activeDate?'':'rotation'}}" src="../images/appointment/down.svg"></image>
-                        </view>
-                    </view>
-                    <view wx:if="{{activeDate}}" class="cell-bd">
-                        <block wx:if="{{dateList}}">
-                            <repeat for="{{dateList}}" item="listItem" key="index">
-                                <view id="{{index}}" class="select-item {{dateIndex==index?'item-active':''}}"
-                                      @tap="selectDate">
-                                    <text>{{listItem.dateFormat}} {{ listItem.weekday }}</text>
-                                </view>
-                            </repeat>
-                        </block>
-                        <view class="no-data" wx:else>
-                            <text>-- 无数据 --</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="line"></view>
-
-                <!-- 选择时间 -->
-                <view class="booking-cell">
-                    <view class="cell-hd" @tap="activeTime">
-                        <view class="cell-title">具体时间</view>
-                        <view class="cell-select">
-                            <text wx:if="{{timeIndex == -1}}">请选择</text>
-                            <text wx:else>{{timeList[timeIndex].start_time + '-' + timeList[timeIndex].end_time}}</text>
-                            <image class="{{activeTime?'':'rotation'}}" src="../images/appointment/down.svg"></image>
-                        </view>
-                    </view>
-
-                    <view wx:if="{{activeTime}}" class="cell-bd">
-                        <block wx:if="{{timeList}}">
-                            <repeat for="{{timeList}}" item="listItem" key="index">
-                                <view id="{{index}}" class="select-item {{timeIndex==index?'item-active':''}}"
-                                      style="height:56rpx;width:176rpx;" @tap="selectTime">
-                                    <text>{{listItem.start_time}}-{{listItem.end_time}}</text>
-                                </view>
-                            </repeat>
-                        </block>
-                        <view class="no-data" wx:else>
-                            <text>-- 无数据 --</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="line"></view>
-
-                <!-- 确认预约按钮 -->
-                <view class="cells-btn">
-                    <button class="nomalBtn" wx:if="{{ account.order_id_list <= 0 }}" type="default"
-                            @tap="comfirnBooking">立即预约
-                    </button>
-                    <block wx:else>
-                        <button class="nomalBtn" type="default" @tap="toOrderDetail">查看预约</button>
-                        <button class="cancelBtn" type="default" @tap="cancelOrder">取消订单</button>
-                    </block>
-                </view>
-            </view>
-
-            <view class="foot-space"></view>
+        <view class="userInfo-txt">
+          <view class="user-name">你好，{{userInfo.nickName}}</view>
+          <view class="msg">
+            <text wx:if="{{ account.order_id_list <= 0 }}">今天天气：{{account.weather}}</text>
+            <text wx:else>账户余额：￥{{account.balance}}*您有一个洗车预约，请及时查看</text>
+          </view>
         </view>
+      </view>
     </view>
-    <!-- <pay></pay> -->
 
+    <!-- 预约条件选择 -->
+    <view class="booking-content">
+      <view class="booking-msg">
+        <text wx:if="{{ account.order_id_list <= 0 }}">*欢迎您选择CY1993，请选择洗车服务</text>
+        <text wx:else>*您有一个洗车预约，请及时查看</text>
+      </view>
+
+      <!-- 选择门店 -->
+      <view class="booking-cells">
+        <view class="booking-cell">
+          <view class="cell-hd" @tap="activeBranch">
+            <view class="cell-title">预约门店</view>
+            <view class="cell-select">
+              <text wx:if="{{branchIndex == -1}}">请选择</text>
+              <text wx:else>{{branchList[branchIndex]}}</text>
+              <image class="{{activeBranch?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+            </view>
+          </view>
+
+          <view wx:if="{{activeBranch}}" class="cell-bd">
+            <block wx:if="{{branchList}}">
+              <repeat for="{{branchList}}" item="listItem" key="index">
+                <view id="{{index}}" class="select-item {{branchIndex==index?'item-active':''}}" @tap="selectBranch">
+                  <text>{{listItem}}</text>
+                </view>
+              </repeat>
+            </block>
+            <view class="no-data" wx:else>
+              <text>-- 无数据 --</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="line"></view>
+
+        <!-- 选择日期 -->
+        <view class="booking-cell">
+          <view class="cell-hd" @tap="activeDate">
+            <view class="cell-title">预约日期</view>
+            <view class="cell-select">
+              <text wx:if="{{dateIndex == -1}}">请选择</text>
+              <text wx:else>{{dateList[dateIndex].date}}</text>
+              <image class="{{activeDate?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+            </view>
+          </view>
+
+          <view wx:if="{{activeDate}}" class="cell-bd">
+            <block wx:if="{{dateList}}">
+              <repeat for="{{dateList}}" item="listItem" key="index">
+                <view id="{{index}}" class="select-item {{dateIndex==index?'item-active':''}}" @tap="selectDate">
+                  <text>{{listItem.dateFormat}} {{ listItem.weekday }}</text>
+                </view>
+              </repeat>
+            </block>
+            <view class="no-data" wx:else>
+              <text>-- 无数据 --</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="line"></view>
+
+        <!-- 选择时间 -->
+        <view class="booking-cell">
+          <view class="cell-hd" @tap="activeTime">
+            <view class="cell-title">具体时间</view>
+            <view class="cell-select">
+              <text wx:if="{{timeIndex == -1}}">请选择</text>
+              <text wx:else>{{timeList[timeIndex].start_time + '-' + timeList[timeIndex].end_time}}</text>
+              <image class="{{activeTime?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+            </view>
+          </view>
+
+          <view wx:if="{{activeTime}}" class="cell-bd">
+            <block wx:if="{{timeList}}">
+              <repeat for="{{timeList}}" item="listItem" key="index">
+                <view id="{{index}}" class="select-item {{timeIndex==index?'item-active':''}}" style="height:56rpx;width:176rpx;" @tap="selectTime">
+                  <text>{{listItem.start_time}}-{{listItem.end_time}}</text>
+                </view>
+              </repeat>
+            </block>
+            <view class="no-data" wx:else>
+              <text>-- 无数据 --</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="line"></view>
+
+        <!-- 确认预约按钮 -->
+        <view class="cells-btn">
+          <!-- <button class="nomalBtn" wx:if="{{ account.order_id_list > 0 }}" type="default" @tap="comfirnBooking"> -->
+          <button class="nomalBtn" wx:if="{{ account.order_id_list <= 0 }}" type="default" @tap="comfirnBooking">
+            立即预约
+          </button>
+          <block wx:else>
+            <button class="nomalBtn" type="default" @tap="toOrderDetail">查看预约</button>
+            <button class="cancelBtn" type="default" @tap="cancelOrder">取消订单</button>
+          </block>
+        </view>
+      </view>
+
+      <view class="foot-space"></view>
+    </view>
+  </view>
+  <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
+  <!-- <pay></pay> -->
 </template>
-
 <script>
-  import wepy from 'wepy'
-  import util from '../utils/util'
-  // import Pay from '../components/pay'
-  import {
-    SYSTEM_INFO,
-    SEL_CLASS_CODE
-  } from '../utils/constant';
-  import api from '../api/api'
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '首页',
-//      "disableScroll": true
+import wepy from 'wepy'
+import util from '../utils/util'
+import {
+  SYSTEM_INFO,
+  SEL_CLASS_CODE
+} from '../utils/constant';
+import api from '../api/api'
+// import Pay from '../components/pay'
+import Alert from '../components/myAlert'
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '首页',
+    //      "disableScroll": true
+  }
+  components = {
+    alert: Alert,
+  }
+
+  data = {
+    userInfo: {
+      nickName: '加载中...'
+    },
+    account: {
+      weather: '加载中...',
+      balance: '加载中...',
+      order_id_list: wx.getStorageSync('order_id_list'),
+    },
+    // count: 0,
+    dateList: [],
+    // windowHeight: 0,
+    timeList: [],
+    currentDate: wx.getStorageSync(SEL_CLASS_CODE),
+    // indexDetail:'',
+    user_id: 0,
+
+    branchInfo: [],
+    branchList: [],
+    // branchIndex:0,
+    defaultBranch: {
+      name: '请选择分店'
+    },
+
+    //active***：控制下拉框收合；***Index：控制选项唯一选中
+    activeBranch: false,
+    branchIndex: -1,
+    activeDate: false,
+    dateIndex: -1,
+    activeTime: false,
+    timeIndex: -1,
+    is_active: 0,
+
+  }
+
+  computed = {
+    now() {
+      return +new Date()
     }
-    components = {
-    }
+  }
 
-    data = {
-      userInfo: {
-        nickName: '加载中...'
-      },
-      account:{
-        weather: '加载中...',
-        balance: '加载中...',
-        order_id_list: wx.getStorageSync('order_id_list'),
-      },
-      // count: 0,
-      dateList: [],
-      // windowHeight: 0,
-      timeList: [],
-      currentDate: wx.getStorageSync(SEL_CLASS_CODE),
-      // indexDetail:'',
-      user_id:0,
+  methods = {
+    // 新加の方法-------------------------------------------------------
 
-      branchInfo:[],
-      branchList:[],
-      // branchIndex:0,
-      defaultBranch:{
-        name: '请选择分店'
-      },
-
-      //active***：控制下拉框收合；***Index：控制选项唯一选中
-      activeBranch: false,
-      branchIndex:-1,
-      activeDate: false,
-      dateIndex:-1,
-      activeTime: false,
-      timeIndex:-1,
-
-    }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
-    methods = {
-			// 新加の方法-------------------------------------------------------
-
-      // 下拉框收合
-      activeBranch() {
-        this.activeBranch = !this.activeBranch;
-				this.$apply()
-      },
-      activeDate() {
-        this.activeDate = !this.activeDate;
-				this.$apply()
-      },
-      activeTime() {
-        this.activeTime = !this.activeTime;
-				this.$apply()
-      },
-
-      // 选择门店
-      async selectBranch(e) {
-				this.activeBranch = !this.activeBranch;
-        this.branchIndex = e.currentTarget.id;
-				let branch_id = this.branchInfo[this.branchIndex].id
-        this.timeIndex = this.dateIndex = -1;
-				this.$apply()
-				let user_id = wx.getStorageSync("userid")
-        await this.getusermainpage(branch_id,user_id)
-      },
-
-      // 选择日期
-      selectDate(e) {
-				this.activeDate = !this.activeDate;
-        this.dateIndex = e.currentTarget.id;
-				let code = this.dateList[this.dateIndex].date;
-				this.currentDate = code;
-				this.getTimeList(code);
-				wepy.setStorageSync(SEL_CLASS_CODE, code);
-				this.timeIndex = -1;
-				this.$apply()
-      },
-
-      // 选择时间
-      selectTime(e) {
-				this.activeTime = !this.activeTime;
-        this.timeIndex = e.currentTarget.id;
-				this.$apply()
-      },
-
-      // 预定
-			async comfirnBooking(){
-				if( this.branchIndex!=-1 && this.dateIndex!=-1 && this.timeIndex!=-1 && this.timeIndex!=-1){
-					let branch_id = this.branchInfo[this.branchIndex].id;
-					let selectDate = this.dateList[this.dateIndex].date;
-					let start_time = this.timeList[this.timeIndex].start_time;
-					let end_time = this.timeList[this.timeIndex].end_time;
-					wepy.navigateTo({
-						url: `/pages/appointment?branch_id=${branch_id}&selectDate=${selectDate}&start_time=${start_time}&end_time=${end_time}`
-	        });
-				}else{
-					const res = await api.getrecentavailabledatetime({
-	          query: {
-	            branch_id: this.defaultBranch.id,
-	            user_type: wepy.getStorageSync('user_type'),
-	          },
-	          method: 'POST'
-	        });
-	        let dateInfo = res.data.data[0]
-
-					wepy.navigateTo({
-	          url: `/pages/appointment?selectDate=${dateInfo.date}&start_time=${dateInfo.start_time}&end_time=${dateInfo.end_time}&branch_id=${this.defaultBranch.id}`
-	        })
-				}
-			},
-
-      // 查看预约订单
-			toOrderDetail() {
-				wepy.navigateTo({
-					url: `/pages/order_detail?order_id=1`
-				});
-			},
-
-      // 取消订单
-			cancelOrder() {
-
-			},
-
-      //---------------------------------------------------------------
-
-      // changeCate (e) {
-      //   let code = e.currentTarget.dataset.code;
-      //   this.currentDate = code
-      //   this.dateList.forEach(v => v.open = (v.date === code) ? !v.open : false);
-
-      //   this.getTimeList(code);
-      //   wepy.setStorageSync(SEL_CLASS_CODE, code);
-      //   //设置一级分类的选中状态
-      //   for (var i = 0; i < this.dateList.length; i++) {
-      //     var rootCate = this.dateList[i];
-      //     rootCate.active = false;
-      //     if (rootCate.date == code) {
-      //       rootCate.active = true;
-      //     }
-      //   }
-      // },
-      // async bindBranchChange (e) {
-      //   let branch_id = this.branchInfo[e.detail.value].id
-      //   this.defaultBranch.id = branch_id
-      //   this.defaultBranch.name = this.branchInfo[e.detail.value].name
-      //   wepy.setStorageSync('defaultBranch',this.branchInfo[e.detail.value])
-      //   this.$apply()
-      //   let user_id = wx.getStorageSync("userid")
-      //   await this.getusermainpage(branch_id,user_id)
-      // },
-
-      // async orderNow() {
-      //   const res = await api.getrecentavailabledatetime({
-      //     query: {
-      //       branch_id: this.defaultBranch.id,
-      //       user_type: wepy.getStorageSync('user_type'),
-      //     },
-      //     method: 'POST'
-      //   });
-      //   let dateInfo = res.data.data[0]
-
-      //   wepy.navigateTo({
-      //     url: "/pages/appointment?selectDate="+dateInfo.date+"&start_time="+ dateInfo.start_time +"&end_time="+dateInfo.end_time +"&branch_id="+this.defaultBranch.id
-      //   })
-      // },
-      // display (e) {
-      //   console.log(e)
-      // },
-
-    }
-
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
-
-    //获取日期列表
-    async getDateList() {
-      for(var p in this.dateList){//遍历json数组时，这么写p为索引，0,1
-        this.dateList[p].dateFormat = this.dateList[p].date.slice(5)
-      }
-      this.$apply();
-    }
-    //获取某个日期的某个时间段
-    async getTimeList(rootCateCode) {
-      const json = await api.getavailabletime({
-        query: {
-          branch_id: this.defaultBranch.id,
-          user_type: wepy.getStorageSync('user_type'),
-          date: rootCateCode
-        },
-        method: 'POST'
-      });
-      this.timeList = json.data.data
-      this.$apply();
-    }
-
-    async onLoad() {
-      let systemInfo = wx.getStorageSync(SYSTEM_INFO);
-      // this.windowHeight = systemInfo.windowHeight;
+    // 下拉框收合
+    activeBranch() {
+      this.activeBranch = !this.activeBranch;
       this.$apply()
-    }
+    },
+    activeDate() {
+      this.activeDate = !this.activeDate;
+      this.$apply()
+    },
+    activeTime() {
+      this.activeTime = !this.activeTime;
+      this.$apply()
+    },
 
-    async getusermainpage(branch_id,user_id){
-      let merchant_id = wepy.getStorageSync('merchant_id')
-      const res = await api.getusermainpage({
-        query: {
-          branch_id: branch_id,
-          user_id: user_id,
-          merchant_id:merchant_id
-        },
-        method: 'POST'
-      });
-      if (!res.data.status > 0){
-        wepy.setStorageSync('userid','')
-        await  this.$parent.getAuth()
-        wx.switchTab({
-          url: './auth'
+    // 选择门店
+    async selectBranch(e) {
+      this.activeBranch = !this.activeBranch;
+      this.branchIndex = e.currentTarget.id;
+      let branch_id = this.branchInfo[this.branchIndex].id
+      this.timeIndex = this.dateIndex = -1;
+      this.$apply()
+      let user_id = wx.getStorageSync("userid")
+      await this.getusermainpage(branch_id, user_id)
+    },
+
+    // 选择日期
+    selectDate(e) {
+      this.activeDate = !this.activeDate;
+      this.dateIndex = e.currentTarget.id;
+      let code = this.dateList[this.dateIndex].date;
+      this.currentDate = code;
+      this.getTimeList(code);
+      wepy.setStorageSync(SEL_CLASS_CODE, code);
+      this.timeIndex = -1;
+      this.$apply()
+    },
+
+    // 选择时间
+    selectTime(e) {
+      this.activeTime = !this.activeTime;
+      this.timeIndex = e.currentTarget.id;
+      this.$apply()
+    },
+
+    // 预定
+    async comfirnBooking() {
+      if (this.branchIndex != -1 && this.dateIndex != -1 && this.timeIndex != -1 && this.timeIndex != -1) {
+        let branch_id = this.branchInfo[this.branchIndex].id;
+        let selectDate = this.dateList[this.dateIndex].date;
+        let start_time = this.timeList[this.timeIndex].start_time;
+        let end_time = this.timeList[this.timeIndex].end_time;
+        wepy.navigateTo({
+          url: `/pages/appointment?branch_id=${branch_id}&selectDate=${selectDate}&start_time=${start_time}&end_time=${end_time}`
+        });
+      } else {
+        const res = await api.getrecentavailabledatetime({
+          query: {
+            branch_id: this.defaultBranch.id,
+            user_type: wepy.getStorageSync('user_type'),
+          },
+          method: 'POST'
+        });
+        let dateInfo = res.data.data[0]
+
+        wepy.navigateTo({
+          url: `/pages/appointment?selectDate=${dateInfo.date}&start_time=${dateInfo.start_time}&end_time=${dateInfo.end_time}&branch_id=${this.defaultBranch.id}`
         })
-        return
       }
-      this.timeList = res.data.data[0].today_available_time
-      this.dateList = res.data.data[0].available_date
-      //设置当前选中日期
-      this.dateList[0].active = true
-      this.currentDate = this.dateList[0].date
-      //设置用户信息
-      this.account.user_type = res.data.data[0].user_type
-      this.account.balance = res.data.data[0].balance
-      this.account.weather = res.data.data[0].weather
-      this.account.order_id_list = res.data.data[0].order_id_list
-      wepy.setStorageSync('order_id_list',res.data.data[0].order_id_list)
-      this.account.have_recent_book = res.data.data[0].have_recent_book
-      this.account.vip_name = res.data.data[0].vip_name
-      this.account.recent_book_time = res.data.data[0].recent_book_time
-      wepy.setStorageSync('user_type',res.data.data[0].user_type)
-      wepy.setStorageSync('user_balance',res.data.data[0].balance)
+    },
 
-      //分店信息
-      this.branchInfo = res.data.data[0].branch_list
-      for (var p in this.branchInfo){
-        this.branchList[p] = this.branchInfo[p].name
-      }
+    // 查看预约订单
+    toOrderDetail() {
+      wepy.navigateTo({
+        url: `/pages/order_detail?order_id=1`
+      });
+    },
 
-      this.defaultBranch = res.data.data[0].default_branch
-      wepy.setStorageSync('defaultBranch',this.defaultBranch)
+    // 取消订单
+    cancelOrder() {
+      this.is_active = 1
+    },
 
-      this.timeList = res.data.data[0].today_available_time
-      await this.getDateList()
-      this.$apply();
-    }
+    //---------------------------------------------------------------
 
-    // async selected (code) {
+    // changeCate (e) {
+    //   let code = e.currentTarget.dataset.code;
+    //   this.currentDate = code
+    //   this.dateList.forEach(v => v.open = (v.date === code) ? !v.open : false);
+
+    //   this.getTimeList(code);
+    //   wepy.setStorageSync(SEL_CLASS_CODE, code);
+    //   //设置一级分类的选中状态
     //   for (var i = 0; i < this.dateList.length; i++) {
     //     var rootCate = this.dateList[i];
     //     rootCate.active = false;
@@ -545,25 +448,148 @@ page,
     //       rootCate.active = true;
     //     }
     //   }
-    // }
+    // },
+    // async bindBranchChange (e) {
+    //   let branch_id = this.branchInfo[e.detail.value].id
+    //   this.defaultBranch.id = branch_id
+    //   this.defaultBranch.name = this.branchInfo[e.detail.value].name
+    //   wepy.setStorageSync('defaultBranch',this.branchInfo[e.detail.value])
+    //   this.$apply()
+    //   let user_id = wx.getStorageSync("userid")
+    //   await this.getusermainpage(branch_id,user_id)
+    // },
 
-    async onShow() {
-      if (!wepy.getStorageSync('userid')){
-        await  this.$parent.getAuth()
-      }
-      let user_id = wepy.getStorageSync('userid')
-      let merchant_id = wepy.getStorageSync('merchant_id')
-      let defaultBranch = wepy.getStorageSync('defaultBranch')
-      let branch_id = ''
-      this.userInfo = wepy.getStorageSync('user_info')
-      if (defaultBranch){
-        branch_id = defaultBranch.id
-      }
-      if (user_id){
-        await this.getusermainpage(branch_id,user_id)
-      }
-    }
+    // async orderNow() {
+    //   const res = await api.getrecentavailabledatetime({
+    //     query: {
+    //       branch_id: this.defaultBranch.id,
+    //       user_type: wepy.getStorageSync('user_type'),
+    //     },
+    //     method: 'POST'
+    //   });
+    //   let dateInfo = res.data.data[0]
 
+    //   wepy.navigateTo({
+    //     url: "/pages/appointment?selectDate="+dateInfo.date+"&start_time="+ dateInfo.start_time +"&end_time="+dateInfo.end_time +"&branch_id="+this.defaultBranch.id
+    //   })
+    // },
+    // display (e) {
+    //   console.log(e)
+    // },
 
   }
+
+  events = {
+    'index-emit': (...args) => {
+      let $event = args[args.length - 1]
+      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+    }
+  }
+
+  //获取日期列表
+  async getDateList() {
+    for (var p in this.dateList) { //遍历json数组时，这么写p为索引，0,1
+      this.dateList[p].dateFormat = this.dateList[p].date.slice(5)
+    }
+    this.$apply();
+  }
+  //获取某个日期的某个时间段
+  async getTimeList(rootCateCode) {
+    const json = await api.getavailabletime({
+      query: {
+        branch_id: this.defaultBranch.id,
+        user_type: wepy.getStorageSync('user_type'),
+        date: rootCateCode
+      },
+      method: 'POST'
+    });
+    this.timeList = json.data.data
+    this.$apply();
+  }
+
+  async onLoad() {
+    let systemInfo = wx.getStorageSync(SYSTEM_INFO);
+    // this.windowHeight = systemInfo.windowHeight;
+    this.$apply()
+  }
+
+  async getusermainpage(branch_id, user_id) {
+    let merchant_id = wepy.getStorageSync('merchant_id')
+    const res = await api.getusermainpage({
+      query: {
+        branch_id: branch_id,
+        user_id: user_id,
+        merchant_id: merchant_id
+      },
+      method: 'POST'
+    });
+    if (!res.data.status > 0) {
+      wepy.setStorageSync('userid', '')
+      await this.$parent.getAuth()
+      wx.switchTab({
+        url: './auth'
+      })
+      return
+    }
+    this.timeList = res.data.data[0].today_available_time
+    this.dateList = res.data.data[0].available_date
+    //设置当前选中日期
+    this.dateList[0].active = true
+    this.currentDate = this.dateList[0].date
+    //设置用户信息
+    this.account.user_type = res.data.data[0].user_type
+    this.account.balance = res.data.data[0].balance
+    this.account.weather = res.data.data[0].weather
+    this.account.order_id_list = res.data.data[0].order_id_list
+    wepy.setStorageSync('order_id_list', res.data.data[0].order_id_list)
+    this.account.have_recent_book = res.data.data[0].have_recent_book
+    this.account.vip_name = res.data.data[0].vip_name
+    this.account.recent_book_time = res.data.data[0].recent_book_time
+    wepy.setStorageSync('user_type', res.data.data[0].user_type)
+    wepy.setStorageSync('user_balance', res.data.data[0].balance)
+
+    //分店信息
+    this.branchInfo = res.data.data[0].branch_list
+    for (var p in this.branchInfo) {
+      this.branchList[p] = this.branchInfo[p].name
+    }
+
+    this.defaultBranch = res.data.data[0].default_branch
+    wepy.setStorageSync('defaultBranch', this.defaultBranch)
+
+    this.timeList = res.data.data[0].today_available_time
+    await this.getDateList()
+    this.$apply();
+  }
+
+  // async selected (code) {
+  //   for (var i = 0; i < this.dateList.length; i++) {
+  //     var rootCate = this.dateList[i];
+  //     rootCate.active = false;
+  //     if (rootCate.date == code) {
+  //       rootCate.active = true;
+  //     }
+  //   }
+  // }
+
+  async onShow() {
+    if (!wepy.getStorageSync('userid')) {
+      await this.$parent.getAuth()
+    }
+    let user_id = wepy.getStorageSync('userid')
+    let merchant_id = wepy.getStorageSync('merchant_id')
+    let defaultBranch = wepy.getStorageSync('defaultBranch')
+    let branch_id = ''
+    this.userInfo = wepy.getStorageSync('user_info')
+    if (defaultBranch) {
+      branch_id = defaultBranch.id
+    }
+    if (user_id) {
+      await this.getusermainpage(branch_id, user_id)
+    }
+  }
+
+
+}
+
 </script>

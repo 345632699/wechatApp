@@ -1,6 +1,13 @@
 <style lang="less">
   @import '../style/common.less';
 
+  //全局css
+  .btn(@bgColr,@borderColor:transparent){//按钮
+    background: @bgColr;
+    color: @txtColor;
+    border: 1px solid @borderColor;
+  }
+
   .page {
     .weui-tab {
       .weui-navbar {
@@ -183,9 +190,9 @@
               width: 145rpx;
               height: 55rpx;
               margin-right: 20rpx;
-              line-height: 55rpx;
-              .longBtn(@normalBtnBgColor, @normalBtnBgColor);
               font-size: 20rpx;
+              .btn(@normalBtnBgColor);
+
               &:last-child {
                 margin-right: 0;
               }
@@ -209,7 +216,7 @@
 <template>
   <view class="page">
     <view class="weui-tab">
-
+      <!-- 顶部 -->
       <view class="weui-navbar">
         <repeat for="{{tabs}}" key="*this">
           <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}"
@@ -220,8 +227,10 @@
         <view class="weui-navbar__slider"
               style="left:{{sliderLeft}}px;transform:translateX({{sliderOffset}}px);-webkit-transform:translateX({{sliderOffset}}px);"></view>
       </view>
-
+      <!-- 内容 -->
       <view class="weui-tab__panel">
+
+        <!-- 最新资讯 -->
         <view class="weui-tab__content news" hidden="{{activeIndex != 0}}">
           <view class="cells">
             <repeat for="{{newsList}}" item="item" key="index">
@@ -241,20 +250,20 @@
           </view>
         </view>
 
+        <!-- 案例展示 -->
         <view class="weui-tab__content display" hidden="{{activeIndex != 1}}">
           <view class="imgs" wx:for="{{ imgList }}" wx:key="item">
             <image @tap="previewImage" data-src="{{ item[0].image_url }}" class="img1" src="{{ item[0].thumbnail_image_url }}" mode="aspectFill"/>
-
             <view class="group">
               <image @tap="previewImage" data-src="{{ item[1].image_url }}" class="img2" src="{{ item[1].thumbnail_image_url }}" mode="aspectFill"/>
               <image @tap="previewImage" data-src="{{ item[2].image_url }}" class="img2" src="{{ item[2].thumbnail_image_url }}" mode="aspectFill"/>
               <image @tap="previewImage" data-src="{{ item[3].image_url }}" class="img2" src="{{ item[3].thumbnail_image_url }}" mode="aspectFill"/>
             </view>
-
             <image @tap="previewImage" data-src="{{ item[4].image_url }}" class="img1" src="{{ item[4].thumbnail_image_url }}" mode="aspectFill"/>
           </view>
         </view>
 
+        <!-- 关于我们 -->
         <view class="weui-tab__content about" hidden="{{activeIndex != 2}}">
           <view class="head">
             <image src="../images/discover/logo.png"></image>
@@ -285,11 +294,10 @@
               </view>
             </repeat>
           </view>
-
+          <!-- 底部间隔 -->
           <view class="about-fd"></view>
         </view>
       </view>
-
     </view>
   </view>
 </template>
@@ -314,9 +322,9 @@
     data = {
       //weui的tab参数
       tabs: ["最新资讯", "案例展示", "关于我们"],
-      activeIndex: 1,
-      sliderOffset: 0,
-      sliderLeft: 0,
+      activeIndex: 0,//激活项
+      sliderOffset: 0,//x轴上转换的值
+      sliderLeft: 31.5,//距离左边的偏移值
 
       //最新资讯
       newsList: [{
@@ -332,25 +340,15 @@
           txt: "展示两行内容，工作日全场9折优惠，办理会员充值满1000元 立送300元礼品卡" //展示两行内容
         }
       ],
-      //公司简介
+      //公司简介的段落数组
       companyInfo: [
         'C&Y·1993专业汽车洗车中心是一家专注于专业的技术，高效的服务的汽车洗车中心。专心致志，全心全意地服务大众，实现100%的客户满意度是我们的宗旨。C&Y·1993专业汽车洗车中心以顾客为本，竭尽全力打造深圳信誉店。',
         '“青春如初春，如朝日，如百卉之萌动。”我们是一群有梦想的年轻人，我们拥有活力、拥有激情，我们敢于挑战，善于创新。在这群拥有梦想的年轻人日以继夜辛勤劳作的背景之下，一家专注为汽车精洗、内饰清洁，并配有专业机洗车的汽车洗车中心——C&Y·1993，于2016年12月踏上启程之路，正式运营！迄今为止，我们也经历了一个多年头，时间并没有消磨我们的激情，而是让我们更加专业细心。',
         'C&Y·1993——让您的爱车灰尘仆仆而来，白白净净而归'
       ],
       //公司地址列表
-      addressList: [
-        // {
-        //   name: '梅林总店',
-        //   location: '广东省深圳市福田区梅林街道 梅秀路1-1号华强云产业园单身宿舍3栋111',
-        //   phone_number: '18594219932'
-        // },
-        // {
-        //   name: '梅林总店',
-        //   location: '广东省深圳市福田区梅林街道 梅秀路1-1号华强云产业园单身宿舍3栋111',
-        //   phoneNum: '18594219932'
-        // }
-      ],
+      addressList: [],
+      // 案例展示的图片列表
       imgList: []
     }
 
@@ -359,6 +357,15 @@
         this.sliderOffset = e.currentTarget.offsetLeft;
         this.activeIndex = e.currentTarget.id;
         this.$apply();
+
+        // 没有返回图片，提示
+        if(this.imgList.length == 0 && this.activeIndex == 1){
+          wx.showToast({
+            title: '暂时还未有相关案例',
+            icon: 'none',
+            duration: 1000
+          });
+        }
       },
 
       makeCall(e) {
@@ -411,11 +418,6 @@
     }
 
     async onLoad() {
-      let imgs = await this.getshowimages()
-      this.imgList[0] = imgs
-      let imgs1 = await this.getshowimages()
-      this.imgList[1] = imgs1
-
       let that = this;
       wx.getSystemInfo({
         success: function (res) {
@@ -424,6 +426,11 @@
           that.sliderOffset = res.windowWidth / that.tabs.length * that.activeIndex;
         }
       });
+
+      let imgs = await this.getshowimages()
+      if(imgs.length) this.imgList[0] = imgs
+      let imgs1 = await this.getshowimages()
+      if(imgs1.length) this.imgList[1] = imgs1
       this.$apply();
     }
 
@@ -433,9 +440,9 @@
     }
 
     async onReachBottom() {
-      if (this.activeIndex == 1) {
+      if (this.activeIndex == 1 && this.imgList.length > 0) {
         let imgs = await this.getshowimages()
-        this.imgList.push(imgs)
+        if(imgs.length) this.imgList.push(imgs)
         console.log(this.imgList)
         this.$apply()
       }

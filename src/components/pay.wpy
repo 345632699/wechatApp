@@ -1,143 +1,165 @@
 <style type="less">
-    .wepy-api-dialog_pay{
-        .wepy-api-dialog__mask_pay{
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-        }
-        .wepy-api-dialog__main_pay{
-            position: fixed;
-            z-index: 5000;
-            max-width: 530rpx;
-            width: 560rpx;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-            background:#FFFFFF;
-            text-align: center;
-            overflow: hidden;
-            border-radius: 32rpx;
-            font-weight: bold;
-            .wepy-api-dialog__hd_pay{
-                padding:32rpx;
-                padding-bottom: 16rpx;
-                text-align: left;
-                .wepy-api-dialog__title_pay{
-                    width:496rpx;
-                    font-weight: bold;
-                    font-size: 32rpx;
-                }
-            }
-            .weui-cell{
-                &.weui_pay{
-                    height: 110rpx;
-                    padding-top: 0;
-                    padding-bottom: 0;
-                    .weui-cell__bd{
-                        text-align: left;
-                        padding-left: 32rpx;
-                        font-size: 28rpx;
-                        color:rgba(0,0,0,0.87);
-                    }
-                }
-            }
-        }
-        .weui-select-right{
-            margin-top: 40rpx;
-        }
+@import '../style/common.less';
+
+.wepy-api-dialog_pay{
+  .wepy-api-dialog__mask_pay{
+    .mask;
+  }
+  .wepy-api-dialog__main_pay{
+    .dialogBox;
+
+    .wepy-api-dialog__hd_pay{
+      .dialogBoxHead;
+      padding-bottom: 0 !important;
+
+      .wepy-api-dialog__title_pay{
+        .dialogBoxTitle;
+      }
     }
+
+    .wepy-api-dialog__bd_pay{
+      font-size: 26rpx;
+      line-height: 36rpx;
+
+      .show-amount{
+        flex-direction: column;
+        padding: 40rpx 40rpx 0 42rpx;
+        .betweenBox;
+
+        .amount-item{
+          padding-bottom: 32rpx;
+          align-items: center;
+          .betweenBox;
+        }
+      }
+
+      .pay-cell{
+        border-top: 2rpx solid #4A4A4A;
+        padding: 32rpx 42rpx;
+        align-items: center;
+        .betweenBox;
+
+        image{
+          width: 8rpx;
+          height: 20rpx;
+          .rotate(-180deg);
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
-    <view class="wepy-api-dialog_pay" wx:if="{{ pay_active }}" @tap="hide">
-        <view class="wepy-api-dialog__mask_pay"></view>
-        <view class="wepy-api-dialog__main_pay">
-            <view class="wepy-api-dialog__hd_pay">
-                <view class="wepy-api-dialog__title_pay">
-                    {{ title }}：¥{{ amount }}
-                </view>
-                <view class="wepy-api-dialog__title_pay" wx:if="{{ user_balance > 0 }}">
-                    账户余额：¥{{ user_balance }}
-                </view>
-                <view class="wepy-api-dialog__title_pay">
-                    请选择支付方式
-                </view>
-            </view>
-            <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">微信支付</view>
-                <view class="weui-cell__ft weui-select-right"></view>
-            </view>
-            <view  wx:if="{{ user_balance > 0 }}" @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">余额支付</view>
-                <view class="weui-cell__ft weui-select-right"></view>
-            </view>
+  <view class="wepy-api-dialog_pay" wx:if="{{ pay_active }}" @tap="hide">
+    <view class="wepy-api-dialog__mask_pay"></view>
+    <view class="wepy-api-dialog__main_pay">
+      <view class="wepy-api-dialog__hd_pay">
+        <view class="wepy-api-dialog__title_pay">支付{{ title }}</view>
+      </view>
+
+      <view class="wepy-api-dialog__bd_pay">
+        <view class="show-amount">
+          <view class="amount-item">
+            <view>{{ title }}金额</view>
+            <view>¥{{ amount }}</view>
+          </view>
+          <view class="amount-item">
+            <view>{{ title }}账户余额</view>
+            <view>¥{{ user_balance }}</view>
+          </view>
         </view>
+
+        <view class="pay-cell"  @tap="payByBalance">
+          <view>账户余额支付</view>
+          <image src="../images/appointment/left-rounded.png"></image>
+        </view>
+        <view class="pay-cell" @tap="payByWechat">
+          <view>微信支付</view>
+          <image src="../images/appointment/left-rounded.png"></image>
+        </view>
+      </view>
+
+      <!-- <view class="wepy-api-dialog__hd_pay">
+        <view class="wepy-api-dialog__title_pay">
+          {{ title }}：¥{{ amount }}
+        </view>
+        <view class="wepy-api-dialog__title_pay" wx:if="{{ user_balance > 0 }}">
+          账户余额：¥{{ user_balance }}
+        </view>
+        <view class="wepy-api-dialog__title_pay">
+          请选择支付方式
+        </view>
+      </view>
+      <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">微信支付</view>
+        <view class="weui-cell__ft weui-select-right"></view>
+      </view>
+      <view wx:if="{{ user_balance > 0 }}" @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">余额支付</view>
+        <view class="weui-cell__ft weui-select-right"></view>
+      </view> -->
     </view>
+  </view>
 </template>
 <script>
-  import wepy from 'wepy'
-  import tip from '../utils/tip'
+import wepy from 'wepy'
+import tip from '../utils/tip'
 
-  export default class MyAlert extends wepy.component {
+export default class MyAlert extends wepy.component {
 
-    data = {
+  data = {}
+
+  props = {
+    // 静态传值
+    title: {
+      type: String,
+      default: '定金'
+    },
+
+    msg: {
+      type: String,
+      default: ''
+    },
+
+    // 父向子单向动态传值
+    pay_active: {
+      type: Number,
+      default: 0,
+      twoWay: true
+    },
+
+    user_balance: {
+      type: Number,
+      default: 0
+    },
+
+    amount: {
+      type: Number,
+      default: 0
+    },
+
+    confirmText: {
+      type: String,
+      default: '確認'
     }
-
-    props = {
-      // 静态传值
-      title: {
-        type:String,
-        default: '定金'
-      },
-
-      msg: {
-        type:String,
-        default: ''
-      },
-
-      // 父向子单向动态传值
-      pay_active: {
-        type: Number,
-        default: 0,
-        twoWay: true
-      },
-
-      user_balance: {
-        type:Number,
-        default:0
-      },
-
-      amount: {
-        type:Number,
-        default:0
-      },
-
-      confirmText: {
-        type:String,
-        default: '確認'
-      }
-    };
+  };
 
 
-    methods = {
-      hide () {
-        this.pay_active = 0
-      },
-      payByBalance (e) {
-        this.$emit('payByBalance',1,2)
-      },
-      payByWechat (e) {
-        this.$emit('payByWechat',1,2)
-      }
-
-    }
-
-    onload () {
+  methods = {
+    hide() {
+      this.pay_active = 0
+    },
+    payByBalance(e) {
+      this.$emit('payByBalance', 1, 2)
+    },
+    payByWechat(e) {
+      this.$emit('payByWechat', 1, 2)
     }
 
   }
+
+  onload() {}
+
+}
+
 </script>

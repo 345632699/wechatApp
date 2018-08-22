@@ -66,7 +66,7 @@ page,
 
                 image{
                   margin-left: 8rpx;
-                  width:20rpx; 
+                  width:20rpx;
                   height: 12rpx;
                 }
               }
@@ -115,7 +115,6 @@ page,
 </style>
 <template>
   <view class="page">
-    <!-- <navigator  url="/pages/appointment0">dddd</navigator> -->
     <!--頂部-->
     <view class="page-bd">
       <view class="cells">
@@ -153,7 +152,7 @@ page,
                   </picker>
                 </view>
                 <!-- 车牌号码输入 -->
-                <view style="max-width:{{pay_success >= 1?'230rpx':'450rpx'}}">
+                <view style="max-width:230rpx">
                   <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                 </view>
                 <!-- 从已有的车牌号码中选取 -->
@@ -204,6 +203,7 @@ page,
           </view>
         </view>
 
+        <!-- 支付费用 -->
         <view class="cell" wx:if="{{ product.id }}">
           <view class="cell-left" style="padding-top:0">
             <image src="../images/appointment/money.png"></image>
@@ -231,6 +231,7 @@ page,
         </view>
       </view>
 
+      <!-- 底部按钮 -->
       <view class="pay-btn">
         <button class="nomalBtn" type="default" wx:if="{{ pay_success < 1 }}" @tap="payPre">支付定金</button>
           <button class="nomalBtn" type="default" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
@@ -516,7 +517,7 @@ page,
       this.product.price = option.product_price
       this.amount = option.product_deposite
     }
-    
+
     if (option.package_id) {
       this.step = 3
       this.title = "支付定金"

@@ -2,5 +2,6 @@ node_modules
 dist
 .DS_Store
 .idea
+.wepycache
 package-lock.json
 package.json

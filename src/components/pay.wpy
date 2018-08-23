@@ -5,12 +5,13 @@
   .wepy-api-dialog__mask_pay{
     .mask;
   }
+  
   .wepy-api-dialog__main_pay{
     .dialogBox;
 
     .wepy-api-dialog__hd_pay{
-      .dialogBoxHead;
       padding-bottom: 0 !important;
+      .dialogBoxHead;
 
       .wepy-api-dialog__title_pay{
         .dialogBoxTitle;
@@ -78,26 +79,6 @@
           <image src="../images/appointment/left-rounded.png"></image>
         </view>
       </view>
-
-      <!-- <view class="wepy-api-dialog__hd_pay">
-        <view class="wepy-api-dialog__title_pay">
-          {{ title }}：¥{{ amount }}
-        </view>
-        <view class="wepy-api-dialog__title_pay" wx:if="{{ user_balance > 0 }}">
-          账户余额：¥{{ user_balance }}
-        </view>
-        <view class="wepy-api-dialog__title_pay">
-          请选择支付方式
-        </view>
-      </view>
-      <view @tap="payByWechat" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
-        <view class="weui-cell__bd">微信支付</view>
-        <view class="weui-cell__ft weui-select-right"></view>
-      </view>
-      <view wx:if="{{ user_balance > 0 }}" @tap="payByBalance" url="" class="weui-cell weui_pay weui-cell_access" hover-class="weui-cell_active">
-        <view class="weui-cell__bd">余额支付</view>
-        <view class="weui-cell__ft weui-select-right"></view>
-      </view> -->
     </view>
   </view>
 </template>

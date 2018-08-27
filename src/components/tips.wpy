@@ -17,11 +17,16 @@
 
         .weui-cell__hd{
           padding: 0 38rpx 0 24rpx;
+          .centerBox;
+
           image{
-            width:12rpx;
-            height: 20rpx;
+            width: 45rpx;
+            height: 45rpx;
           }
+
           .stepper{
+            width: 12rpx;
+            height: 20rpx;
             .rotate(90deg);
           }
         }
@@ -31,13 +36,7 @@
       }
     }
     .weui-mask{
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
+      .mask;
     }
     .weui-actionsheet{
       position: fixed;
@@ -55,10 +54,12 @@
       transition: transform .3s;
       transition: transform .3s,
       -webkit-transform .3s;
+
       &.weui-actionsheet_toggle{
          -webkit-transform: translate(0, 0);
          transform: translate(0, 0);
       }
+
       .weui-actionsheet__menu{
         background: @cellsBgColor;
         height: 482rpx;
@@ -82,6 +83,7 @@
 
           .img{
             padding-right: 24rpx;
+
             image{
               width:20rpx;
               height: 12rpx;
@@ -106,10 +108,12 @@
         .right{
           padding-right: 26rpx;
         }
+
         &:last-child{
           border-bottom: 0;
         }
       }
+
       .active{
         color: #FFFFFF !important;
       }
@@ -122,7 +126,7 @@
     <view class="weui-cells_after-title tip-buttom" wx:if="{{ 1 == type }}" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
+          <image class="order" src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
           <image class="stepper" src="../images/appointment/left-rounded.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>

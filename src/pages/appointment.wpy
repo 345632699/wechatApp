@@ -1,5 +1,6 @@
 <style lang="less">
 @import '../style/common.less';
+
 page,
 .page{
   color: @txtColor;
@@ -48,6 +49,19 @@ page,
               font-size: @normalFontSize;
               line-height:34rpx;
 
+              .picker{
+                .betweenBox;
+                margin-right: 24rpx;
+                align-items: center;
+                
+                image{
+                  width: 20rpx;
+                  height: 12rpx;
+                  margin-right: 10rpx;
+                }
+
+              }
+
               .sub-item{
                 .betweenBox;
                 padding: 14rpx 0;
@@ -65,7 +79,7 @@ page,
                 height: 34rpx;
 
                 image{
-                  margin-left: 8rpx;
+                  margin-left: 14rpx;
                   width:20rpx;
                   height: 12rpx;
                 }
@@ -88,6 +102,38 @@ page,
           }
         }
 
+        .cell-top-car{
+          .betweenBox;
+        }
+
+        .cell-bottom-car{
+          .centerBox;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+          padding-top: 24rpx;
+
+          .item-car {
+            .centerBox;
+            width: 176rpx;
+            height: 56rpx;
+            margin: 0 0 16rpx 36rpx;
+            border: 2rpx solid #9B9B9B;
+            border-radius: 12rpx;
+            color: @titleColor;
+            font-size: 24rpx;
+            line-height: 34rpx;
+
+            &:nth-last-child(3n-1){//3是计数器，1是偏移值
+              margin-left: 0;
+            }
+          }
+
+          .item-active-car {
+            background: @normalBtnBgColor !important;
+            border-color: @normalBtnBgColor !important;
+          }
+        }
+
         &:last-child{
           border-bottom: 0;
         }
@@ -95,14 +141,16 @@ page,
     }
 
     .pay-btn{
-      padding: 14rpx 46rpx 96rpx;
+      padding: 14rpx 46rpx 72rpx;
 
-      .nomalBtn{
+      .nomal-btn{
         .longBtn(@normalBtnBgColor,@normalBtnBorderColor);
+        margin-bottom: 24rpx;
       }
 
-      .cancelBtn{
+      .cancel-btn{
         .longBtn(@cancelBtnBgColor,@cancelBtnBgColor);
+        margin-bottom: 24rpx;
       }
     }
   }
@@ -134,38 +182,48 @@ page,
         </view>
 
         <!-- 车牌号码 -->
-        <view class="cell" style="padding-bottom:16rpx;">
-          <view class="cell-left">
-            <image src="../images/appointment/bus.png"></image>
-          </view>
+        <view class="cell" style="padding-bottom:16rpx;flex-direction: column;">
+          <view class="cell-top-car">
+            <view class="cell-left">
+              <image src="../images/appointment/bus.png"></image>
+            </view>
 
-          <view class="cell-right">
-            <view class="txt" style="width:100%">
-              <view class="title" style="padding-bottom:0">车牌号码</view>
-              <view class="subtitle" style="display:flex;justify-content: flex-start;align-items: center;">
-                <!-- 选择车牌地区 -->
-                <view style="margin-right:24rpx">
-                  <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
+            <view class="cell-right">
+              <view class="txt" style="width:100%">
+                <view class="title" style="padding-bottom:0">车牌号码</view>
+                <view class="subtitle" style="display:flex;justify-content: space-between;align-items: center;">
+                  <view style="display:flex;justify-content: flex-start;align-items: center;">
+                    <!-- 选择车牌地区 -->
                     <view class="picker">
-                      {{carInfo.currentProvince}}
+                      <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
+                        <image src="../images/appointment/down.svg"></image>
+                        <text> {{carInfo.currentProvince}}</text>
+                      </picker>
                     </view>
-                  </picker>
-                </view>
-                <!-- 车牌号码输入 -->
-                <view style="max-width:230rpx">
-                  <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
-                </view>
-                <!-- 从已有的车牌号码中选取 -->
-                <view class="sel-car"  wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
-                  <picker @change="bindCarChange" value="{{ carInfo.carNumIndex }}" range="{{ carInfo.carNumList }}">
+                    <!-- 车牌号码输入 -->
+                    <view style="max-width:150rpx">
+                      <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
+                    </view>
+                  </view>
+                  
+                  <!-- 从已有的车牌号码中选取 -->
+                  <view class="sel-car" @tap="activeSelCar" wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
                     <view>
-                      从我的车牌中选取
-                      <image src="../images/appointment/sheet.svg" ></image>
+                      选择我的车牌号码
+                      <image src="../images/appointment/down.svg" ></image>
                     </view>
-                  </picker>
+                  </view>
                 </view>
               </view>
             </view>
+          </view>
+
+          <view class="cell-bottom-car" wx:if="{{active_sel_car}}">
+            <repeat for="{{test}}" item="item" key="index">
+              <view class="item-car {{carInfo.carNumIndex==index?'item-active-car':''}}" id="{{index}}" @tap="selectCar">
+                <text>{{item}}</text>
+              </view>
+            </repeat>
           </view>
         </view>
 
@@ -233,9 +291,9 @@ page,
 
       <!-- 底部按钮 -->
       <view class="pay-btn">
-        <button class="nomalBtn" type="default" wx:if="{{ pay_success < 1 }}" @tap="payPre">支付定金</button>
-          <button class="nomalBtn" type="default" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
-          <button class="cancelBtn" type="default" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
+        <button class="nomal-btn" type="default" wx:if="{{ pay_success < 1 }}" @tap="payPre">支付定金</button>
+          <button class="nomal-btn" type="default" wx:if="{{ pay_success > 0 }}" @tap="lead">导航出发</button>
+          <button class="cancel-btn" type="default" wx:if="{{ pay_success > 0 }}" @tap="cancelOrder">取消订单</button>
         </view>
       </view>
 
@@ -289,7 +347,7 @@ page,
         currentProvince: "粤B",
         carNum: "", //輸入框内的字符串
         carNumList: [],
-        carNumIndex: 0,
+        carNumIndex: -1,
       },
 
       product:{
@@ -325,11 +383,32 @@ page,
 
       user_balance: 0,
       amount:0,
+
+      //新加的----------------------------------------
+      active_sel_car: false,
+      //----------------------------------------------
     }
 
 
     methods = {
-      //----------------------------------------------
+      //新加的方法--------------------------------------
+      //选择车牌
+      activeSelCar (){
+        this.active_sel_car = !this.active_sel_car;
+        this.$apply()
+      },
+      selectCar (e) {
+        this.active_sel_car = !this.active_sel_car;
+        this.carInfo.carNumIndex = e.currentTarget.id;
+        this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
+        this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
+        this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+        wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
+        wepy.setStorageSync('carNum',this.carInfo.carNum)
+        this.$apply()
+      },
+
+      // 选择套餐
       toSelPackage () {
         if(this.pay_success < 1){
           wepy.navigateTo({
@@ -349,15 +428,15 @@ page,
         wepy.setStorageSync('carNum',this.carInfo.carNum)
         this.$apply()
       },
-      bindCarChange (e) {
-        this.carInfo.carNumIndex =  e.detail.value
-        this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
-        this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
-        this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
-        wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
-        wepy.setStorageSync('carNum',this.carInfo.carNum)
-        this.$apply()
-      },
+      // bindCarChange (e) {
+      //   this.carInfo.carNumIndex =  e.detail.value
+      //   this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
+      //   this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
+      //   this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+      //   wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
+      //   wepy.setStorageSync('carNum',this.carInfo.carNum)
+      //   this.$apply()
+      // },
       previewImage (e) {
         var current = e.target.dataset.src;
         wepy.previewImage({

@@ -139,11 +139,11 @@ page,
         margin-top: 32rpx;
         padding: 60rpx 46rpx;
 
-        .nomalBtn {
+        .nomal-btn {
           .longBtn(@normalBtnBgColor, @normalBtnBorderColor);
         }
 
-        .cancelBtn {
+        .cancel-btn {
           margin-top: 22rpx;
           .longBtn(@cancelBtnBgColor, @cancelBtnBgColor);
         }
@@ -269,13 +269,12 @@ page,
 
         <!-- 确认预约按钮 -->
         <view class="cells-btn">
-          <!-- <button class="nomalBtn" wx:if="{{ account.order_id_list > 0 }}" type="default" @tap="comfirnBooking"> -->
-          <button class="nomalBtn" wx:if="{{ account.order_id_list <= 0 }}" type="default" @tap="comfirnBooking">
+          <button class="nomal-btn" wx:if="{{ account.order_id_list <= 0 }}" type="default" @tap="comfirnBooking">
             立即预约
           </button>
           <block wx:else>
-            <button class="nomalBtn" type="default" @tap="toOrderDetail">查看预约</button>
-            <button class="cancelBtn" type="default" @tap="cancelOrder">取消订单</button>
+            <button class="nomal-btn" type="default" @tap="toOrderDetail">查看预约</button>
+            <button class="cancel-btn" type="default" @tap="cancelOrder">取消订单</button>
           </block>
         </view>
       </view>

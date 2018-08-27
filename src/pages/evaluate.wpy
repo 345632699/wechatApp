@@ -1,0 +1,142 @@
+<style lang="less">
+@import '../style/common.less';
+
+page,
+.page{
+  color: @txtColor;
+
+  .page-bd{
+    margin: 60rpx 26rpx 30rpx 24rpx;
+    background: @cellsBgColor;
+    box-shadow:0 4rpx 8rpx 0 #000000;
+    border-radius:12rpx;
+
+    .cells-rating{
+      padding: 48rpx 46rpx 42rpx;
+
+      .cell-rating{
+      	display: flex;
+      	align-items: center;
+      	justify-content: flex-start;
+      	padding: 20rpx;
+
+      	.title{
+      		font-size: 32rpx;
+      		line-height: 44rpx;
+      		margin-right: 30rpx;
+      	}
+      }
+
+      .cell-comment{
+      	.centerBox;
+      	border-radius: 12rpx;
+				border:2rpx solid #6D6E71;
+				padding: 14rpx 16rpx;
+				margin: 40rpx 0;
+				font-size: 24rpx;
+      	line-height: 34rpx;
+
+      	textarea{
+      		width: 586rpx;
+      		height: 154rpx;
+      	}
+      }
+
+      .btn{
+      	.longBtn(@normalBtnBgColor,@normalBtnBorderColor);
+      	width: 100%;
+      }
+  	}
+	}
+}
+</style>
+<template>
+    <view class="page">
+    <!--頂部-->
+    <view class="page-bd">
+      <view class="cells-rating">
+      	<view class="cell-rating">
+      		<view class="title">服务评分</view>
+      		<rate1 @change.user="ratingService"></rate1>
+      	</view>
+
+      	<view class="cell-rating">
+      		<view class="title">技工评分</view>
+      		<rate2 @change.user="ratingArtisan"></rate2>
+      	</view>
+
+      	<view class="cell-comment">
+      		<textarea maxlength="{{-1}}" placeholder="分享一下洗车评价～您的评价对于我们非常重要，我们 会听取您的意见并且改进我们的服务!" placeholder-style="color: #6D6E71" @blur="setComment" value="{{comment}}" />
+      	</view>
+
+        <button class="btn" @tap="confirmEvaluate">提交评价</button>
+    	</view>
+    </view>
+  </view>
+  <tips :step.sync="step" :title.sync="title"></tips>
+</template>
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE,
+    APPID
+  } from '../utils/constant';
+  import Tips from '../components/tips'
+  import Rate from "../components/rate"
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '订单评价'
+    }
+
+    components = {
+      tips: Tips,
+      rate1: Rate,
+      rate2: Rate,
+    }
+
+    data = {
+    	step: 4,
+      title: "支付尾款",
+      //评价分数
+      evaluate_service: 5,//服务
+      evaluate_artisan: 5,//技工
+      comment: '',//评价内容
+    }
+
+    methods = {
+      // 服务打分
+    	ratingService (count) {
+    		console.log(count);
+        this.evaluate_service = count
+        this.$apply()
+      },
+
+      // 技工打分
+      ratingArtisan (count) {
+    		console.log(count);
+        this.evaluate_artisan = count
+        this.$apply()
+      },
+
+      setComment (e) {
+        this.comment = e.detail.value;
+        this.$apply()
+      } ,
+
+      // 提交评价
+      confirmEvaluate () {
+        wepy.navigateTo({
+          url: `/pages/order_detail?evaluate_service=${this.evaluate_service}&evaluate_artisan=${this.evaluate_artisan}&comment=${this.comment}`
+        });
+      }
+    }
+
+    async onLoad() {
+    }
+
+    async onShow () {
+    }
+  }
+</script>

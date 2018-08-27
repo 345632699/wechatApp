@@ -123,7 +123,7 @@ page,
             font-size: 24rpx;
             line-height: 34rpx;
 
-            &:nth-last-child(3n-1){//3是计数器，1是偏移值
+            &:nth-last-child(3n-1){//3是计数器，-1是偏移值
               margin-left: 0;
             }
           }
@@ -205,7 +205,6 @@ page,
                       <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
                   </view>
-                  
                   <!-- 从已有的车牌号码中选取 -->
                   <view class="sel-car" @tap="activeSelCar" wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
                     <view>
@@ -218,8 +217,9 @@ page,
             </view>
           </view>
 
+          <!-- 展示车牌 -->
           <view class="cell-bottom-car" wx:if="{{active_sel_car}}">
-            <repeat for="{{test}}" item="item" key="index">
+            <repeat for="{{carInfo.carNumList}}" item="item" key="index">
               <view class="item-car {{carInfo.carNumIndex==index?'item-active-car':''}}" id="{{index}}" @tap="selectCar">
                 <text>{{item}}</text>
               </view>

@@ -266,7 +266,7 @@
         <!-- 关于我们 -->
         <view class="weui-tab__content about" hidden="{{activeIndex != 2}}">
           <view class="head">
-            <image src="../images/discover/logo.png"></image>
+            <image src="../images/icons/logo@2x.png"></image>
           </view>
           <view class="box">
             <view class="title">

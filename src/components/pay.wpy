@@ -41,9 +41,8 @@
         .betweenBox;
 
         image{
-          width: 8rpx;
-          height: 20rpx;
-          .rotate(-180deg);
+          width: 25rpx;
+          height: 25rpx;
         }
       }
     }
@@ -72,11 +71,11 @@
 
         <view class="pay-cell"  @tap="payByBalance">
           <view>账户余额支付</view>
-          <image src="../images/appointment/left-rounded.png"></image>
+          <image src="../images/icons/more.png"></image>
         </view>
         <view class="pay-cell" @tap="payByWechat">
           <view>微信支付</view>
-          <image src="../images/appointment/left-rounded.png"></image>
+          <image src="../images/icons/more.png"></image>
         </view>
       </view>
     </view>

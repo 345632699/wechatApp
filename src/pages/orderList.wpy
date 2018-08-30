@@ -3,26 +3,341 @@
 
 page,
 .page{
+  //height: 100%;
   color: @txtColor;
 
+  .weui-tab {
+    .weui-navbar {
+      border-bottom: 0;
+      .weui-navbar__item {
+        color: #9B9B9B;
+
+        .weui-navbar__title {
+          font-size: 32rpx;
+          line-height: 44rpx;
+        }
+      }
+
+      .weui-bar__item_on {
+        color: @txtColor;
+      }
+
+      .weui-navbar__slider {
+        width: 60px;
+        background: #C42B2B;
+      }
+    }
+  }
+
   .page-bd{
-    margin: 60rpx 26rpx 30rpx 24rpx;
-    background: @cellsBgColor;
-    box-shadow:0 4rpx 8rpx 0 #000000;
-    border-radius:12rpx;
+    padding: 20rpx 0 100rpx 0;
 
+    //.no-data{
+    //  color: #9B9B9B;
+    //  font-size: 26rpx;
+    //  padding-top: 50rpx;
+    //  letter-spacing: 1rpx;
+    //  .centerBox;
+    //}
 
+    .cells{
+      margin: 40rpx 26rpx 30rpx 24rpx;
+      background: @cellsBgColor;
+      box-shadow:0 4rpx 8rpx 0 #000000;
+      border-radius:12rpx;
+      padding: 0 36rpx;
+
+      .cells-title{
+        text-align: center;
+        padding-top: 20rpx;
+        font-size: 32rpx;
+        line-height: 44rpx;
+      }
+
+      .cell{
+        border-bottom: 2rpx solid @cellsBorder;
+        padding: 48rpx 0 24rpx 0;
+        .betweenBox;
+
+        .cell-left{
+          padding: 14rpx 0 0 18rpx;
+
+          image{
+            width: 46rpx;
+            height: 46rpx;
+          }
+        }
+
+        .cell-right{
+          width: 528rpx;
+          align-items: center;
+          display: flex;
+
+          .txt{
+            width: 510rpx;
+            .betweenBox;
+            flex-direction: column;
+
+            .title{
+              color: @txtColor;
+              font-size: 32rpx;
+              line-height:44rpx;
+              padding-bottom: 8rpx;
+            }
+
+            .subtitle{
+              color: #9B9B9B;
+              font-size: @normalFontSize;
+              line-height:34rpx;
+
+              .sub-item{
+                .betweenBox;
+                padding: 14rpx 0;
+
+                &:first-child{
+                  padding-top: 20rpx;
+                }
+
+                &:last-child{
+                  padding-bottom: 0;
+                }
+              }
+            }
+          }
+
+          .hint{
+            color: #C42B2B;
+            font-size: @normalFontSize;
+            width: 100%;
+            text-align: left;
+            margin-top: 8rpx;
+          }
+        }
+
+        .cell-top{
+          width:100%;
+          align-items: center;
+          .betweenBox;
+
+          image{
+            margin-left: 18rpx;
+            width: 46rpx;
+            height: 46rpx;
+          }
+
+          .title{
+            width: 528rpx;
+            color: @txtColor;
+            font-size: 32rpx;
+            line-height:44rpx;
+          }
+        }
+
+        .cell-bottom{
+          .centerBox;
+          flex-wrap: wrap;
+          padding: 22rpx 20rpx 0;
+
+          image{
+            margin: 24rpx 24rpx 0 0;
+            width: 180rpx;
+            height: 180rpx;
+
+            &:nth-last-child(3n+1){//3是计数器，1是偏移值
+              margin-right: 0;
+            }
+          }
+        }
+
+        //&:last-child{
+        //  border-bottom: 0;
+        //}
+      }
+
+      .cells-btn{
+        padding: 28rpx 10rpx;
+
+        .nomal-btn{
+          .longBtn(@normalBtnBgColor,@normalBtnBorderColor);
+          width: 100%;
+        }
+
+        .cancel-btn{
+          .longBtn(@cancelBtnBgColor,@cancelBtnBgColor);
+          width: 100%;
+        }
+      }
+    }
 	}
+
+  .page-fd{
+    position: fixed;
+    bottom: 0;
+    height: 48px;
+    background: #212121;
+    .centerBox;
+
+    .fd-item{
+      height: 100%;
+      flex-direction: column;
+      color: #9B9B9B;
+      .centerBox;
+
+      image{
+        height: 27px;
+        width: 27px;
+      }
+
+      text{
+        font-size: 10px;
+        line-height: 15px;
+      }
+
+      &:first-child{
+        color: @titleColor;
+      }
+    }
+  }
 }
 </style>
 <template>
     <view class="page">
     <!--頂部-->
-    <view class="page-bd">
-      
+    <view class="weui-tab">
+      <!-- 顶部 -->
+      <view class="weui-navbar">
+        <repeat for="{{tabs}}" key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </repeat>
+        <view class="weui-navbar__slider" style="left:{{sliderLeft}}px;transform:translateX({{sliderOffset}}px);-webkit-transform:translateX({{sliderOffset}}px);"></view>
+      </view>
+
+      <!-- 内容 -->
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content page-bd">
+          <!-- <view class="no-data" wx:if="{{orderList.length == 0}}">未找到相关订单。</view>
+          <block wx:else> -->
+            <view class="cells" wx:for="{{orderList}}" key="{{index}}" item="item">
+              <view class="cells-title">预约订单</view>
+              <!-- 预约时间 -->
+              <view class="cell">
+                <view class="cell-left">
+                  <image src="../images/icons/time.png"></image>
+                </view>
+
+                <view class="cell-right">
+                  <view class="txt">
+                    <view class="title">预约时间</view>
+                    <view class="subtitle">2018.8.10 下午 3:00</view>
+                  </view>
+                </view>
+              </view>
+
+              <!-- 车牌号码 -->
+              <view class="cell">
+                <view class="cell-left">
+                  <image src="../images/icons/number.png"></image>
+                </view>
+
+                <view class="cell-right">
+                  <view class="txt">
+                    <view class="title">车牌号码</view>
+                    <view class="subtitle">粤B LY916</view>
+                  </view>
+                </view>
+              </view>
+
+              <!-- 套餐选择 -->
+              <view class="cell">
+                <view class="cell-left">
+                  <image src="../images/icons/shoppingcar.png"></image>
+                </view>
+
+                <view class="cell-right" style="flex-direction: column;">
+                  <view style="width:100%;display:flex;align-items:center;">
+                    <view class="txt">
+                      <view class="title">套餐选择</view>
+                      <view class="subtitle">¥168套餐 预计用时：3小时</view>
+                    </view>
+                  </view>
+                  <view class="hint">*开始洗车前1小时内不可取消预约</view>
+                </view>
+              </view>
+
+              <view class="cells-btn">
+                <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
+              </view>
+            </view>
+          <!-- </block> -->
+
+          <view class="cells" wx:for="{{orderList}}" key="*this" item="item">
+            <view class="cells-title">预约订单</view>
+            <!-- 预约时间 -->
+            <view class="cell">
+              <view class="cell-left">
+                <image src="../images/icons/time.png"></image>
+              </view>
+
+              <view class="cell-right">
+                <view class="txt">
+                  <view class="title">预约时间</view>
+                  <view class="subtitle">2018.8.10 下午 3:00</view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 车牌号码 -->
+            <view class="cell">
+              <view class="cell-left">
+                <image src="../images/icons/number.png"></image>
+              </view>
+
+              <view class="cell-right">
+                <view class="txt">
+                  <view class="title">车牌号码</view>
+                  <view class="subtitle">粤B LY916</view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 套餐选择 -->
+            <view class="cell">
+              <view class="cell-left">
+                <image src="../images/icons/shoppingcar.png"></image>
+              </view>
+
+              <view class="cell-right" style="flex-direction: column;">
+                <view style="width:100%;display:flex;align-items:center;">
+                  <view class="txt">
+                    <view class="title">套餐选择</view>
+                    <view class="subtitle">¥168套餐 预计用时：3小时</view>
+                  </view>
+                </view>
+                <view class="hint">*开始洗车前1小时内不可取消预约</view>
+              </view>
+            </view>
+
+            <view class="cells-btn">
+              <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
+
+    <!-- 底部 -->
+    <!-- <view class="page-fd">
+      <repeat wx:for="{{tabbar}}" wx:key="index" item="item">
+        <view class="fd-item" @tap="toTabBarPage" id="{{index}}" style="width:{{tabbarItemWidth}}px">
+          <image src="{{item.img}}"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </repeat>
+    </view> -->
+
   </view>
- 
 </template>
 <script>
   import wepy from 'wepy'
@@ -32,6 +347,9 @@ page,
     SEL_CLASS_CODE,
     APPID
   } from '../utils/constant';
+  import api from '../api/api'
+
+  const sliderWidth = 60 // 需要设置slider的宽度，用于计算中间位置
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '预约'
@@ -41,16 +359,93 @@ page,
     }
 
     data = {
+      //weui的tab参数
+      tabs: ["我的预约", "历史订单"],
+      activeIndex: 0,//激活项
+      sliderOffset: 0,//x轴上转换的值
+      sliderLeft: 0,//距离左边的偏移值
+
+      tabbarItemWidth: 0,
+      tabbar:[
+        {
+          img: '../images/icons/book_white.png',
+          url: '',
+          name: '预约'
+        },
+        {
+          img: '../images/icons/find_gray.png',
+          url: 'discover',
+          name: '发现'
+        }
+      ],
+
+      orderList: [],
     }
 
     methods = {
-      
+      async tabClick(e) {
+        this.sliderOffset = e.currentTarget.offsetLeft;
+        this.activeIndex = e.currentTarget.id;
+        this.$apply();
+
+        if(this.activeIndex == 0){
+          this.getAppointmentList();
+        }else{
+          this.getHistoryOrderList();
+        }
+
+        if(this.orderList.length == 0){
+          wx.showToast({
+            title: '未找到相关订单',
+            icon: 'none',
+            duration: 1000
+          });
+        }
+      },
+
+      toTabBarPage (e) {
+        let index = e.currentTarget.id;
+        let url = this.tabbar[index].url;
+        if(index > 0){
+          wx.switchTab({
+            url: url
+          })
+        }
+      }
+    }
+    //获取预约列表
+    async getAppointmentList () {
+
+    }
+
+    //获取历史订单
+    async getHistoryOrderList() {
+
     }
 
     async onLoad() {
+      let that = this;
+      let tabbarCount = this.tabbar.length;
+      wx.getSystemInfo({
+        success: function (res) {
+          that.tabbarItemWidth = res.windowWidth / tabbarCount;
+          that.sliderLeft = (res.windowWidth / that.tabs.length - sliderWidth) / 2;
+          that.sliderOffset = res.windowWidth / that.tabs.length * that.activeIndex;
+        }
+      });
+
+      let orderIdList = wepy.getStorageSync('order_id_list');
     }
 
     async onShow () {
+      this.getAppointmentList();
+      if(this.orderList.length == 0){
+          wx.showToast({
+            title: '未找到相关订单',
+            icon: 'none',
+            duration: 1000
+          });
+        }
     }
   }
 </script>

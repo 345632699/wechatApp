@@ -61,23 +61,7 @@ page,
                   padding-bottom: 0;
                 }
               }
-
-              .sel-car{
-                height: 34rpx;
-
-                image{
-                  margin-left: 8rpx;
-                  width:20rpx;
-                  height: 12rpx;
-                }
-              }
             }
-          }
-
-          .skip{
-            width: 12rpx;
-            height: 20rpx;
-            .rotate(-180deg);
           }
 
           .hint{

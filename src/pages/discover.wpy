@@ -26,7 +26,7 @@
         }
 
         .weui-navbar__slider {
-          width: 120rpx;
+          width: 60px;
           background: #C42B2B;
         }
       }
@@ -219,13 +219,11 @@
       <!-- 顶部 -->
       <view class="weui-navbar">
         <repeat for="{{tabs}}" key="*this">
-          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}"
-                @tap="tabClick">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
             <view class="weui-navbar__title">{{item}}</view>
           </view>
         </repeat>
-        <view class="weui-navbar__slider"
-              style="left:{{sliderLeft}}px;transform:translateX({{sliderOffset}}px);-webkit-transform:translateX({{sliderOffset}}px);"></view>
+        <view class="weui-navbar__slider" style="left:{{sliderLeft}}px;transform:translateX({{sliderOffset}}px);-webkit-transform:translateX({{sliderOffset}}px);"></view>
       </view>
       <!-- 内容 -->
       <view class="weui-tab__panel">
@@ -310,7 +308,7 @@
   } from '../utils/constant';
   import api from '../api/api'
 
-  const sliderWidth = 62 // 需要设置slider的宽度，用于计算中间位置
+  const sliderWidth = 60 // 需要设置slider的宽度，用于计算中间位置
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '订单中心',
@@ -324,7 +322,7 @@
       tabs: ["最新资讯", "案例展示", "关于我们"],
       activeIndex: 0,//激活项
       sliderOffset: 0,//x轴上转换的值
-      sliderLeft: 31.5,//距离左边的偏移值
+      sliderLeft: 0,//距离左边的偏移值
 
       //最新资讯
       newsList: [{

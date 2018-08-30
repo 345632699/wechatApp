@@ -51,12 +51,14 @@ page,
 
               .picker{
                 .betweenBox;
-                margin-right: 24rpx;
+                padding-right: 14rpx;
                 align-items: center;
+                border-right: 2rpx solid #D8D8D8;
+                height: 28rpx;
                 
                 image{
-                  width: 20rpx;
-                  height: 12rpx;
+                  width: 28rpx;
+                  height: 28rpx;
                   margin-right: 10rpx;
                 }
 
@@ -77,20 +79,20 @@ page,
 
               .sel-car{
                 height: 34rpx;
+                .centerBox;
 
                 image{
                   margin-left: 14rpx;
-                  width:20rpx;
-                  height: 12rpx;
+                  width: 28rpx;
+                  height: 28rpx;
                 }
               }
             }
           }
 
           .skip{
-            width: 12rpx;
-            height: 20rpx;
-            .rotate(-180deg);
+            width: 25rpx;
+            height: 25rpx;
           }
 
           .hint{
@@ -170,7 +172,7 @@ page,
         <!-- 预约时间 -->
         <view class="cell">
           <view class="cell-left">
-            <image src="../images/appointment/time.png"></image>
+            <image src="../images/icons/time.png"></image>
           </view>
 
           <view class="cell-right">
@@ -185,7 +187,7 @@ page,
         <view class="cell" style="padding-bottom:16rpx;flex-direction: column;">
           <view class="cell-top-car">
             <view class="cell-left">
-              <image src="../images/appointment/bus.png"></image>
+              <image src="../images/icons/number.png"></image>
             </view>
 
             <view class="cell-right">
@@ -194,23 +196,21 @@ page,
                 <view class="subtitle" style="display:flex;justify-content: space-between;align-items: center;">
                   <view style="display:flex;justify-content: flex-start;align-items: center;">
                     <!-- 选择车牌地区 -->
-                    <view class="picker">
-                      <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
-                        <image src="../images/appointment/down.svg"></image>
+                    <picker mode="multiSelector" @change="bindProvinceChange" value="{{multiIndex}}" range="{{province}}">
+                      <view class="picker">
+                        <image src="../images/icons/triangle.png"></image>
                         <text> {{carInfo.currentProvince}}</text>
-                      </picker>
-                    </view>
+                      </view>
+                    </picker>
                     <!-- 车牌号码输入 -->
-                    <view style="max-width:150rpx">
+                    <view style="max-width:145rpx;margin-left:20rpx;">
                       <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
                   </view>
                   <!-- 从已有的车牌号码中选取 -->
                   <view class="sel-car" @tap="activeSelCar" wx:if="{{ carInfo.carNumList != false && pay_success < 1 }}">
-                    <view>
-                      选择我的车牌号码
-                      <image src="../images/appointment/down.svg" ></image>
-                    </view>
+                    <text>选择我的车牌号码</text>
+                    <image src="../images/icons/triangle.png" ></image>
                   </view>
                 </view>
               </view>
@@ -230,7 +230,7 @@ page,
         <!-- 绑定手机号码 -->
         <view class="cell" @tap="bindMobile">
           <view class="cell-left">
-            <image src="../images/appointment/addPhone.svg"></image>
+            <image src="../images/icons/phone.png"></image>
           </view>
 
           <view class="cell-right">
@@ -238,14 +238,14 @@ page,
               <view class="title">手机号码</view>
               <view class="subtitle">{{phone > 0 ? phone : '绑定手机以便我们与您取得联系'}}</view>
             </view>
-            <image class="skip" wx:if="{{ pay_success < 1 }}" src="../images/appointment/left-rounded.png"></image>
+            <image class="skip" wx:if="{{ pay_success < 1 }}" src="../images/icons/more.png"></image>
           </view>
         </view>
 
         <!-- 选择套餐 -->
         <view class="cell" @tap="toSelPackage">
           <view class="cell-left">
-            <image src="../images/appointment/select.png"></image>
+            <image src="../images/icons/shoppingcar.png"></image>
           </view>
 
           <view class="cell-right" style="flex-direction: column;">
@@ -254,7 +254,7 @@ page,
                 <view class="title">套餐选择</view>
                 <view class="subtitle">{{ product.name }}</view>
               </view>
-              <image wx:if="{{ pay_success < 1 }}" class="skip" src="../images/appointment/left-rounded.png"></image>
+              <image wx:if="{{ pay_success < 1 }}" class="skip" src="../images/icons/more.png"></image>
             </view>
             <view class="hint"  hidden="{{ product.detail ? '':'false'}}">*开始洗车前24小时内取消不可退定金</view>
             <view class="hint"  style="color:#9B9B9B" hidden="{{ product.detail ? '':'false'}}">*包含: {{ product.detail }}</view>
@@ -264,7 +264,7 @@ page,
         <!-- 支付费用 -->
         <view class="cell" wx:if="{{ product.id }}">
           <view class="cell-left" style="padding-top:0">
-            <image src="../images/appointment/money.png"></image>
+            <image src="../images/icons/money.png"></image>
           </view>
 
           <view class="cell-right">
@@ -341,7 +341,7 @@ page,
       end_time: '',
       branch_id:0,
 
-      icon: "../images/icon_home.png",
+      // icon: "../images/icon_home.png",
       carInfo:{
         currentCarNum: "",
         currentProvince: "粤B",

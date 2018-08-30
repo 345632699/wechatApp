@@ -89,14 +89,14 @@ export default class extends wepy.app {
       "borderStyle": "black",
       "list": [{
         "pagePath": "pages/index",
-        "text": "首页",
-        "iconPath": "images/index/date.png",
-        "selectedIconPath": "images/index/date_hover.png"
+        "text": "预约",
+        "iconPath": "images/icons/book_gray.png",
+        "selectedIconPath": "images/icons/book_white.png"
       }, {
         "pagePath": "pages/discover",
         "text": "发现",
-        "iconPath": "images/index/discover.png",
-        "selectedIconPath": "images/index/discover_hover.png"
+        "iconPath": "images/icons/find_gray.png",
+        "selectedIconPath": "images/icons/find_white.png"
       }]
     }
   }

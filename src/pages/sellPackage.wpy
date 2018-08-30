@@ -65,10 +65,10 @@
 
         image{
           position: relative;
-          top: -2rpx;
+          top: 4rpx;
           left: 11rpx;
-          width: 17rpx;
-          height: 10rpx;
+          width: 28rpx;
+          height: 28rpx;
           //padding: 15rpx 11rpx;
         }
       }
@@ -98,7 +98,7 @@
           <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
           <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
           <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情
-            <image src="../images/appointment/down.svg"></image>
+            <image src="../images/icons/triangle.png"></image>
           </navigator>
         </view>
       </view>

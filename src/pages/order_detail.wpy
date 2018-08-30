@@ -159,9 +159,9 @@ page,
         <!-- 洗车进程 -->
         <view class="cell" wx:if="{{ orderDetail.order_status > 0 && orderDetail.order_status < 4}}">
           <view class="cell-left">
-            <image wx:if="{{ orderDetail.order_status == 1 }}" src="../images/appointment/time.png"></image>
-            <image wx:if="{{ orderDetail.order_status == 2 }}" src="../images/appointment/washing.png"></image>
-            <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/appointment/done.png"></image>
+            <image wx:if="{{ orderDetail.order_status == 1 }}" src="../images/icons/time.png"></image>
+            <image wx:if="{{ orderDetail.order_status == 2 }}" src="../images/icons/washing.png"></image>
+            <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/icons/washing.png"></image>
           </view>
 
           <view class="cell-right">
@@ -183,7 +183,7 @@ page,
         <!-- 车牌号码 -->
         <view class="cell">
           <view class="cell-left">
-            <image src="../images/appointment/bus.png"></image>
+            <image src="../images/icons/number.png"></image>
           </view>
 
           <view class="cell-right">
@@ -197,7 +197,7 @@ page,
         <!-- 手机号码 -->
         <view class="cell">
           <view class="cell-left">
-            <image src="../images/appointment/addPhone.svg"></image>
+            <image src="../images/icons/phone.png"></image>
           </view>
 
           <view class="cell-right">
@@ -211,7 +211,7 @@ page,
         <!-- 套餐 -->
         <view class="cell">
           <view class="cell-left">
-            <image src="../images/appointment/select.png"></image>
+            <image src="../images/icons/shoppingcar.png"></image>
           </view>
 
           <view class="cell-right" style="flex-direction: column;">
@@ -228,7 +228,7 @@ page,
         <!-- 效果展示 -->
         <view class="cell" wx:if="{{ orderDetail.image_list.length }}" style="flex-direction: column;">
           <view class="cell-top">
-            <image src="../images/appointment/display.png"></image>
+            <image src="../images/icons/view.png"></image>
             <view class="title">效果展示</view>
           </view>
 
@@ -240,7 +240,7 @@ page,
         <!-- 支付费用 -->
         <view class="cell">
           <view class="cell-left" style="padding-top:0">
-            <image src="../images/appointment/money.png"></image>
+            <image src="../images/icons/money.png"></image>
           </view>
 
           <view class="cell-right">

@@ -73,13 +73,13 @@ page,
       }
 
       .booking-cell {
-        min-height: 118rpx;
+        //min-height: 118rpx;
         margin-right: 38rpx;
 
         .cell-hd {
-          min-height: 80rpx;
-          padding-top: 38rpx;
+          padding: 38rpx 0 36rpx 0;
           margin-left: 42rpx;
+          align-items: center;
           .betweenBox;
 
           .cell-title {
@@ -89,14 +89,16 @@ page,
           }
 
           .cell-select {
+            .centerBox;
+
             text {
               line-height: 34rpx;
               color: #9B9B9B;
             }
 
             image {
-              width: 17px;
-              height: 10px;
+              width: 28rpx;
+              height: 28rpx;
               margin-left: 32rpx;
             }
 
@@ -206,7 +208,7 @@ page,
             <view class="cell-select">
               <text wx:if="{{branchIndex == -1}}">请选择</text>
               <text wx:else>{{branchList[branchIndex]}}</text>
-              <image class="{{activeBranch?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+              <image class="{{activeBranch?'':'rotation'}}" src="../images/icons/triangle.png"></image>
             </view>
           </view>
 
@@ -233,7 +235,7 @@ page,
             <view class="cell-select">
               <text wx:if="{{dateIndex == -1}}">请选择</text>
               <text wx:else>{{dateList[dateIndex].date}}</text>
-              <image class="{{activeDate?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+              <image class="{{activeDate?'':'rotation'}}" src="../images/icons/triangle.png"></image>
             </view>
           </view>
 
@@ -260,7 +262,7 @@ page,
             <view class="cell-select">
               <text wx:if="{{timeIndex == -1}}">请选择</text>
               <text wx:else>{{timeList[timeIndex].start_time + '-' + timeList[timeIndex].end_time}}</text>
-              <image class="{{activeTime?'':'rotation'}}" src="../images/appointment/down.svg"></image>
+              <image class="{{activeTime?'':'rotation'}}" src="../images/icons/triangle.png"></image>
             </view>
           </view>
 

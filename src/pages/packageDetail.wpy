@@ -90,10 +90,10 @@
 
       image{
         position: relative;
-        top: -2rpx;
+        top: 4rpx;
         left: 11rpx;
-        width: 17rpx;
-        height: 10rpx;
+        width: 28rpx;
+        height: 28rpx;
       }
 
       .rotation{
@@ -138,7 +138,7 @@
         <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
         <view class="tap" @tap="hidden">
           {{hiddenFlag? '展开详情' : '收起详情'}}
-          <image class="{{hiddenFlag? '' : 'rotation'}}" src="../images/appointment/down.svg"></image>
+          <image class="{{hiddenFlag? '' : 'rotation'}}" src="../images/icons/triangle.png"></image>
         </view>
       </view>
       <!--<icon type="succe面深度清o_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->

@@ -16,7 +16,7 @@
         height: 100%;
 
         .weui-cell__hd{
-          padding: 0 38rpx 0 24rpx;
+          padding: 0 28rpx 0 24rpx;
           .centerBox;
 
           image{
@@ -25,9 +25,9 @@
           }
 
           .stepper{
-            width: 12rpx;
-            height: 20rpx;
-            .rotate(90deg);
+            width: 25rpx;
+            height: 25rpx;
+            .rotate(-90deg);
           }
         }
         .weui-cell__ft{
@@ -85,8 +85,9 @@
             padding-right: 24rpx;
 
             image{
-              width:20rpx;
-              height: 12rpx;
+              width: 25rpx;
+              height: 25rpx;
+              .rotate(90deg);
             }
           }
         }
@@ -127,7 +128,7 @@
       <view class="weui-cell">
         <view class="weui-cell__hd">
           <image class="order" src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
-          <image class="stepper" src="../images/appointment/left-rounded.png" wx:else></image>
+          <image class="stepper" src="../images/icons/more.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
         <view class="weui-cell__ft">{{ step }}/4</view>
@@ -137,7 +138,7 @@
       <view class="weui-cell">
         <view class="weui-cell__hd">
           <image src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
-          <image class="stepper" src="../images/appointment/left-rounded.png" wx:else></image>
+          <image class="stepper" src="../images/icons/more.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
         <view class="weui-cell__ft">{{ step }}/ {{ order_count }}</view>
@@ -152,7 +153,7 @@
           <view class="hide-mask" @tap="hideAct"></view>
           <view class="weui-actionsheet__title">
             <view class="img">
-              <image src="../images/appointment/sheet.svg" ></image>
+              <image src="../images/icons/more.png" ></image>
             </view>
             <view>预订流程</view>
           </view>

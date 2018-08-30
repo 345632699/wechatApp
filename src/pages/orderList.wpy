@@ -32,13 +32,13 @@ page,
   .page-bd{
     padding: 20rpx 0 100rpx 0;
 
-    //.no-data{
-    //  color: #9B9B9B;
-    //  font-size: 26rpx;
-    //  padding-top: 50rpx;
-    //  letter-spacing: 1rpx;
-    //  .centerBox;
-    //}
+    .no-data{
+      color: #9B9B9B;
+      font-size: 26rpx;
+      padding-top: 50rpx;
+      letter-spacing: 1rpx;
+      .centerBox;
+    }
 
     .cells{
       margin: 40rpx 26rpx 30rpx 24rpx;
@@ -217,9 +217,9 @@ page,
       <!-- 内容 -->
       <view class="weui-tab__panel">
         <view class="weui-tab__content page-bd">
-          <!-- <view class="no-data" wx:if="{{orderList.length == 0}}">未找到相关订单。</view>
-          <block wx:else> -->
-            <view class="cells" wx:for="{{orderList}}" key="{{index}}" item="item">
+          <view class="no-data" wx:if="{{orderList.length == 0}}">暂无数据</view>
+          <block wx:else>
+            <view class="cells" wx:for="{{orderList}}" wx:key="item" item="item">
               <view class="cells-title">预约订单</view>
               <!-- 预约时间 -->
               <view class="cell">
@@ -270,9 +270,9 @@ page,
                 <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
               </view>
             </view>
-          <!-- </block> -->
+          </block>
 
-          <view class="cells" wx:for="{{orderList}}" key="*this" item="item">
+          <view class="cells" wx:for="{{orderList}}" wx:key="index" item="item">
             <view class="cells-title">预约订单</view>
             <!-- 预约时间 -->
             <view class="cell">
@@ -393,14 +393,6 @@ page,
         }else{
           this.getHistoryOrderList();
         }
-
-        if(this.orderList.length == 0){
-          wx.showToast({
-            title: '未找到相关订单',
-            icon: 'none',
-            duration: 1000
-          });
-        }
       },
 
       toTabBarPage (e) {
@@ -439,13 +431,6 @@ page,
 
     async onShow () {
       this.getAppointmentList();
-      if(this.orderList.length == 0){
-          wx.showToast({
-            title: '未找到相关订单',
-            icon: 'none',
-            duration: 1000
-          });
-        }
     }
   }
 </script>

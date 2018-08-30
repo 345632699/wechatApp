@@ -284,14 +284,8 @@ page,
 
         <!-- 确认预约按钮 -->
         <view class="cells-btn">
-          <button class="nomal-btn" wx:if="{{ account.order_id_list <= 0 }}" type="default" @tap="comfirnBooking">
-            立即预约
-          </button>
-          <block wx:else>
-            <button class="nomal-btn" type="default" @tap="comfirnBooking">添加新预约</button>
-            <!-- <button class="nomal-btn" type="default" @tap="toOrderDetail">查看预约</button> -->
-            <button class="cancel-btn" type="default" @tap="cancelOrder">取消订单</button>
-          </block>
+          <button class="nomal-btn" wx:if="{{ account.order_id_list <= 0 }}" type="default" @tap="comfirnBooking">立即预约</button>
+          <button wx:else class="nomal-btn" type="default" @tap="comfirnBooking">添加新预约</button>
         </view>
       </view>
 
@@ -446,11 +440,6 @@ export default class Index extends wepy.page {
       wepy.navigateTo({
         url: `/pages/order_detail?order_id=1`
       });
-    },
-
-    // 取消订单
-    cancelOrder() {
-      this.is_active = 1
     },
 
     //---------------------------------------------------------------

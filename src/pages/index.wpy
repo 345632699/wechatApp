@@ -149,6 +149,19 @@ page,
         }
       }
     }
+
+    .circle-btn{
+      border-radius: 50%;
+      width: 112rpx;
+      height: 112rpx;
+      position: fixed;
+      right: 24rpx;
+      bottom: 8rpx;
+      background: @normalBtnBgColor;
+      box-shadow:0px -4px 18px 2px #000000;
+      flex-direction: column;
+      .centerBox;
+    }
     
     .foot-space {
       .bottom(30rpx);
@@ -273,11 +286,19 @@ page,
             立即预约
           </button>
           <block wx:else>
-            <button class="nomal-btn" type="default" @tap="toOrderDetail">查看预约</button>
+            <button class="nomal-btn" type="default" @tap="comfirnBooking">添加新预约</button>
+            <!-- <button class="nomal-btn" type="default" @tap="toOrderDetail">查看预约</button> -->
             <button class="cancel-btn" type="default" @tap="cancelOrder">取消订单</button>
           </block>
         </view>
       </view>
+
+      <navigator url="" hover-class="none">
+        <view class="circle-btn">
+          <text>查看</text>
+          <text>预约</text>
+        </view>
+      </navigator>
 
       <view class="foot-space"></view>
     </view>

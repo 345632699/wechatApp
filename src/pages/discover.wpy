@@ -90,7 +90,7 @@
       padding: 48rpx 0;
 
       .imgs {
-        padding: 0 24rpx 20rpx 26rpx;
+        padding: 0 24rpx 0 26rpx;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

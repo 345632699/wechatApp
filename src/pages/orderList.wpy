@@ -1,0 +1,56 @@
+<style lang="less">
+@import '../style/common.less';
+
+page,
+.page{
+  color: @txtColor;
+
+  .page-bd{
+    margin: 60rpx 26rpx 30rpx 24rpx;
+    background: @cellsBgColor;
+    box-shadow:0 4rpx 8rpx 0 #000000;
+    border-radius:12rpx;
+
+
+	}
+}
+</style>
+<template>
+    <view class="page">
+    <!--頂部-->
+    <view class="page-bd">
+      
+    </view>
+  </view>
+ 
+</template>
+<script>
+  import wepy from 'wepy'
+  import util from '../utils/util'
+  import {
+    SYSTEM_INFO,
+    SEL_CLASS_CODE,
+    APPID
+  } from '../utils/constant';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '预约'
+    }
+
+    components = {
+    }
+
+    data = {
+    }
+
+    methods = {
+      
+    }
+
+    async onLoad() {
+    }
+
+    async onShow () {
+    }
+  }
+</script>

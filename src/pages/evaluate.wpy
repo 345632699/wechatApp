@@ -66,7 +66,7 @@ page,
       	</view>
 
       	<view class="cell-comment">
-      		<textarea maxlength="{{-1}}" placeholder="分享一下洗车评价～您的评价对于我们非常重要，我们 会听取您的意见并且改进我们的服务!" placeholder-style="color: #6D6E71" @blur="setComment" value="{{comment}}" />
+      		<textarea maxlength="{{-1}}" placeholder="分享一下洗车评价～您的评价对于我们非常重要，我们会听取您的意见并且改进我们的服务!" placeholder-style="color: #6D6E71" @blur="setComment" value="{{comment}}" />
       	</view>
 
         <button class="btn" @tap="confirmEvaluate">提交评价</button>

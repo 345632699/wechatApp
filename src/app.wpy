@@ -66,6 +66,7 @@ export default class extends wepy.app {
       'pages/appointment',
       'pages/sellPackage',
       'pages/packageDetail',
+      'pages/orderList',
       'pages/order_detail',
       'pages/evaluate',
       'pages/discover',

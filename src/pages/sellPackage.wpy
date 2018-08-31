@@ -1,75 +1,96 @@
 <style lang="less">
 @import '../style/common.less';
 .page{
-  padding: 60rpx 24rpx 60rpx 26rpx;
-  .page_box{
-    background: @cellsBgColor;
-    box-shadow:0px 4px 12px 2px #000000;
-    border-radius: 12rpx;
-    margin-bottom: 20rpx;
-    .img_box{
-      height: 388rpx;
-      border-top-left-radius: 20rpx;
-      border-top-right-radius: 20rpx;
-      width: 100%;
-      .img{
-        border-top-left-radius: 20rpx;
-        border-top-right-radius: 20rpx;
-        width: 100%;
-        height: 100%;
-      }
-      .mainTitle,.product_name{
-        color: #FFFFFF;
-        font-size: 60rpx;
-        line-height:72rpx;
-        position: relative;
-        left: 16rpx;
-        top: -200rpx;
-      }
-    }
-    .detail{
-      padding: 34rpx 40rpx 0rpx 28rpx;
-      .title{
-        color: @txtColor;
-        font-size: 32rpx;
-        line-height: 44rpx;
-      }
-      .tips{
-        color: @txtColor;
-        font-size: @normalFontSize;
-        line-height: 34rpx;
-        padding: 8rpx 0 40rpx 0;
-      }
-      .main{
-        font-size: @normalFontSize;
-        line-height: 34rpx;
-        color: #9B9B9B;
-        text-align: justify;
-        display: -webkit-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        text-indent: 0;
-      }
-      .tap{
-        line-height: 40rpx;
-        display: inline-block;
-        padding: 44rpx 116rpx 32rpx 0;
-        color: @txtColor;
-        font-size: 28rpx;
+  .cells{
+    padding: 20rpx 0;
 
-        &:last-child{
-          color: #9B9B9B;
-        }
+    .cell{
+      margin: 40rpx 26rpx 30rpx 24rpx;
+      background: @cellsBgColor;
+      box-shadow:0 4rpx 8rpx 0 #000000;
+      border-radius:12rpx;
+
+      .cell-hd{
+        height: 394rpx;
 
         image{
+          width: 100%;
+          height: 394rpx;
+          border-radius: 12rpx 12rpx 0 0;
+        }
+
+        .top-title{
+          color: @titleColor;
+          font-weight:600;
+          font-size: 60rpx;
+          line-height:72rpx;
           position: relative;
-          top: 4rpx;
-          left: 11rpx;
-          width: 28rpx;
-          height: 28rpx;
-          //padding: 15rpx 11rpx;
+          left: 28rpx;
+          top: -170rpx;
+          display: flex;
+          flex-direction: column;
+          width: 250rpx;
+        }
+      }
+
+      .cell-bd{
+        padding: 34rpx 40rpx 0 28rpx;
+        display: flex;
+        flex-direction: column;
+
+        .title{
+          color: @txtColor;
+          font-size: 32rpx;
+          line-height: 44rpx;
+        }
+
+        .tips{
+          color: @txtColor;
+          font-size: @normalFontSize;
+          line-height: 34rpx;
+          padding-top: 8rpx;
+        }
+
+        .main{
+          font-size: @normalFontSize;
+          line-height: 34rpx;
+          color: #9B9B9B;
+          text-align: justify;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          padding-top: 40rpx;
+        }
+
+      }
+
+      .cell-fd{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .select{
+          padding: 44rpx 58rpx 32rpx 28rpx;
+          color: @txtColor;
+          font-size: 28rpx;
+          line-height: 40rpx;
+          z-index: 500;
+        }
+
+        .detail{
+          padding: 44rpx 58rpx 32rpx 58rpx;
+          color: #9B9B9B;
+          font-size: 28rpx;
+          line-height: 40rpx;
+          .centerBox;
+
+          image{
+            margin-left: 11rpx;
+            width: 28rpx;
+            height: 28rpx;
+          }
         }
       }
     }
@@ -79,30 +100,30 @@
 <template>
   <view class="page">
     <!--頂部-->
-    <view>
-      <view class="page_box" wx:for="{{dateList}}" wx:key="item">
-        <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="img_box">
-          <image class="img" src="../images/slices/168.png" alt="" />
-          <view class="mainTitle">
-            {{ item.product_price }}
+    <view class="cells">
+      <navigator class="cell" hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" wx:for="{{dateList}}" wx:key="item">
+        <view class="cell-hd">
+          <image src="../images/slices/168.png"></image>
+          <view class="top-title">
+            <text class="price">{{ item.product_price }}</text>
+            <text class="name">{{ item.product_name }}</text>
           </view>
-          <view class="product_name">
-            {{ item.product_name }}
-          </view>
-        </navigator>
-        <view class="detail">
-          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="title font-weight">
-            {{ item.product_subtitle }}
-          </navigator>
-          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</navigator>
-          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="main">包含：{{ item.product_intro }}</navigator>
-          <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
-          <navigator hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" class="tap">套餐详情
-            <image src="../images/icons/triangle.png"></image>
-          </navigator>
         </view>
-      </view>
-      <!--<icon type="success_no_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
+
+        <view class="cell-bd">
+          <text class="title">{{ item.product_subtitle }}</text>
+          <text class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</text>
+          <text class="main">包含：{{ item.product_intro }}</text>
+        </view>
+
+        <view class="cell-fd">
+          <view class="select" @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}">选择套餐</view>
+          <view class="detail">
+            套餐详情
+            <image src="../images/icons/triangle.png"></image>
+          </view>
+        </view>
+      </navigator>
     </view>
   </view>
 </template>

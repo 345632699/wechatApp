@@ -1,72 +1,116 @@
 <style lang="less">
 @import '../style/common.less';
 .page{
-   padding: 60rpx 24rpx 60rpx 26rpx;
+  padding: 20rpx 0;
 
-  .page_box{
+  .cell{
+    margin: 40rpx 26rpx 30rpx 24rpx;
     background: @cellsBgColor;
-    box-shadow:0px 4px 12px 2px #000000;
-    border-radius: 12rpx;
-    margin-bottom: 20rpx;
+    box-shadow:0 4rpx 8rpx 0 #000000;
+    border-radius:12rpx;
 
-    .img_box{
-      height: 388rpx;
-      border-top-left-radius: 20rpx;
-      border-top-right-radius: 20rpx;
-      width: 100%;
-      .img{
-        border-top-left-radius: 20rpx;
-        border-top-right-radius: 20rpx;
+    .cell-hd{
+      height: 394rpx;
+
+      image{
         width: 100%;
-        height: 100%;
+        height: 394rpx;
+        border-radius: 12rpx 12rpx 0 0;
       }
-      .mainTitle,.product_name{
-        color: #FFFFFF;
+
+      .top-title{
+        color: @titleColor;
+        font-weight:600;
         font-size: 60rpx;
         line-height:72rpx;
         position: relative;
-        left: 16rpx;
-        top: -200rpx;
+        left: 28rpx;
+        top: -170rpx;
+        display: flex;
+        flex-direction: column;
+        width: 250rpx;
       }
     }
 
-    .detail{
+    .cell-bd{
       padding: 34rpx 40rpx 0 28rpx;
+      display: flex;
+      flex-direction: column;
+
       .title{
         color: @txtColor;
         font-size: 32rpx;
         line-height: 44rpx;
       }
+
       .tips{
         color: @txtColor;
         font-size: @normalFontSize;
         line-height: 34rpx;
-        padding: 8rpx 0 40rpx 0;
+        padding-top: 8rpx;
       }
+
       .main{
-        padding-top: 16rpx;
-        padding-bottom: 16rpx;
-        border-top:1px solid @cellsBorder;
-        &.border-none{
-          border:none;
+        padding-top: 50rpx;
+
+        .main-item{
+          padding: 28rpx 0 26rpx;
+          border-top:1px solid @cellsBorder;
+          display: flex;
+          flex-direction: column;
+
+          .title{
+            padding-bottom: 18rpx;
+            font-size: 32rpx;
+            line-height: 44rpx;
+            color: @normalFontSize;
+          }
+
+          .content{
+            color: #9B9B9B;
+            font-size: @normalFontSize;
+            line-height: 34rpx;
+          }
+
+          &:first-child{
+            border:none;
+          }
         }
-        .title{
-          padding-bottom: 18rpx;
-          font-size: 32rpx;
-          line-height: 44rpx;
-          color: @normalFontSize;
-        }
-        .content{
-          color: #9B9B9B;
-          font-size: @normalFontSize;
-          line-height: 34rpx;
+      }
+    
+    }
+
+    .cell-fd{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .select{
+        padding: 44rpx 58rpx 32rpx 28rpx;
+        color: @txtColor;
+        font-size: 28rpx;
+        line-height: 40rpx;
+        z-index: 500;
+      }
+
+      .detail{
+        padding: 44rpx 58rpx 32rpx 58rpx;
+        color: #9B9B9B;
+        font-size: 28rpx;
+        line-height: 40rpx;
+        .centerBox;
+
+        image{
+          margin-left: 11rpx;
+          width: 28rpx;
+          height: 28rpx;
         }
       }
     }
 
     .hidden-box{
       overflow: hidden;
-      height: 470rpx;
+      height: 480rpx;
     }
 
     .omit{
@@ -77,28 +121,8 @@
       letter-spacing: 4rpx;
     }
 
-    .tap{
-      line-height: 40rpx;
-      display: inline-block;
-      padding: 34rpx 40rpx 32rpx 28rpx;
-      color: @txtColor;
-      font-size: 28rpx;
-
-      &:last-child{
-        color: #9B9B9B;
-      }
-
-      image{
-        position: relative;
-        top: 4rpx;
-        left: 11rpx;
-        width: 28rpx;
-        height: 28rpx;
-      }
-
-      .rotation{
-        .rotate(180deg);
-      }
+    .rotation{
+      .rotate(180deg);
     }
   }
 }
@@ -106,42 +130,38 @@
 <template>
   <view class="page">
     <!--頂部-->
-    <view>
-      <view class="page_box">
-        <view class="img_box">
-          <image class="img" src="../images/slices/168.png" alt="" />
-          <view class="mainTitle">
-            {{ product.product_price }}
-          </view>
-          <view class="product_name">
-            {{ product.product_name }}
-          </view>
+    <view class="cell">
+      <view class="cell-hd">
+        <image src="../images/slices/168.png"></image>
+        <view class="top-title">
+          <text class="price">{{ product.product_price }}</text>
+          <text class="name">{{ product.product_name }}</text>
         </view>
-        <view class="detail {{hiddenFlag ? 'hidden-box' : ''}}">
-          <view class="title">
-            {{ product.product_subtitle }}
-          </view>
-          <view class="tips">耗时约{{ product.product_cost_time / 60 }}小时, 开始前{{ product.product_cancel_limit_time }}分钟内不可取消</view>
+      </view>
 
-          <view wx:for="{{product.product_details}}" wx:key="item">
-            <view class="main {{ (0 == index) ? 'border-none':''}}" >
-              <view class="title">
-                {{ item.title }}
-              </view>
-              <view class="content">
-                <view wx:for="{{ item.content }}">{{ item }}</view>
-              </view>
+      <view class="cell-bd {{hiddenFlag ? 'hidden-box' : ''}}">
+        <text class="title">{{ product.product_subtitle }}</text>
+        <text class="tips">耗时约{{ product.product_cost_time / 60 }}小时, 开始前{{ product.product_cancel_limit_time }}分钟内不可取消</text>
+
+        <view class="main">
+          <view class="main-item" wx:for="{{product.product_details}}" wx:key="{{index}}" item="item">
+            <text class="title">{{ item.title }}</text>
+            <view class="content">
+              <view wx:for="{{ item.content }}" wx:key="{{index}}">{{ item }}</view>
             </view>
           </view>
         </view>
-        <view class="omit" hidden="{{hiddenFlag? '' : 'false'}}">...</view>
-        <view @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}" class="tap">选择套餐</view>
-        <view class="tap" @tap="hidden">
+      </view>
+
+      <view class="omit" hidden="{{hiddenFlag? '' : 'false'}}">...</view>
+
+      <view class="cell-fd">
+        <view class="select" @tap="selectPackage" data-code="{{ product.product_id }}" data-info="{{ product }}">选择套餐</view>
+        <view class="detail" @tap="hidden">
           {{hiddenFlag? '展开详情' : '收起详情'}}
           <image class="{{hiddenFlag? '' : 'rotation'}}" src="../images/icons/triangle.png"></image>
         </view>
       </view>
-      <!--<icon type="succe面深度清o_circle" size="23" hidden="{{item.active? '':'false'}}"></icon>-->
     </view>
   </view>
 </template>
@@ -177,10 +197,17 @@ export default class Index extends wepy.page {
     },
     selectPackage (e) {
       let pacakge_id = e.currentTarget.dataset.code
-      let package_detail = "*包含: 项目内容内容内容内容能显示多少就项目内容内容内容内容能显示多少就"
-      let package_name = "168套餐 预计用时：3小时"
-      wepy.navigateTo({
-        url:'/pages/appointment?package_id='+pacakge_id+'&package_detail='+package_detail+'&package_name='+package_name,
+      let package_detail =  e.currentTarget.dataset.info.product_subtitle
+      let package_name = e.currentTarget.dataset.info.product_name
+      let product_deposite = e.currentTarget.dataset.info.product_deposite
+      let product_price = e.currentTarget.dataset.info.product_price
+
+      wepy.redirectTo({
+        url:'/pages/appointment?package_id='+pacakge_id+
+        '&package_detail='+package_detail+
+        '&product_price='+product_price+
+        '&product_deposite='+product_deposite+
+        '&package_name='+package_name,
       })
     }
   }

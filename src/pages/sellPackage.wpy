@@ -55,7 +55,6 @@
           font-size: @normalFontSize;
           line-height: 34rpx;
           color: #9B9B9B;
-          text-align: justify;
           display: -webkit-box;
           overflow: hidden;
           text-overflow: ellipsis;

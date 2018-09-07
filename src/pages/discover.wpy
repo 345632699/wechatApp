@@ -234,15 +234,15 @@
           <view class="cells">
             <repeat for="{{newsList}}" item="item" key="index">
               <view class="cell">
-                <view class="cell-hd">
-                  <image src="{{item.picUrl}}"></image>
+                <view class="cell-hd" style="padding-top:{{item.image ? 'none' : '25rpx'}}">
+                  <image wx:if="{{item.image}}" src="{{item.image}}" binderror="imgError" id="{{ index }}"></image>
                 </view>
                 <view class="cell-bd">
                   <view class="head">
                     <view class="title">{{item.title}}</view>
-                    <view class="date">{{item.date}}</view>
+                    <view class="date">{{item.publish_time}}</view>
                   </view>
-                  <view class="txt">{{item.txt}}</view>
+                  <view class="txt">{{item.content}}</view>
                 </view>
               </view>
             </repeat>
@@ -326,19 +326,7 @@
       sliderLeft: 0,//距离左边的偏移值
 
       //最新资讯
-      newsList: [{
-        picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534843365503&di=041bba013ac870b389c6124c9902eedc&imgtype=0&src=http%3A%2F%2Fimg.juimg.com%2Ftuku%2Fyulantu%2F121212%2F267865-12121216202953.jpg",
-        title: "洗车优惠活动",
-        date: "2018.08.02",
-        txt: "展示两行内容，工作日全场9折优惠，办理会员充值满1000元 立送300元礼品卡。够两行了吗够了吗够了吗够了吗够了吗，够了" //展示两行内容
-      },
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534841962311&di=2a411d352732681da24a7d8336562cfd&imgtype=0&src=http%3A%2F%2Fpic33.photophoto.cn%2F20141130%2F0038038032841824_b.jpg",
-          title: "洗车优惠活动2",
-          date: "2018.08.12",
-          txt: "展示两行内容，工作日全场9折优惠，办理会员充值满1000元 立送300元礼品卡" //展示两行内容
-        }
-      ],
+      newsList: [],
       //公司简介的段落数组
       companyInfo: [
         'C&Y·1993专业汽车洗车中心是一家专注于专业的技术，高效的服务的汽车洗车中心。专心致志，全心全意地服务大众，实现100%的客户满意度是我们的宗旨。C&Y·1993专业汽车洗车中心以顾客为本，竭尽全力打造深圳信誉店。',
@@ -365,6 +353,13 @@
             duration: 1000
           });
         }
+      },
+
+      //图片加载错误，将图片设置为空 不显示。
+      imgError (e) {
+        let index = e.currentTarget.id;
+        this.newsList[index].image = '';
+        this.$apply();
       },
 
       makeCall(e) {
@@ -420,7 +415,6 @@
       let that = this;
       wx.getSystemInfo({
         success: function (res) {
-          console.log("windowWidth:", res.windowWidth);
           that.sliderLeft = (res.windowWidth / that.tabs.length - sliderWidth) / 2;
           that.sliderOffset = res.windowWidth / that.tabs.length * that.activeIndex;
         }
@@ -433,8 +427,16 @@
       this.$apply();
     }
 
-    onShow() {
+    async onShow() {
       this.addressList[0] = wepy.getStorageSync('defaultBranch')
+      
+      const res = await api.getnotices({
+        query: {
+          user_id: wepy.getStorageSync('merchant_id'),
+        },
+        method: 'POST'
+      });
+      this.newsList = res.data.data;
       this.$apply()
     }
 
@@ -442,7 +444,6 @@
       if (this.activeIndex == 1 && this.imgList.length > 0) {
         let imgs = await this.getshowimages()
         if(imgs.length) this.imgList.push(imgs)
-        console.log(this.imgList)
         this.$apply()
       }
     }

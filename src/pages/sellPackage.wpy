@@ -63,6 +63,34 @@
           padding-top: 40rpx;
         }
 
+        .main-detail{
+          padding-top: 22rpx;
+
+          .main-item{
+            padding: 28rpx 0 26rpx;
+            border-top:1px solid @cellsBorder;
+            display: flex;
+            flex-direction: column;
+
+            .title{
+              padding-bottom: 18rpx;
+              font-size: 32rpx;
+              line-height: 44rpx;
+              color: @normalFontSize;
+            }
+
+            .content{
+              color: #9B9B9B;
+              font-size: @normalFontSize;
+              line-height: 34rpx;
+            }
+
+            &:first-child{
+              border:none;
+            }
+          }
+        }
+
       }
 
       .cell-fd{
@@ -92,6 +120,10 @@
           }
         }
       }
+
+      .rotation{
+        .rotate(180deg);
+      }
     }
   }
 }
@@ -100,7 +132,8 @@
   <view class="page">
     <!--頂部-->
     <view class="cells">
-      <navigator class="cell" hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" wx:for="{{dateList}}" wx:key="item">
+      <!-- <navigator class="cell" hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" wx:for="{{dateList}}" wx:key="item"> -->
+      <view class="cell" wx:for="{{dateList}}" wx:key="{{ index }}" wx:for-item="item">
         <view class="cell-hd">
           <image src="../images/slices/168.png"></image>
           <view class="top-title">
@@ -112,17 +145,26 @@
         <view class="cell-bd">
           <text class="title">{{ item.product_subtitle }}</text>
           <text class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</text>
-          <text class="main">包含：{{ item.product_intro }}</text>
+          <text class="main" wx:if="{{ item.hide_details == true }}">包含：{{ item.product_intro }}</text>
+          <view class="main-detail" wx:else>
+            <view class="main-item" wx:for="{{item.product_details}}" wx:key="{{index}}" wx:for-item="detailItem">
+              <text class="title">{{ detailItem.title }}</text>
+              <view class="content">
+                <view wx:for="{{ detailItem.content }}" wx:key="{{ index }}" wx:for-item="contentItem">{{ contentItem }}</view>
+              </view>
+            </view>
+          </view>
         </view>
 
         <view class="cell-fd">
           <view class="select" @tap="selectPackage" data-code="{{ item.product_id }}" data-info="{{ item }}">选择套餐</view>
-          <view class="detail">
-            套餐详情
-            <image src="../images/icons/triangle.png"></image>
+          <view class="detail" @tap="packageDetail" id="{{ index }}">
+            {{ item.hide_details ? '套餐详情' : '收起详情' }}
+            <image class="{{ item.hide_details ? '' : 'rotation' }}" src="../images/icons/triangle.png"></image>
           </view>
         </view>
-      </navigator>
+      </view>
+      <!--  </navigator> -->
     </view>
   </view>
 </template>
@@ -137,7 +179,7 @@ import {
 import api from "../api/api"
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '套餐选择'
+    navigationBarTitleText: '套餐列表'
   }
   components = {
 
@@ -165,6 +207,12 @@ export default class Index extends wepy.page {
         '&product_deposite='+product_deposite+
         '&package_name='+package_name,
       })
+    },
+
+    packageDetail (e) {
+      let index = e.currentTarget.id;
+      this.dateList[index].hide_details = !this.dateList[index].hide_details;
+      this.$apply();
     }
   }
 
@@ -182,6 +230,20 @@ export default class Index extends wepy.page {
     });
     this.dateList = json.data.data
     this.$apply()
+
+    //获取套餐详情
+    let that = this;
+    this.dateList.forEach( async (item, index) => {
+      const res = await api.getproductdetails({
+        query: {
+          product_id: item.product_id
+        },
+        method: 'POST'
+      });
+      item.product_details = res.data.data[0].product_details;
+      item.hide_details = true;
+      that.$apply()
+    });
   }
 
   onReachBottom() {

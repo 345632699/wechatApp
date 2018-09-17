@@ -168,7 +168,7 @@ page,
         }
       }
     }
-	}
+  }
 
   .page-fd{
     position: fixed;
@@ -201,7 +201,7 @@ page,
 }
 </style>
 <template>
-    <view class="page">
+  <view class="page">
     <!--頂部-->
     <view class="weui-tab">
       <!-- 顶部 -->
@@ -219,7 +219,7 @@ page,
         <view class="weui-tab__content page-bd">
           <view class="no-data" wx:if="{{orderList.length == 0}}">暂无数据</view>
           <block wx:else>
-            <view class="cells" wx:for="{{orderList}}" wx:key="item" item="item">
+            <view class="cells" wx:for="{{orderList}}" wx:key="{{index}}" item="item">
               <view class="cells-title">预约订单</view>
               <!-- 预约时间 -->
               <view class="cell">
@@ -230,7 +230,7 @@ page,
                 <view class="cell-right">
                   <view class="txt">
                     <view class="title">预约时间</view>
-                    <view class="subtitle">2018.8.10 下午 3:00</view>
+                    <view class="subtitle">{{ item.order_time }}</view>
                   </view>
                 </view>
               </view>
@@ -244,7 +244,7 @@ page,
                 <view class="cell-right">
                   <view class="txt">
                     <view class="title">车牌号码</view>
-                    <view class="subtitle">粤B LY916</view>
+                    <view class="subtitle">{{ item.car_number }}</view>
                   </view>
                 </view>
               </view>
@@ -259,7 +259,7 @@ page,
                   <view style="width:100%;display:flex;align-items:center;">
                     <view class="txt">
                       <view class="title">套餐选择</view>
-                      <view class="subtitle">¥168套餐 预计用时：3小时</view>
+                      <view class="subtitle">{{ item.product_name }} 预计用时：{{ item.product_cost_time }}</view>
                     </view>
                   </view>
                   <view class="hint">*开始洗车前1小时内不可取消预约</view>
@@ -267,62 +267,10 @@ page,
               </view>
 
               <view class="cells-btn">
-                <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
+                <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default" @tap="toOrderDetail" id="{{index}}">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
               </view>
             </view>
           </block>
-
-          <view class="cells" wx:for="{{orderList}}" wx:key="index" item="item">
-            <view class="cells-title">预约订单</view>
-            <!-- 预约时间 -->
-            <view class="cell">
-              <view class="cell-left">
-                <image src="../images/icons/time.png"></image>
-              </view>
-
-              <view class="cell-right">
-                <view class="txt">
-                  <view class="title">预约时间</view>
-                  <view class="subtitle">2018.8.10 下午 3:00</view>
-                </view>
-              </view>
-            </view>
-
-            <!-- 车牌号码 -->
-            <view class="cell">
-              <view class="cell-left">
-                <image src="../images/icons/number.png"></image>
-              </view>
-
-              <view class="cell-right">
-                <view class="txt">
-                  <view class="title">车牌号码</view>
-                  <view class="subtitle">粤B LY916</view>
-                </view>
-              </view>
-            </view>
-
-            <!-- 套餐选择 -->
-            <view class="cell">
-              <view class="cell-left">
-                <image src="../images/icons/shoppingcar.png"></image>
-              </view>
-
-              <view class="cell-right" style="flex-direction: column;">
-                <view style="width:100%;display:flex;align-items:center;">
-                  <view class="txt">
-                    <view class="title">套餐选择</view>
-                    <view class="subtitle">¥168套餐 预计用时：3小时</view>
-                  </view>
-                </view>
-                <view class="hint">*开始洗车前1小时内不可取消预约</view>
-              </view>
-            </view>
-
-            <view class="cells-btn">
-              <button class="{{activeIndex == 0 ? 'nomal-btn' : 'cancel-btn'}}" type="default">{{activeIndex == 0 ? '查看详情' : '查看订单'}}</button>
-            </view>
-          </view>
         </view>
       </view>
     </view>
@@ -340,97 +288,139 @@ page,
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
-  import util from '../utils/util'
-  import {
-    SYSTEM_INFO,
-    SEL_CLASS_CODE,
-    APPID
-  } from '../utils/constant';
-  import api from '../api/api'
+import wepy from 'wepy'
+import util from '../utils/util'
+import {
+  SYSTEM_INFO,
+  SEL_CLASS_CODE,
+  APPID
+} from '../utils/constant';
+import api from '../api/api'
 
-  const sliderWidth = 60 // 需要设置slider的宽度，用于计算中间位置
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '预约'
+const sliderWidth = 60 // 需要设置slider的宽度，用于计算中间位置
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '预约'
+  }
+
+  components = {
+  }
+
+  data = {
+    //weui的tab参数
+    tabs: ["我的预约", "历史订单"],
+    activeIndex: 0,//激活项
+    sliderOffset: 0,//x轴上转换的值
+    sliderLeft: 0,//距离左边的偏移值
+
+    tabbarItemWidth: 0,
+    tabbar:[
+    {
+      img: '../images/icons/book_white.png',
+      url: '',
+      name: '预约'
+    },
+    {
+      img: '../images/icons/find_gray.png',
+      url: 'discover',
+      name: '发现'
     }
+    ],
+    branchId: '',
+    orderList: [],
+  }
 
-    components = {
-    }
+  methods = {
+    async tabClick(e) {
+      this.sliderOffset = e.currentTarget.offsetLeft;
+      this.activeIndex = e.currentTarget.id;
+      this.$apply();
 
-    data = {
-      //weui的tab参数
-      tabs: ["我的预约", "历史订单"],
-      activeIndex: 0,//激活项
-      sliderOffset: 0,//x轴上转换的值
-      sliderLeft: 0,//距离左边的偏移值
-
-      tabbarItemWidth: 0,
-      tabbar:[
-        {
-          img: '../images/icons/book_white.png',
-          url: '',
-          name: '预约'
-        },
-        {
-          img: '../images/icons/find_gray.png',
-          url: 'discover',
-          name: '发现'
-        }
-      ],
-
-      orderList: [],
-    }
-
-    methods = {
-      async tabClick(e) {
-        this.sliderOffset = e.currentTarget.offsetLeft;
-        this.activeIndex = e.currentTarget.id;
-        this.$apply();
-
-        if(this.activeIndex == 0){
-          this.getAppointmentList();
-        }else{
-          this.getHistoryOrderList();
-        }
-      },
-
-      toTabBarPage (e) {
-        let index = e.currentTarget.id;
-        let url = this.tabbar[index].url;
-        if(index > 0){
-          wx.switchTab({
-            url: url
-          })
-        }
+      if(this.activeIndex == 0){
+        this.getAppointmentList();
+      }else{
+        this.getHistoryOrderList();
       }
-    }
-    //获取预约列表
-    async getAppointmentList () {
+    },
 
-    }
+    toTabBarPage (e) {
+      let index = e.currentTarget.id;
+      let url = this.tabbar[index].url;
+      if(index > 0){
+        wx.switchTab({
+          url: url
+        })
+      }
+    },
 
-    //获取历史订单
-    async getHistoryOrderList() {
-
-    }
-
-    async onLoad() {
+    //跳转 查看订单详情
+    toOrderDetail (e) {
+      let index = e.currentTarget.id;
       let that = this;
-      let tabbarCount = this.tabbar.length;
-      wx.getSystemInfo({
-        success: function (res) {
-          that.tabbarItemWidth = res.windowWidth / tabbarCount;
-          that.sliderLeft = (res.windowWidth / that.tabs.length - sliderWidth) / 2;
-          that.sliderOffset = res.windowWidth / that.tabs.length * that.activeIndex;
-        }
+      wepy.navigateTo({
+        url: `/pages/order_detail?order_id=${that.orderList[index].order_id}`
       });
-
-      let orderIdList = wepy.getStorageSync('order_id_list');
     }
+  }
 
-    async onShow () {
+  //车牌加空格
+  showCarNum () {
+    this.orderList.forEach((item,index) => {
+      let string1 = `${item.car_number.slice(0,2)} `;
+      let string2 = item.car_number.slice(2);
+      item.car_number = string1.concat(string2);
+    })
+  }
+
+  //获取预约列表
+  async getAppointmentList () {
+    const json = await api.getmyavaorder({
+      query: {
+        branch_id: parseInt(this.branchId),
+        user_id: parseInt(wepy.getStorageSync('userid')),
+      },
+      method: 'POST'
+    });
+    this.orderList = json.data.data;
+    this.showCarNum();
+    this.$apply();
+  }
+
+  //获取历史订单
+  async getHistoryOrderList() {
+    const json = await api.gethistoryorder({
+      query: {
+        branch_id: parseInt(this.branchId),
+        user_id: parseInt(wepy.getStorageSync('userid')),
+      },
+      method: 'POST'
+    });
+    this.orderList = json.data.data;
+    this.showCarNum();
+    this.$apply();
+  }
+
+  async onLoad(option) {
+    let that = this;
+    let tabbarCount = this.tabbar.length;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.tabbarItemWidth = res.windowWidth / tabbarCount;
+        that.sliderLeft = (res.windowWidth / that.tabs.length - sliderWidth) / 2;
+        that.sliderOffset = res.windowWidth / that.tabs.length * that.activeIndex;
+      }
+    });
+
+    this.branchId = option.branch_id;
+    this.$apply();
+  }
+
+  async onShow () {
+    if(this.activeIndex == 1){
+      this.getHistoryOrderList();
+    }else{
       this.getAppointmentList();
     }
   }
+}
 </script>

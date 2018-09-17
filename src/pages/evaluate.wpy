@@ -66,7 +66,7 @@ page,
       	</view>
 
       	<view class="cell-comment">
-      		<textarea maxlength="{{-1}}" placeholder="分享一下洗车评价～您的评价对于我们非常重要，我们会听取您的意见并且改进我们的服务!" placeholder-style="color: #6D6E71" @blur="setComment" value="{{comment}}" />
+      		<textarea maxlength="{{-1}}" placeholder="分享一下洗车评价～您的评价对于我们非常重要，我们会听取您的意见并且改进我们的服务!" placeholder-style="color: #6D6E71" @input="setComment" value="{{comment}}" />
       	</view>
 
         <button class="btn" @tap="confirmEvaluate">提交评价</button>
@@ -85,6 +85,9 @@ page,
   } from '../utils/constant';
   import Tips from '../components/tips'
   import Rate from "../components/rate"
+  import tip from '../utils/tip'
+  import api from '../api/api'
+  
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '订单评价'
@@ -99,6 +102,7 @@ page,
     data = {
     	step: 4,
       title: "支付尾款",
+      order_id: '',
       //评价分数
       evaluate_service: 5,//服务
       evaluate_artisan: 5,//技工
@@ -108,32 +112,45 @@ page,
     methods = {
       // 服务打分
     	ratingService (count) {
-    		console.log(count);
         this.evaluate_service = count
         this.$apply()
       },
 
       // 技工打分
       ratingArtisan (count) {
-    		console.log(count);
         this.evaluate_artisan = count
         this.$apply()
       },
 
       setComment (e) {
-        this.comment = e.detail.value;
+        this.comment = e.detail.value
         this.$apply()
-      } ,
+      },
 
       // 提交评价
-      confirmEvaluate () {
-        wepy.navigateTo({
-          url: `/pages/order_detail?evaluate_service=${this.evaluate_service}&evaluate_artisan=${this.evaluate_artisan}&comment=${this.comment}`
+      async confirmEvaluate () {
+        const res = await api.updatecomment({
+          query: {
+            order_id: this.order_id,
+            evaluate_service: this.evaluate_service,
+            evaluate_artisan: this.evaluate_artisan,
+            comment: this.comment
+          },
+          method: 'POST'
         });
+        if (res.data.status) {
+          this.is_evaluate = true
+          tip.success("感谢评价")
+          wepy.navigateBack()
+        }else{
+          tip.error(res.data.errmsg)
+        }
       }
     }
 
-    async onLoad() {
+    async onLoad(option) {
+      this.order_id = option.order_id
+      this.$apply()
     }
 
     async onShow () {

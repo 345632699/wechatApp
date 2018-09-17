@@ -607,10 +607,6 @@ page,
          this.start_time = option.start_time
          this.end_time = option.end_time
          this.branch_id = option.branch_id
-//        this.selectDate = "2018-08-18"
-//        this.start_time = "13:00"
-//        this.end_time = "17:00"
-//        this.branch_id = "1"
         wepy.setStorageSync('selectDate',option.selectDate)
         wepy.setStorageSync('start_time',option.start_time)
         wepy.setStorageSync('end_time',option.end_time)
@@ -637,7 +633,6 @@ page,
       const res = await api.getuserinfo({
         query: {
           user_id: wepy.getStorageSync('userid'),
-
         },
         method: 'POST'
       });

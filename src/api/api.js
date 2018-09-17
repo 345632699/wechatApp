@@ -47,7 +47,10 @@ const balancetotalpayment = (params) => wxRequest(params, apiMall + "/balancetot
 const wxtotalpayment = (params) => wxRequest(params, apiMall + "/wxtotalpayment/");
 //更新评价
 const updatecomment = (params) => wxRequest(params, apiMall + "/updatecomment/");
-
+//获取预约列表
+const getmyavaorder = (params) => wxRequest(params, apiMall + "/getmyavaorder/");
+//获取历史订单
+const gethistoryorder = (params) => wxRequest(params, apiMall + "/gethistoryorder/");
 
 module.exports = {
   getDiscoverList,
@@ -76,4 +79,6 @@ module.exports = {
   updatecomment,
   PostDepositPayment,
   decrypt,
+  getmyavaorder,
+  gethistoryorder
 }

@@ -359,8 +359,9 @@ page,
     methods = {
       // 新加的方法--------------------------------------------------
       toEvaluate () {
+        let that = this;
         wepy.navigateTo({
-          url: `/pages/evaluate`
+          url: `/pages/evaluate?order_id=${that.order_id}`
         });
       },
 
@@ -413,22 +414,22 @@ page,
       // },
 
       //传评价到后台
-      async evaluate () {
-        const res = await api.updatecomment({
-          query: {
-            order_id: this.order_id,
-            rank: this.evaluate
-          },
-          method: 'POST'
-        });
-        if (res.data.status) {
-          this.is_evaluate = true
-          tip.success("感谢评价")
-          // wepy.navigateBack()
-        }else{
-          tip.error(res.data.errmsg)
-        }
-      },
+      // async evaluate () {
+      //   const res = await api.updatecomment({
+      //     query: {
+      //       order_id: this.order_id,
+      //       rank: this.evaluate
+      //     },
+      //     method: 'POST'
+      //   });
+      //   if (res.data.status) {
+      //     this.is_evaluate = true
+      //     tip.success("感谢评价")
+      //     // wepy.navigateBack()
+      //   }else{
+      //     tip.error(res.data.errmsg)
+      //   }
+      // },
 
       async cancelOrder () {
         this.is_active = 1
@@ -444,6 +445,13 @@ page,
 
     }
 
+    //车牌加空格
+    showCarNum () {
+      let string1 = `${this.orderDetail.car_number.slice(0,2)} `;
+      let string2 = this.orderDetail.car_number.slice(2);
+      this.orderDetail.car_number = string1.concat(string2);
+    }
+
     async getorderinfo (order_id) {
       const res = await api.getorderinfo({
         query: {
@@ -453,6 +461,7 @@ page,
       });
       this.orderDetail = res.data.data[0]
       this.amount = this.orderDetail.product_price - this.orderDetail.product_deposit
+      this.showCarNum();
       this.$apply()
     }
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数

@@ -290,7 +290,7 @@ page,
       </view>
 
       <!-- 圈圈按钮 -->
-      <navigator wx:if="{{ account.order_id_list > 0 }}" url="orderList" hover-class="none">
+      <navigator wx:if="{{ account.order_id_list > 0 }}" url="orderList?branch_id={{defaultBranch.id}}" hover-class="none">
         <view class="circle-btn">
           <text>查看</text>
           <text>预约</text>

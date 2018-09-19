@@ -139,7 +139,7 @@ page,
           method: 'POST'
         });
         if (res.data.status) {
-          this.is_evaluate = true
+          this.$emit('evaluate', 1)
           tip.success("感谢评价")
           wepy.navigateBack()
         }else{

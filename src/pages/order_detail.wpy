@@ -265,9 +265,11 @@ page,
         <button wx:if="{{ orderDetail.order_status == 2 }}" class="nomal-btn" type="default">正在洗车…</button>
         <button wx:if="{{ orderDetail.order_status == 3 }}" class="nomal-btn" type="default" @tap="wxTotalPayment">支付尾款</button>
         <button wx:if="{{ orderDetail.order_status < 2 }}" class="cancel-btn" type="default" @tap="cancelOrder">取消订单</button>
-        
-        <button wx:if="{{is_evaluate}}" class="cancel-btn" type="default">已评价</button>
-        <button wx:if="{{!is_evaluate}}" class="nomal-btn" type="default" @tap="toEvaluate">发表评价</button>
+
+        <block wx:if="{{ orderDetail.order_status == 4 }}">
+          <button wx:if="{{is_evaluate}}" class="cancel-btn" type="default">已评价</button>
+          <button wx:if="{{!is_evaluate}}" class="nomal-btn" type="default" @tap="toEvaluate">发表评价</button>
+        </block>
       </view>
       </view>
 
@@ -332,7 +334,7 @@ page,
       orderDetail: {},
       orderIndex: 0,
       order_id: 0,
-      orderCount: 0,
+      // orderCount: 0,
 
 
       // step: 1, //订单排序
@@ -466,6 +468,9 @@ page,
     }
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
     events = {
+      'evaluate': (value) => {
+        if(value == 1) this.is_evaluate = true
+      },
       'comfirmAction': async  (comfirm) => {
         if (comfirm == 1){
           const res = await api.cancelorder({
@@ -552,8 +557,9 @@ page,
       this.package_detail = option.package_detail
       this.package_name = option.package_name
       this.defaultBranch = wepy.getStorageSync('defaultBranch')
-      let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
-      this.orderCount = wepy.getStorageSync('order_id_list').length
+      // let order_id = wepy.getStorageSync('order_id_list')[this.orderIndex]
+      let order_id = option.order_id;
+      // this.orderCount = wepy.getStorageSync('order_id_list').length
       this.order_id = order_id
       await this.getorderinfo(order_id)
       this.$apply()

@@ -365,15 +365,18 @@ export default class Index extends wepy.page {
 
   //车牌加空格
   showCarNum () {
-    this.orderList.forEach((item,index) => {
-      let string1 = `${item.car_number.slice(0,2)} `;
-      let string2 = item.car_number.slice(2);
-      item.car_number = string1.concat(string2);
-    })
+    if(this.orderList){
+      this.orderList.forEach((item,index) => {
+        let string1 = `${item.car_number.slice(0,2)} `;
+        let string2 = item.car_number.slice(2);
+        item.car_number = string1.concat(string2);
+      })
+    }
   }
 
   //获取预约列表
   async getAppointmentList () {
+    this.orderList = [];
     const json = await api.getmyavaorder({
       query: {
         branch_id: parseInt(this.branchId),
@@ -388,6 +391,7 @@ export default class Index extends wepy.page {
 
   //获取历史订单
   async getHistoryOrderList() {
+    this.orderList = [];
     const json = await api.gethistoryorder({
       query: {
         branch_id: parseInt(this.branchId),

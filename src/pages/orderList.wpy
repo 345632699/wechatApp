@@ -30,7 +30,7 @@ page,
   }
 
   .page-bd{
-    padding: 20rpx 0 100rpx 0;
+    padding-bottom:100rpx;
 
     .no-data{
       color: #9B9B9B;

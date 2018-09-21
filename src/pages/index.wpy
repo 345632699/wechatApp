@@ -186,8 +186,8 @@ page,
         <view class="userInfo-txt">
           <view class="user-name">你好，{{userInfo.nickName}}</view>
           <view class="msg">
-            <text wx:if="{{ account.order_id_list <= 0 }}">今天天气：{{account.weather}}</text>
-            <text wx:else>账户余额：￥{{account.balance}}*您有一个洗车预约，请及时查看</text>
+            <text wx:if="{{account.have_recent_book}}">账户余额：￥{{account.balance}}</text>
+            <text wx:else>今天天气：{{account.weather}}</text>
           </view>
         </view>
       </view>
@@ -196,8 +196,8 @@ page,
     <!-- 预约条件选择 -->
     <view class="booking-content">
       <view class="booking-msg">
-        <text wx:if="{{ account.order_id_list <= 0 }}">*欢迎您选择CY1993，请选择洗车服务</text>
-        <text wx:else>*您有一个洗车预约，请及时查看</text>
+        <text wx:if="{{account.have_recent_book}}">*您在{{account.recent_book_time}}有一个洗车预约</text>
+        <text wx:else>*欢迎您选择CY1993，请选择洗车服务</text>
       </view>
 
       <!-- 选择门店 -->
@@ -385,6 +385,9 @@ export default class Index extends wepy.page {
       this.activeBranch = !this.activeBranch;
       this.branchIndex = e.currentTarget.id;
       let branch_id = this.branchInfo[this.branchIndex].id
+      this.defaultBranch.id = branch_id
+      this.defaultBranch.name = this.branchInfo[this.branchIndex].name
+      wepy.setStorageSync('defaultBranch',this.branchInfo[this.branchIndex])
       this.timeIndex = this.dateIndex = -1;
       this.$apply()
       let user_id = wx.getStorageSync("userid")
@@ -399,7 +402,6 @@ export default class Index extends wepy.page {
       this.currentDate = code;
       this.getTimeList(code);
       wepy.setStorageSync(SEL_CLASS_CODE, code);
-      this.timeIndex = -1;
       this.$apply()
     },
 
@@ -523,6 +525,21 @@ export default class Index extends wepy.page {
     let systemInfo = wx.getStorageSync(SYSTEM_INFO);
     // this.windowHeight = systemInfo.windowHeight;
     this.$apply()
+
+    if (!wepy.getStorageSync('userid')) {
+      await this.$parent.getAuth()
+    }
+    let user_id = wepy.getStorageSync('userid')
+    let merchant_id = wepy.getStorageSync('merchant_id')
+    let defaultBranch = wepy.getStorageSync('defaultBranch')
+    let branch_id = ''
+    this.userInfo = wepy.getStorageSync('user_info')
+    if (defaultBranch) {
+      branch_id = defaultBranch.id
+    }
+    if (user_id) {
+      await this.getusermainpage(branch_id, user_id)
+    }
   }
 
   async getusermainpage(branch_id, user_id) {
@@ -569,7 +586,7 @@ export default class Index extends wepy.page {
     this.defaultBranch = res.data.data[0].default_branch
     wepy.setStorageSync('defaultBranch', this.defaultBranch)
 
-    this.timeList = res.data.data[0].today_available_time
+    // this.timeList = res.data.data[0].today_available_time
     await this.getDateList()
     this.$apply();
   }
@@ -585,20 +602,20 @@ export default class Index extends wepy.page {
   // }
 
   async onShow() {
-    if (!wepy.getStorageSync('userid')) {
-      await this.$parent.getAuth()
-    }
-    let user_id = wepy.getStorageSync('userid')
-    let merchant_id = wepy.getStorageSync('merchant_id')
-    let defaultBranch = wepy.getStorageSync('defaultBranch')
-    let branch_id = ''
-    this.userInfo = wepy.getStorageSync('user_info')
-    if (defaultBranch) {
-      branch_id = defaultBranch.id
-    }
-    if (user_id) {
-      await this.getusermainpage(branch_id, user_id)
-    }
+    // if (!wepy.getStorageSync('userid')) {
+    //   await this.$parent.getAuth()
+    // }
+    // let user_id = wepy.getStorageSync('userid')
+    // let merchant_id = wepy.getStorageSync('merchant_id')
+    // let defaultBranch = wepy.getStorageSync('defaultBranch')
+    // let branch_id = ''
+    // this.userInfo = wepy.getStorageSync('user_info')
+    // if (defaultBranch) {
+    //   branch_id = defaultBranch.id
+    // }
+    // if (user_id) {
+    //   await this.getusermainpage(branch_id, user_id)
+    // }
   }
 
 

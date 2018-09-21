@@ -312,7 +312,7 @@
   const sliderWidth = 60 // 需要设置slider的宽度，用于计算中间位置
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '订单中心',
+      navigationBarTitleText: '发现',
     }
 
     //注册组件

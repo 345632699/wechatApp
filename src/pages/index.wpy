@@ -560,7 +560,7 @@ export default class Index extends wepy.page {
       })
       return
     }
-    this.timeList = res.data.data[0].today_available_time
+    this.timeList = res.data.data[0].available_time
     this.dateList = res.data.data[0].available_date
     //设置当前选中日期
     this.dateList[0].active = true

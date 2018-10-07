@@ -145,7 +145,7 @@ page,
           <view class="cell-left">
             <image wx:if="{{ orderDetail.order_status == 1 }}" src="../images/icons/time.png"></image>
             <image wx:if="{{ orderDetail.order_status == 2 }}" src="../images/icons/washing.png"></image>
-            <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/icons/washing.png"></image>
+            <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/icons/finish.png"></image>
           </view>
 
           <view class="cell-right">

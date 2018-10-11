@@ -523,21 +523,6 @@ export default class Index extends wepy.page {
     let systemInfo = wx.getStorageSync(SYSTEM_INFO);
     // this.windowHeight = systemInfo.windowHeight;
     this.$apply()
-
-    if (!wepy.getStorageSync('userid')) {
-      await this.$parent.getAuth()
-    }
-    let user_id = wepy.getStorageSync('userid')
-    let merchant_id = wepy.getStorageSync('merchant_id')
-    let defaultBranch = wepy.getStorageSync('defaultBranch')
-    let branch_id = ''
-    this.userInfo = wepy.getStorageSync('user_info')
-    if (defaultBranch) {
-      branch_id = defaultBranch.id
-    }
-    if (user_id) {
-      await this.getusermainpage(branch_id, user_id)
-    }
   }
 
   async getusermainpage(branch_id, user_id) {
@@ -600,20 +585,20 @@ export default class Index extends wepy.page {
   // }
 
   async onShow() {
-    // if (!wepy.getStorageSync('userid')) {
-    //   await this.$parent.getAuth()
-    // }
-    // let user_id = wepy.getStorageSync('userid')
-    // let merchant_id = wepy.getStorageSync('merchant_id')
-    // let defaultBranch = wepy.getStorageSync('defaultBranch')
-    // let branch_id = ''
-    // this.userInfo = wepy.getStorageSync('user_info')
-    // if (defaultBranch) {
-    //   branch_id = defaultBranch.id
-    // }
-    // if (user_id) {
-    //   await this.getusermainpage(branch_id, user_id)
-    // }
+    if (!wepy.getStorageSync('userid')) {
+      await this.$parent.getAuth()
+    }
+    let user_id = wepy.getStorageSync('userid')
+    let merchant_id = wepy.getStorageSync('merchant_id')
+    let defaultBranch = wepy.getStorageSync('defaultBranch')
+    let branch_id = ''
+    this.userInfo = wepy.getStorageSync('user_info')
+    if (defaultBranch) {
+      branch_id = defaultBranch.id
+    }
+    if (user_id) {
+      await this.getusermainpage(branch_id, user_id)
+    }
   }
 
 

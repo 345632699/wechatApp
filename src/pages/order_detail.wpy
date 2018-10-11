@@ -546,11 +546,8 @@ page,
 
     async onLoad(option) {
       // 用户评价
-      if(option.evaluate_service){
-        let evaluate_service = option.evaluate_service;
-        let evaluate_artisan = option.evaluate_artisan;
-        let comment = option.comment;
-        await this.evaluate(evaluate_service, evaluate_artisan, comment);
+      if(option.is_evaluate){
+        this.is_evaluate = option.is_evaluate
       }
 
       this.pacakge_id = option.pacakge_id

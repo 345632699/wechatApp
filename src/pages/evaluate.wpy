@@ -141,7 +141,10 @@ page,
         if (res.data.status) {
           this.$emit('evaluate', 1)
           tip.success("感谢评价")
-          wepy.navigateBack()
+          // wepy.navigateBack();
+          wepy.navigateTo({
+            url: `/pages/order_detail?is_evaluate=true`
+          });
         }else{
           tip.error(res.data.errmsg)
         }

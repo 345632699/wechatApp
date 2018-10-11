@@ -234,10 +234,10 @@
           <view class="cells">
             <repeat for="{{newsList}}" item="item" key="index">
               <view class="cell">
-                <view class="cell-hd" style="padding-top:{{item.image ? 'none' : '25rpx'}}">
-                  <image wx:if="{{item.image}}" src="{{item.image}}" binderror="imgError" id="{{ index }}"></image>
+                <view class="cell-hd" style="display:{{item.image_show ? 'block' : 'none'}}">
+                  <image wx:if="{{item.image}}" src="{{item.image}}" bindload="imgOnLoad" id="{{ index }}"></image>
                 </view>
-                <view class="cell-bd">
+                <view class="cell-bd" style="padding-top:{{item.image_show ? '14rpx' : '30rpx'}}">
                   <view class="head">
                     <view class="title">{{item.title}}</view>
                     <view class="date">{{item.publish_time}}</view>
@@ -356,9 +356,10 @@
       },
 
       //图片加载错误，将图片设置为空 不显示。
-      imgError (e) {
+      imgOnLoad (e) {
+        console.log('ssss');
         let index = e.currentTarget.id;
-        this.newsList[index].image = '';
+        this.newsList[index].image_show = true;
         this.$apply();
       },
 
@@ -437,6 +438,10 @@
         method: 'POST'
       });
       this.newsList = res.data.data;
+      this.newsList.forEach((item,index) => {
+        item.image_show = false;
+      })
+      console.log('show:',this.newsList);
       this.$apply()
     }
 

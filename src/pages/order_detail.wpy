@@ -151,7 +151,7 @@ page,
           <view class="cell-right">
             <view class="txt" wx:if="{{ orderDetail.order_status == 1 }}">
               <view class="title">预约时间</view>
-              <view class="subtitle">{{ selectDate }} {{start_time}}</view>
+              <view class="subtitle">{{ booking_service_time }}</view>
             </view>
             <view class="txt" wx:if="{{ orderDetail.order_status == 2 }}">
               <view class="title">洗车进行中…</view>

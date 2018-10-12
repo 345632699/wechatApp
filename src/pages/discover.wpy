@@ -355,9 +355,8 @@
         }
       },
 
-      //图片加载错误，将图片设置为空 不显示。
+      //图片不能加载，将图片 不显示。
       imgOnLoad (e) {
-        console.log('ssss');
         let index = e.currentTarget.id;
         this.newsList[index].image_show = true;
         this.$apply();

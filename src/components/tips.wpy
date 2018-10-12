@@ -127,7 +127,7 @@
     <view class="weui-cells_after-title tip-buttom" wx:if="{{ 1 == type }}" @tap="tap" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image class="order" src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
+          <image class="order" src="../images/icons/myorder.png" wx:if="{{ type >1 }}"></image>
           <image class="stepper" src="../images/icons/more.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>
@@ -137,7 +137,7 @@
     <view class="weui-cells_after-title tip-buttom" wx:if="{{ 2 == type }}" hidden="{{active ? '' : false}}">
       <view class="weui-cell">
         <view class="weui-cell__hd">
-          <image src="../images/appointment/myorder.png" wx:if="{{ type >1 }}"></image>
+          <image src="../images/icons/myorder.png" wx:if="{{ type >1 }}"></image>
           <image class="stepper" src="../images/icons/more.png" wx:else></image>
         </view>
         <view class="weui-cell__bd">{{ title }}</view>

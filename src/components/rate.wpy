@@ -31,7 +31,7 @@ export default class Rate extends wepy.component {
     stars: [0, 1, 2, 3, 4],
     normalSrc: '../images/icons/star.png',
     selectedSrc: '../images/icons/star_filled.png',
-    halfSrc: '../images/half.png',
+    halfSrc: '../images/icons/half.png',
   }
 
   events = {

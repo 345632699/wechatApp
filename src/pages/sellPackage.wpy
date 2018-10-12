@@ -135,7 +135,7 @@
       <!-- <navigator class="cell" hover-class="none" url="/pages/packageDetail?product_id={{ item.product_id }}" wx:for="{{dateList}}" wx:key="item"> -->
       <view class="cell" wx:for="{{dateList}}" wx:key="{{ index }}" wx:for-item="item">
         <view class="cell-hd">
-          <image src="../images/slices/168.png"></image>
+          <image src="../images/icons/168.png"></image>
           <view class="top-title">
             <text class="price">{{ item.product_price }}</text>
             <text class="name">{{ item.product_name }}</text>

@@ -321,7 +321,7 @@
     data = {
       //weui的tab参数
       tabs: ["最新资讯", "案例展示", "关于我们"],
-      activeIndex: 0,//激活项
+      activeIndex: 1,//激活项
       sliderOffset: 0,//x轴上转换的值
       sliderLeft: 0,//距离左边的偏移值
 
@@ -336,7 +336,9 @@
       //公司地址列表
       addressList: [],
       // 案例展示的图片列表
-      imgList: []
+      imgList: [],
+      imgArrLength: 5,//一次加载的图片数量
+      imgPage: 1//从第几页开始加载图片
     }
 
     methods = {
@@ -400,15 +402,31 @@
       },
     }
 
-    async getshowimages() {
+    async getshowimages(index) {
       const res = await api.getshowimages({
         query: {
           merchant_id: wepy.getStorageSync('merchant_id'),
-          number: '6'
+          number: this.imgArrLength,
+          first_index: this.imgPage,
         },
         method: 'POST'
       });
       return res.data.data
+    }
+
+    async getnotices() {
+      const res = await api.getnotices({
+        query: {
+          user_id: wepy.getStorageSync('merchant_id'),
+        },
+        method: 'POST'
+      });
+
+      let data = res.data.data;
+      data.forEach((item,index) => {
+        item.image_show = false;
+      })
+      return data;
     }
 
     async onLoad() {
@@ -420,32 +438,38 @@
         }
       });
 
+      //获取最新资讯
+      this.newsList = await this.getnotices();
+
+      //获取案例展示图片
       let imgs = await this.getshowimages()
       if(imgs.length) this.imgList[0] = imgs
-      let imgs1 = await this.getshowimages()
-      if(imgs1.length) this.imgList[1] = imgs1
       this.$apply();
     }
 
     async onShow() {
       this.addressList[0] = wepy.getStorageSync('defaultBranch')
-      
-      const res = await api.getnotices({
-        query: {
-          user_id: wepy.getStorageSync('merchant_id'),
-        },
-        method: 'POST'
-      });
-      this.newsList = res.data.data;
-      this.newsList.forEach((item,index) => {
-        item.image_show = false;
-      })
-      console.log('show:',this.newsList);
       this.$apply()
     }
 
     async onReachBottom() {
       if (this.activeIndex == 1 && this.imgList.length > 0) {
+        let lastArray = this.imgList[this.imgList.length - 1];
+        //如果最后一页
+        if(lastArray[lastArray.length - 1].is_final){
+          // 最后一次返回的图片不足指定数量，补图片
+          if(lastArray.length - 1 < this.imgArrLength){
+            let lackCount = this.imgArrLength - (lastArray.length - 1);
+            for(let i = lastArray.length-1; i < this.imgArrLength; i++){
+              let j = 0;
+              this.imgList[this.imgList.length - 1].splice(i,0,this.imgList[0][j]);
+              j += 1;
+            }
+          }
+          this.imgPage = 1;
+        }else{
+          this.imgPage += 1; 
+        }
         let imgs = await this.getshowimages()
         if(imgs.length) this.imgList.push(imgs)
         this.$apply()

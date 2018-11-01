@@ -205,7 +205,7 @@ page,
                 <view class="subtitle">{{ orderDetail.product_name }}  预计用时：{{ orderDetail.predict_cost_time / 60 | Int }}小时</view>
               </view>
             </view>
-            <view class="hint">*开始洗车前1小时内不可取消预约</view>
+            <view class="hint" wx:if="{{ orderDetail.order_status != 4 }}">*开始洗车前1小时内不可取消预约</view>
           </view>
         </view>
 
@@ -269,6 +269,7 @@ page,
         <block wx:if="{{ orderDetail.order_status == 4 }}">
           <button wx:if="{{is_evaluate}}" class="cancel-btn" type="default">已评价</button>
           <button wx:if="{{!is_evaluate}}" class="nomal-btn" type="default" @tap="toEvaluate">发表评价</button>
+          <button class="cancel-btn" type="default" @tap="backToIndex">返回</button>
         </block>
       </view>
       </view>

@@ -142,8 +142,8 @@ page,
           this.$emit('evaluate', 1)
           tip.success("感谢评价")
           // wepy.navigateBack();
-          wepy.navigateTo({
-            url: `/pages/order_detail?is_evaluate=true`
+          wepy.redirectTo({
+            url: `/pages/order_detail?is_evaluate=true&order_id=${this.order_id}`
           });
         }else{
           tip.error(res.data.errmsg)

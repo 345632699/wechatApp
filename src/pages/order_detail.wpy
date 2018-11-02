@@ -463,6 +463,7 @@ page,
         method: 'POST'
       });
       this.orderDetail = res.data.data[0]
+      this.is_evaluate = this.orderDetail.is_evaluate
       this.amount = this.orderDetail.product_price - this.orderDetail.product_deposit
       this.showCarNum();
       this.$apply()

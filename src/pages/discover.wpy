@@ -120,6 +120,14 @@
           }
         }
       }
+
+      .no-data{
+        text-align: center;
+        padding-top: 40rpx;
+        color: #9B9B9B;
+        font-size: 24rpx;
+        line-height: 30rpx;
+      }
     }
 
     .about {
@@ -251,6 +259,7 @@
 
         <!-- 案例展示 -->
         <view class="weui-tab__content display" hidden="{{activeIndex != 1}}">
+          <view class="no-data" wx:if="{{!imgList.length}}">暂无数据</view>
           <view class="imgs" wx:for="{{ imgList }}" wx:key="item">
             <image @tap="previewImage" data-src="{{ item[0].image_url }}" class="img1" src="{{ item[0].thumbnail_image_url }}" mode="aspectFill"/>
             <view class="group">
@@ -345,16 +354,17 @@
       async tabClick(e) {
         this.sliderOffset = e.currentTarget.offsetLeft;
         this.activeIndex = e.currentTarget.id;
-        this.$apply();
-
-        // 没有返回图片，提示
-        if(this.imgList.length == 0 && this.activeIndex == 1){
-          wx.showToast({
-            title: '暂时还未有相关案例',
-            icon: 'none',
-            duration: 1000
-          });
+        
+        if(this.activeIndex == 0){
+          //获取最新资讯
+          this.newsList = await this.getnotices();
         }
+        if(this.activeIndex == 1){
+          //获取案例展示图片
+          let imgs = await this.getshowimages()
+          if(imgs.length > 1) this.imgList[0] = imgs
+        }
+        this.$apply();
       },
 
       //图片不能加载，将图片 不显示。
@@ -438,12 +448,15 @@
         }
       });
 
-      //获取最新资讯
-      this.newsList = await this.getnotices();
-
-      //获取案例展示图片
-      let imgs = await this.getshowimages()
-      if(imgs.length) this.imgList[0] = imgs
+      if(this.activeIndex == 0){
+        //获取最新资讯
+        this.newsList = await this.getnotices();
+      }
+      if(this.activeIndex == 1){
+        //获取案例展示图片
+        let imgs = await this.getshowimages()
+        if(imgs.length > 1) this.imgList[0] = imgs
+      }
       this.$apply();
     }
 

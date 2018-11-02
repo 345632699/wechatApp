@@ -64,7 +64,7 @@
             <view>¥{{ amount }}</view>
           </view>
           <view class="amount-item">
-            <view>{{ title }}账户余额</view>
+            <view>账户余额</view>
             <view>¥{{ user_balance }}</view>
           </view>
         </view>

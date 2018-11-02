@@ -500,6 +500,7 @@ page,
         if(res.data.status){
           this.pay_success = 1
           this.orderDetail.order_status = 4
+          this.is_evaluate = false
           this.$apply()
           tip.success('支付成功')
         }else {
@@ -534,6 +535,7 @@ page,
         success: function (res) {
             that.pay_success = 1
             that.orderDetail.order_status = 4
+            that.is_evaluate = false
             that.$apply()
             tip.success('支付成功')
         },

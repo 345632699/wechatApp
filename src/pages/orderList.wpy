@@ -262,7 +262,7 @@ page,
                       <view class="subtitle">{{ item.product_name }} 预计用时：{{ item.product_cost_time }}分钟</view>
                     </view>
                   </view>
-                  <view class="hint">*开始洗车前1小时内不可取消预约</view>
+                  <!-- <view class="hint">*开始洗车前1小时内不可取消预约</view> -->
                 </view>
               </view>
 

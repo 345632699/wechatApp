@@ -201,11 +201,12 @@ page,
           <view class="cell-right" style="flex-direction: column;">
             <view style="width:100%;display:flex;align-items:center;">
               <view class="txt">
-                <view class="title">套餐选择</view>
-                <view class="subtitle">{{ orderDetail.product_name }}  预计用时：{{ orderDetail.predict_cost_time / 60 | Int }}小时</view>
+                <view class="title">套餐选择 </view>
+                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}" >{{ orderDetail.product_name }}  预计用时：{{ orderDetail.predict_cost_time / 60 | Int }}小时</view>
+                <view class="subtitle" wx:else >{{ orderDetail.product_name }}  实际用时：{{ orderDetail.actual_cost_time / 60 | Int }}小时</view>
               </view>
             </view>
-            <view class="hint" wx:if="{{ orderDetail.order_status != 4 }}">*开始洗车前1小时内不可取消预约</view>
+            <view class="hint" wx:if="{{ orderDetail.order_status == 1 }}">*开始洗车前1小时内不可取消预约</view>
           </view>
         </view>
 
@@ -217,7 +218,7 @@ page,
           </view>
 
           <view class="cell-bottom">
-            <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" data-index="{{ index }}" data-src="{{ item }}" src="{{ item }}"></image>
+            <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" data-index="{{ index }}" data-src="{{ item }}" mode="bindload" src="{{ item }}"></image>
           </view>
         </view>
 
@@ -232,7 +233,7 @@ page,
               <view class="title">支付费用</view>
               <view class="subtitle">
                 <view class="sub-item">
-                  <text>定金 {{  orderDetail.order_status >= 1  ? "(已支付)" : ""}}</text>
+                  <text>定金 {{  orderDetail.order_status != 4  ? "(已支付)" : ""}}</text>
                   <text>￥{{ orderDetail.product_deposit }}</text>
                 </view>
                 <view class="sub-item">

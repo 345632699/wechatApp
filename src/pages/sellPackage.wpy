@@ -187,7 +187,8 @@ export default class Index extends wepy.page {
   }
 
   data = {
-    dateList: []
+    dateList: [],
+    branch_id: 1
   }
 
   computed = {
@@ -201,12 +202,16 @@ export default class Index extends wepy.page {
       let product_deposite = e.currentTarget.dataset.info.product_deposite
       let product_price = e.currentTarget.dataset.info.product_price
 
-      wepy.redirectTo({
-        url:'/pages/appointment?package_id='+pacakge_id+
-        '&package_detail='+package_detail+
-        '&product_price='+product_price+
-        '&product_deposite='+product_deposite+
-        '&package_name='+package_name,
+      let productInfo = {
+        id: pacakge_id,
+        detail: package_detail,
+        name: package_name,
+        deposite: product_deposite,
+        price: product_price
+      }
+      wepy.setStorageSync('productInfo',productInfo)
+      wepy.switchTab({
+        url:'/pages/index',
       })
     },
 
@@ -218,14 +223,15 @@ export default class Index extends wepy.page {
   }
 
 
-  onLoad() {
-
+  onLoad(option) {
+    this.branch_id = option.branch_id
+    this.$apply()
   }
 
   async onShow() {
     const json = await api.getavailableproduct({
       query: {
-        branch_id: "1"
+        branch_id: this.branch_id
       },
       method: 'POST'
     });

@@ -243,7 +243,7 @@ page,
         </view>
 
         <!-- 选择套餐 -->
-        <view class="cell" @tap="toSelPackage">
+        <view class="cell">
           <view class="cell-left">
             <image src="../images/icons/shoppingcar.png"></image>
           </view>
@@ -254,7 +254,7 @@ page,
                 <view class="title">套餐选择</view>
                 <view class="subtitle">{{ product.name }}</view>
               </view>
-              <image wx:if="{{ pay_success < 1 }}" class="skip" src="../images/icons/more.png"></image>
+              <!--<image wx:if="{{ pay_success < 1 }}" class="skip" src="../images/icons/more.png"></image>-->
             </view>
             <view class="hint"  hidden="{{ product.detail ? '':'false'}}">*开始洗车前24小时内取消不可退定金</view>
             <view class="hint"  style="color:#9B9B9B" hidden="{{ product.detail ? '':'false'}}">*包含: {{ product.detail }}</view>
@@ -588,42 +588,16 @@ page,
 
   onLoad(option) {
     console.log("option:",option);
-    if(option.package_id){
-      this.product.id = option.package_id
-      this.product.detail = option.package_detail
-      this.product.name = option.package_name
-      this.product.deposite = option.product_deposite
-      this.product.price = option.product_price
-      this.amount = option.product_deposite
-    }
-
-    if (option.package_id) {
+    this.product = wepy.getStorageSync('productInfo')
+    if (this.product.id) {
       this.step = 3
       this.title = "支付定金"
       this.$apply()
     }
-    if( typeof(option.package_id) == 'undefined' ){
-         this.selectDate = option.selectDate
-         this.start_time = option.start_time
-         this.end_time = option.end_time
-         this.branch_id = option.branch_id
-        wepy.setStorageSync('selectDate',option.selectDate)
-        wepy.setStorageSync('start_time',option.start_time)
-        wepy.setStorageSync('end_time',option.end_time)
-        wepy.setStorageSync('branch_id',option.branch_id)
-      }else{
-        this.selectDate = wepy.getStorageSync('selectDate')
-        this.start_time = wepy.getStorageSync('start_time')
-        this.end_time = wepy.getStorageSync('end_time')
-        this.branch_id = wepy.getStorageSync('branch_id')
-        this.$apply()
-      }
 
-      this.$apply()
+  }
 
-    }
-
-    async onShow () {
+  async onShow () {
       if (wepy.getStorageSync('carNum') || wepy.getStorageSync('currentProvince') ){
         this.carInfo.carNum = wepy.getStorageSync('carNum')
         this.carInfo.currentProvince = wepy.getStorageSync('currentProvince')

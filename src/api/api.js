@@ -52,6 +52,9 @@ const getmyavaorder = (params) => wxRequest(params, apiMall + "/getmyavaorder/")
 //获取历史订单
 const gethistoryorder = (params) => wxRequest(params, apiMall + "/gethistoryorder/");
 
+const getavailabledateandtime = (params) => wxRequest(params, apiMall + "/getavailabledateandtime/");
+
+
 module.exports = {
   getDiscoverList,
   wxJsCode2Session,
@@ -78,6 +81,7 @@ module.exports = {
   wxtotalpayment,
   updatecomment,
   PostDepositPayment,
+  getavailabledateandtime,
   decrypt,
   getmyavaorder,
   gethistoryorder

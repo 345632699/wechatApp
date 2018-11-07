@@ -340,6 +340,8 @@ page,
       start_time: '',
       end_time: '',
       branch_id:0,
+      select_date: '',
+      select_time: '',
 
       // icon: "../images/icon_home.png",
       carInfo:{
@@ -490,7 +492,7 @@ page,
             branchId: parseInt(this.branch_id),
             productId: parseInt(this.product.id),
             itemId: "",
-            bookingServiceTime: this.selectDate + " " + this.start_time + ":00",
+            bookingServiceTime: this.select_date + ' ' + this.select_time,
             carNumber: this.carInfo.currentCarNum,
           },
           method: 'POST'
@@ -532,14 +534,15 @@ page,
         },
         method: 'POST'
       });
-      if(res.data.status){
+      if(res.data.is_success){
         this.pay_success = 1
         this.step = 4
         this.title = "支付尾款"
         this.$apply()
         tip.success('支付成功')
       }else {
-        tip.error(res.data.errmsg)
+        tip.error('预定失败')
+        return
       }
     },
     'payByWechat' : async (e) => {
@@ -555,8 +558,14 @@ page,
         method: 'POST'
       });
       let wxpayData = res.data.data[0]
-      let that = this
-      await this.wxpay(wxpayData,that)
+      if (wxpayData.is_success) {
+        let that = this
+        await this.wxpay(wxpayData,that)
+      }else{
+        tip.error('预定失败')
+        return
+      }
+
     }
   }
 
@@ -588,6 +597,9 @@ page,
 
   onLoad(option) {
     console.log("option:",option);
+    this.branch_id = option.branch_id
+    this.select_time = option.select_time
+    this.select_date = option.selectDate
     this.product = wepy.getStorageSync('productInfo')
     if (this.product.id) {
       this.step = 3

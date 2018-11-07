@@ -201,13 +201,15 @@ export default class Index extends wepy.page {
       let package_name = e.currentTarget.dataset.info.product_name
       let product_deposite = e.currentTarget.dataset.info.product_deposite
       let product_price = e.currentTarget.dataset.info.product_price
+      let product_cost_time = e.currentTarget.dataset.info.product_cost_time
 
       let productInfo = {
         id: pacakge_id,
         detail: package_detail,
         name: package_name,
         deposite: product_deposite,
-        price: product_price
+        price: product_price,
+        product_cost_time: product_cost_time
       }
       wepy.setStorageSync('productInfo',productInfo)
       wepy.switchTab({

@@ -531,6 +531,7 @@ page,
       const res = await api.balancedepositpayment({
         query: {
           orderId: this.order_id,
+          user_type: wepy.getStorageSync('user_type')
         },
         method: 'POST'
       });
@@ -554,6 +555,7 @@ page,
           feeType: "CNY",
           goodsTag: "",
           limitPay: "",
+          user_type: wepy.getStorageSync('user_type')
         },
         method: 'POST'
       });

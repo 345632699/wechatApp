@@ -178,7 +178,7 @@ page,
           <view class="cell-right">
             <view class="txt">
               <view class="title">预约时间</view>
-              <view class="subtitle">{{ selectDate }} {{start_time}}</view>
+              <view class="subtitle">{{ select_date }} {{select_time}}</view>
             </view>
           </view>
         </view>
@@ -606,9 +606,8 @@ page,
     if (this.product.id) {
       this.step = 3
       this.title = "支付定金"
-      this.$apply()
     }
-
+    this.$apply()
   }
 
   async onShow () {

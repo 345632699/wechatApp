@@ -247,7 +247,7 @@ page,
             <view class="cell-title">预约日期</view>
             <view class="cell-select">
               <text wx:if="{{dateIndex == -1}}">请选择</text>
-              <text wx:else>{{dateIndex}}</text>
+              <text wx:else>{{dateList[dateIndex].date}}</text>
               <image class="{{activeDate?'':'rotation'}}" src="../images/icons/triangle.png"></image>
             </view>
           </view>
@@ -258,7 +258,7 @@ page,
                 <view wx:if="{{ listItem.enabled > 0 }}" id="{{index}}" class="select-item {{dateIndex==index?'item-active':''}}" @tap="selectDate">
                   <text>{{ listItem.date }}</text>
                 </view>
-                <view wx:else style="background: grey" id="{{index}}" class="select-item {{dateIndex==index?'item-active':''}}">
+                <view wx:else style="background: grey" class="select-item">
                   <text>{{ listItem.date }}</text>
                 </view>
               </repeat>
@@ -375,7 +375,7 @@ export default class Index extends wepy.page {
     timeIndex: -1,
     is_active: 0,
 
-    selectTime: ''
+    selectTime: -1
 
   }
 
@@ -391,27 +391,19 @@ export default class Index extends wepy.page {
       this.activeBranch = !this.activeBranch;
       this.$apply()
     },
-    async activeDate() {
+
+    activeDate() {
       let product_name = this.productInfo.name
       if ( typeof (product_name) == 'undefined'){
         tip.error('请先选择套餐')
         return
       }
 
-      const json = await api.getavailabledateandtime({
-        query: {
-          branch_id: this.defaultBranch.id,
-          product_id: this.productInfo.id,
-          user_type: wepy.getStorageSync('user_type')
-        },
-        method: 'POST'
-      });
-      let res = json.data.data
-      this.dateList = res[0]
-      this.allTimeList = res[1]
-      this.activeDate = !this.activeDate;
+      this.activeDate = !this.activeDate
+      this.activeTime = false
       this.$apply()
     },
+    
     activeTime() {
       let seleteDate = this.dateIndex
       console.log(seleteDate)
@@ -448,19 +440,20 @@ export default class Index extends wepy.page {
         return
       }
       wepy.navigateTo({
-        url: `/pages/sellPackage`
+        url: `/pages/sellPackage?branch_id=${this.defaultBranch.id}`
       })
     },
 
     // 选择日期
     selectDate(e) {
       this.activeDate = !this.activeDate;
-      let index = e.currentTarget.id;
-      this.dateIndex = this.dateList[index].date
-      this.selectTime = ''
-      console.log(this.dateIndex)
+      // let index = e.currentTarget.id;
+      this.dateIndex = e.currentTarget.id;
+      let selectDate = this.dateList[this.dateIndex].date
+      this.selectTime = -1
+      console.log(selectDate)
       console.log(this.allTimeList)
-      let timeList =  this.allTimeList[this.dateIndex]
+      let timeList =  this.allTimeList[selectDate]
       timeList.forEach((item) => {
         item.active = 0
       })
@@ -471,16 +464,17 @@ export default class Index extends wepy.page {
 
     // 选择时间
     selectTime(e,index) {
+      this.activeTime = !this.activeTime;
       let hour = this.productInfo.product_cost_time / 60 - 1
       if (e.active){
         this.timeList[index].active = 0
         for (let i=index+1;i<=index + hour;i++) {
           this.timeList[i].enabled = 1
         }
-        this.selectTime = ''
+        this.selectTime = -1
         this.timeIndex = -1
       }else{
-        if (this.selectTime) {
+        if (this.selectTime != -1) {
           tip.error('只可选择一个时间段')
           return
         }
@@ -507,7 +501,7 @@ export default class Index extends wepy.page {
       console.log(this.productInfo )
       if (this.branchIndex != -1 && this.dateIndex != -1 && this.selectTime != -1 && this.productInfo != -1) {
         let branch_id = this.branchInfo[this.branchIndex].id;
-        let selectDate = this.dateIndex;
+        let selectDate = this.dateList[this.dateIndex].date;
         let selectTime = this.selectTime.time;
         wepy.navigateTo({
           url: `/pages/appointment?branch_id=${branch_id}&selectDate=${selectDate}&select_time=${selectTime}`
@@ -605,6 +599,20 @@ export default class Index extends wepy.page {
     this.$apply();
   }
 
+  async availableDateAndTime(){
+    const json = await api.getavailabledateandtime({
+      query: {
+        branch_id: this.defaultBranch.id,
+        product_id: this.productInfo.id,
+        user_type: wepy.getStorageSync('user_type')
+      },
+      method: 'POST'
+    });
+    let res = json.data.data
+    this.dateList = res[0]
+    this.allTimeList = res[1]
+  }
+
   async onLoad() {
     let systemInfo = wx.getStorageSync(SYSTEM_INFO);
     // this.windowHeight = systemInfo.windowHeight;
@@ -674,7 +682,7 @@ export default class Index extends wepy.page {
     this.activeTime = ''
     this.timeList = ''
     this.selectTime = ''
-    this.$apply()
+    
     if (defaultBranch) {
       branch_id = defaultBranch.id
     }
@@ -682,6 +690,14 @@ export default class Index extends wepy.page {
     if (user_id && !selectBranch_id) {
       await this.getusermainpage(branch_id, user_id)
     }
+
+    //如果从其他页跳转过来
+    if(this.productInfo){
+      //闭合日期和时间选框
+      this.activeDate = this.activeTime = false
+      this.availableDateAndTime()
+    }
+    this.$apply()
   }
 }
 

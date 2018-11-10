@@ -234,7 +234,7 @@ page,
             <view class="cell-select">
               <text wx:if="{{productInfo == ''}}">请选择</text>
               <text wx:else>{{ productInfo.name }}</text>
-              <image class="{{activeBranch?'':'rotation'}}" src="../images/icons/triangle.png"></image>
+              <image src="../images/icons/triangle.png"></image>
             </view>
           </view>
         </view>

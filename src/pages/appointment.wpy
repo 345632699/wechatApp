@@ -476,7 +476,7 @@ page,
 
       async payPre() {
         if (!this.carInfo.currentCarNum){
-          tip.error('车牌号不能为空')
+          tip.longError('车牌号不能为空')
           return
         }
         if (!this.phone){
@@ -484,7 +484,7 @@ page,
           return
         }
         if (!this.product.id){
-          tip.error('请选择套餐')
+          tip.longError('请选择套餐')
           return
         }
 

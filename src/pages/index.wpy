@@ -457,7 +457,7 @@ export default class Index extends wepy.page {
           value.enabled = -1
         }
         return value
-      })      
+      })
       this.timeList = timeList
 
       this.$apply()
@@ -483,42 +483,10 @@ export default class Index extends wepy.page {
 
       this.timeList = newTimeList;
       this.$apply()
-
-      // this.activeTime = !this.activeTime;
-      // let hour = this.productInfo.product_cost_time / 60 - 1
-      // if (e.active){
-      //   this.timeList[index].active = 0
-      //   for (let i=index+1;i<=index + hour;i++) {
-      //     this.timeList[i].enabled = 1
-      //   }
-      //   this.selectTime = -1
-      //   this.timeIndex = -1
-      // }else{
-      //   if (this.selectTime != -1) {
-      //     tip.error('只可选择一个时间段')
-      //     return
-      //   }
-      //   if (index + hour > (this.timeList.length - 1)) {
-      //     tip.error('时间段不可选')
-      //     return
-      //   }
-      //   this.timeList[index].active = 1
-      //   this.selectTime = this.timeList[index]
-      //   for (let i=index+1;i<=index + hour;i++) {
-      //     this.timeList[i].enabled = -1
-      //   }
-      //   this.timeIndex = 1
-      //   this.$apply()
-      // }
-      // this.$apply()
     },
 
     // 预定
     async comfirnBooking() {
-      console.log(this.branchIndex )
-      console.log(this.dateIndex )
-      console.log(this.selectTime )
-      console.log(this.productInfo )
       if (this.branchIndex != -1 && this.dateIndex != -1 && this.selectTime != -1 && this.productInfo != -1) {
         let branch_id = this.branchInfo[this.branchIndex].id;
         let selectDate = this.dateList[this.dateIndex].date;
@@ -528,8 +496,7 @@ export default class Index extends wepy.page {
         });
         return
       } else {
-        console.log()
-        tip.error('选项不能为空')
+        tip.longError('请选择合适的时间段')
         return
       }
     },
@@ -615,7 +582,6 @@ export default class Index extends wepy.page {
       })
       this.timeList = timeList1
     }
-    console.log(this.timeList)
     this.$apply();
   }
 

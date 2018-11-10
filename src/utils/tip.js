@@ -81,6 +81,23 @@ export default class Tips {
   }
 
   /**
+   * 长提示框
+   * @param {*} title 
+   * @param {*} onHide 
+   */
+  static longError(title) {
+    wx.showToast({
+      title: title,
+      icon: 'none',
+      mask: true,
+      duration: 1500
+    });
+    // 隐藏结束回调
+
+  }
+
+
+  /**
    * 错误框
    */
 
@@ -128,7 +145,7 @@ export default class Tips {
       title: title,
       path: url,
       desc: desc,
-      success: function(res) {
+      success: function (res) {
         Tips.toast("分享成功");
       }
     };

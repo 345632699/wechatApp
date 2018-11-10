@@ -447,50 +447,72 @@ export default class Index extends wepy.page {
     // 选择日期
     selectDate(e) {
       this.activeDate = !this.activeDate;
-      // let index = e.currentTarget.id;
       this.dateIndex = e.currentTarget.id;
       let selectDate = this.dateList[this.dateIndex].date
       this.selectTime = -1
-      console.log(selectDate)
-      console.log(this.allTimeList)
+
       let timeList =  this.allTimeList[selectDate]
-      timeList.forEach((item) => {
-        item.active = 0
-      })
+      let hour = this.productInfo.product_cost_time / 60 - 1
+      timeList = timeList.map((value,i) => {
+        value.active = 0
+        if(i + hour > (timeList.length - 1)){
+          value.enabled = -1
+        }
+        return value
+      })      
       this.timeList = timeList
+
       this.$apply()
       return
     },
 
     // 选择时间
     selectTime(e,index) {
-      this.activeTime = !this.activeTime;
       let hour = this.productInfo.product_cost_time / 60 - 1
-      if (e.active){
-        this.timeList[index].active = 0
-        for (let i=index+1;i<=index + hour;i++) {
-          this.timeList[i].enabled = 1
+      this.activeTime = !this.activeTime;
+      this.timeList[index].active = 1
+      this.timeIndex = index
+      this.selectTime = this.timeList[index]
+
+      let newTimeList = this.timeList.map((value,i) => {
+        if(i == this.timeIndex){
+          value.active = 1
+        }else{
+          value.active = 0
         }
-        this.selectTime = -1
-        this.timeIndex = -1
-      }else{
-        if (this.selectTime != -1) {
-          tip.error('只可选择一个时间段')
-          return
-        }
-        if (index + hour > (this.timeList.length - 1)) {
-          tip.error('时间段不可选')
-          return
-        }
-        this.timeList[index].active = 1
-        this.selectTime = this.timeList[index]
-        for (let i=index+1;i<=index + hour;i++) {
-          this.timeList[i].enabled = -1
-        }
-        this.timeIndex = 1
-        this.$apply()
-      }
+        return value
+      })
+
+      this.timeList = newTimeList;
       this.$apply()
+
+      // this.activeTime = !this.activeTime;
+      // let hour = this.productInfo.product_cost_time / 60 - 1
+      // if (e.active){
+      //   this.timeList[index].active = 0
+      //   for (let i=index+1;i<=index + hour;i++) {
+      //     this.timeList[i].enabled = 1
+      //   }
+      //   this.selectTime = -1
+      //   this.timeIndex = -1
+      // }else{
+      //   if (this.selectTime != -1) {
+      //     tip.error('只可选择一个时间段')
+      //     return
+      //   }
+      //   if (index + hour > (this.timeList.length - 1)) {
+      //     tip.error('时间段不可选')
+      //     return
+      //   }
+      //   this.timeList[index].active = 1
+      //   this.selectTime = this.timeList[index]
+      //   for (let i=index+1;i<=index + hour;i++) {
+      //     this.timeList[i].enabled = -1
+      //   }
+      //   this.timeIndex = 1
+      //   this.$apply()
+      // }
+      // this.$apply()
     },
 
     // 预定

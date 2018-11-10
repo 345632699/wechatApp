@@ -607,6 +607,7 @@ page,
     this.select_time = option.select_time
     this.select_date = option.selectDate
     this.product = wepy.getStorageSync('productInfo')
+    this.amount = this.product.deposite
     if (this.product.id) {
       this.step = 3
       this.title = "支付定金"

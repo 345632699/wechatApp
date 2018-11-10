@@ -387,7 +387,10 @@ export default class Index extends wepy.page {
 
   methods = {
     // 下拉框收合
-    activeBranch() {
+    async activeBranch() {
+      if (!this.branchList){
+        await this.getusermainpage('', wepy.getStorageSync('userid'))
+      }
       this.activeBranch = !this.activeBranch;
       this.$apply()
     },
@@ -425,9 +428,6 @@ export default class Index extends wepy.page {
 
     // 选择门店
     async selectBranch(e) {
-      if (!this.branchInfo){
-        await this.this.getusermainpage('', wepy.getStorageSync('userid'))
-      }
       this.activeBranch = !this.activeBranch;
       this.branchIndex = e.currentTarget.id;
       let branch_id = this.branchInfo[this.branchIndex].id
@@ -436,8 +436,6 @@ export default class Index extends wepy.page {
       wepy.setStorageSync('defaultBranch',this.branchInfo[this.branchIndex])
       this.timeIndex = this.dateIndex = -1;
       this.$apply()
-      let user_id = wx.getStorageSync("userid")
-      await this.getusermainpage(branch_id, user_id)
     },
 
     //
@@ -655,6 +653,7 @@ export default class Index extends wepy.page {
 
     this.defaultBranch = res.data.data[0].default_branch
     wepy.setStorageSync('defaultBranch', this.defaultBranch)
+    wepy.setStorageSync('branchInfo', this.branchInfo)
     this.$apply();
   }
 

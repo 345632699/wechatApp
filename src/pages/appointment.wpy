@@ -178,7 +178,7 @@ page,
           <view class="cell-right">
             <view class="txt">
               <view class="title">预约时间</view>
-              <view class="subtitle">{{ selectDate }} {{start_time}}</view>
+              <view class="subtitle">{{ select_date }} {{select_time}}</view>
             </view>
           </view>
         </view>
@@ -477,6 +477,10 @@ page,
       async payPre() {
         if (!this.carInfo.currentCarNum){
           tip.error('车牌号不能为空')
+          return
+        }
+        if (!this.phone){
+          tip.error('手机号不能为空')
           return
         }
         if (!this.product.id){

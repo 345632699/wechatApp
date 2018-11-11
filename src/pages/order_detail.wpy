@@ -134,7 +134,7 @@
             </view>
             <view class="txt" wx:if="{{ orderDetail.order_status == 3 }}">
               <view class="title">洗车已完成</view>
-              <view class="subtitle">耗时 {{ orderDetail.actual_cost_time / 60 | Int }}小时 {{ orderDetail.actual_cost_time % 60 | Int }}分钟</view>
+              <view class="subtitle">耗时 {{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
             </view>
           </view>
         </view>
@@ -171,10 +171,10 @@
             <view style="width:100%;display:flex;align-items:center;">
               <view class="txt">
                 <view class="title">套餐选择 </view>
-                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}">{{ orderDetail.product_name }} 预计用时：{{ orderDetail.predict_cost_time > 60 ? ((orderDetail.predict_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.predict_cost_time % 60 > 0 ? ( (orderDetail.predict_cost_time % 60 | Int) + '分钟') :
+                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}">{{ orderDetail.product_name }} 预计用时：{{ orderDetail.predict_cost_time >= 60 ? ((orderDetail.predict_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.predict_cost_time % 60 > 0 ? ( (orderDetail.predict_cost_time % 60 | Int) + '分钟') :
                   '' }}
                 </view>
-                <view class="subtitle" wx:else>{{ orderDetail.product_name }} 实际用时：{{ orderDetail.actual_cost_time > 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}
+                <view class="subtitle" wx:else>{{ orderDetail.product_name }} 实际用时：{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}
                 </view>
               </view>
             </view>

@@ -218,9 +218,9 @@
                   <view style="width:100%;display:flex;align-items:center;">
                     <view class="txt">
                       <view class="title">套餐选择</view>
-                      <view class="subtitle" wx:if="{{ item.order_status <= 3 }}">{{ item.product_name }} 预计用时：{{ item.product_cost_time > 60 ? ((item.product_cost_time / 60 | Int) + '小时 ') : '' }} {{ item.product_cost_time % 60 > 0 ? ( (item.product_cost_time % 60 | Int) + '分钟') : '' }}
+                      <view class="subtitle" wx:if="{{ item.order_status <= 3 }}">{{ item.product_name }} 预计用时：{{ item.product_cost_time >= 60 ? ((item.product_cost_time / 60 | Int) + '小时 ') : '' }} {{ item.product_cost_time % 60 > 0 ? ( (item.product_cost_time % 60 | Int) + '分钟') : '' }}
                       </view>
-                      <view class="subtitle" wx:else>{{ item.product_name }} 实际用时：{{ item.actual_cost_time > 60 ? ((item.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ item.actual_cost_time % 60 > 0 ? ( (item.actual_cost_time % 60 | Int) + '分钟') : '' }}
+                      <view class="subtitle" wx:else>{{ item.product_name }} 实际用时：{{ item.actual_cost_time >= 60 ? ((item.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ item.actual_cost_time % 60 > 0 ? ( (item.actual_cost_time % 60 | Int) + '分钟') : '' }}
                       </view>
                     </view>
                   </view>

@@ -605,9 +605,9 @@ export default class Index extends wepy.page {
     if (!wepy.getStorageSync('userid')) {
       await this.$parent.getAuth()
     }
-    let user_id = wepy.getStorageSync('userid')
+    // let user_id = wepy.getStorageSync('userid')
     wepy.removeStorageSync('productInfo')
-    await this.getusermainpage('', user_id)
+    // await this.getusermainpage('', user_id)
     this.$apply()
   }
 
@@ -675,8 +675,9 @@ export default class Index extends wepy.page {
     }
     let selectBranch_id = wepy.getStorageSync('defaultBranch').id
     if (user_id && !selectBranch_id) {
-      await this.getusermainpage(branch_id, user_id)
+     
     }
+     await this.getusermainpage(branch_id, user_id)
 
     //如果从其他页跳转过来
     if(this.productInfo){

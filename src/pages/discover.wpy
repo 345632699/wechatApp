@@ -416,6 +416,7 @@
       const res = await api.getshowimages({
         query: {
           merchant_id: wepy.getStorageSync('merchant_id'),
+          branch_id: wepy.getStorageSync('defaultBranch').id,
           number: this.imgArrLength,
           first_index: this.imgPage,
         },

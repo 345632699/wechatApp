@@ -155,7 +155,7 @@
 
         <view class="cell-bd">
           <text class="title">{{ item.product_subtitle }}</text>
-          <text class="tips">耗时约{{ item.product_cost_time / 60 }}小时, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</text>
+          <text class="tips">耗时约{{ item.product_cost_time >= 60 ? ((item.product_cost_time / 60 | Int) + '小时 ') : '' }} {{ item.product_cost_time % 60 > 0 ? ( (item.product_cost_time % 60 | Int) + '分钟') : '' }}, 开始前{{ item.product_cancel_limit_time / 60 }}小时内取消不退定金</text>
           <text class="main" wx:if="{{ item.hide_details == true }}">包含：{{ item.product_intro }}</text>
           <view class="main-detail" wx:else>
             <view class="main-item" wx:for="{{item.product_details}}" wx:key="{{index}}" wx:for-item="detailItem">

@@ -1,145 +1,121 @@
 <style lang="less">
-@import '../style/common.less';
-
-page,
-.page{
-  color: @txtColor;
-
-  .page-bd{
-    margin: 60rpx 26rpx 30rpx 24rpx;
-    background: @cellsBgColor;
-    box-shadow:0 4rpx 8rpx 0 #000000;
-    border-radius:12rpx;
-
-    .cells{
-      padding: 0 36rpx;
-      .cell{
-        border-bottom: 2rpx solid @cellsBorder;
-        padding: 48rpx 0 24rpx 0;
-        .betweenBox;
-
-        .cell-left{
-          padding: 14rpx 0 0 18rpx;
-
-          image{
-            width: 46rpx;
-            height: 46rpx;
-          }
-        }
-
-        .cell-right{
-          width: 528rpx;
-          align-items: center;
-          display: flex;
-
-          .txt{
-            width: 510rpx;
-            .betweenBox;
-            flex-direction: column;
-
-            .title{
-              color: @txtColor;
-              font-size: 32rpx;
-              line-height:44rpx;
-              padding-bottom: 8rpx;
+  @import '../style/common.less';
+  page,
+  .page {
+    color: @txtColor;
+    .page-bd {
+      margin: 60rpx 26rpx 30rpx 24rpx;
+      background: @cellsBgColor;
+      box-shadow: 0 4rpx 8rpx 0 #000000;
+      border-radius: 12rpx;
+      .cells {
+        padding: 0 36rpx;
+        .cell {
+          border-bottom: 2rpx solid @cellsBorder;
+          padding: 48rpx 0 24rpx 0;
+          .betweenBox;
+          .cell-left {
+            padding: 14rpx 0 0 18rpx;
+            image {
+              width: 46rpx;
+              height: 46rpx;
             }
-
-            .subtitle{
-              color: #9B9B9B;
-              font-size: @normalFontSize;
-              line-height:34rpx;
-
-              .sub-item{
-                .betweenBox;
-                padding: 14rpx 0;
-
-                &:first-child{
-                  padding-top: 20rpx;
-                }
-
-                &:last-child{
-                  padding-bottom: 0;
+          }
+          .cell-right {
+            width: 528rpx;
+            align-items: center;
+            display: flex;
+            .txt {
+              width: 510rpx;
+              .betweenBox;
+              flex-direction: column;
+              .title {
+                color: @txtColor;
+                font-size: 32rpx;
+                line-height: 44rpx;
+                padding-bottom: 8rpx;
+              }
+              .subtitle {
+                color: #9B9B9B;
+                font-size: @normalFontSize;
+                line-height: 34rpx;
+                .sub-item {
+                  .betweenBox;
+                  padding: 14rpx 0;
+                  &:first-child {
+                    padding-top: 20rpx;
+                  }
+                  &:last-child {
+                    padding-bottom: 0;
+                  }
                 }
               }
             }
-          }
-
-          .hint{
-            color: #C42B2B;
-            font-size: @normalFontSize;
-            width: 100%;
-            text-align: left;
-            margin-top: 8rpx;
-          }
-        }
-
-        .cell-top{
-          width:100%;
-          align-items: center;
-          .betweenBox;
-
-          image{
-            margin-left: 18rpx;
-            width: 46rpx;
-            height: 46rpx;
-          }
-
-          .title{
-            width: 528rpx;
-            color: @txtColor;
-            font-size: 32rpx;
-            line-height:44rpx;
-          }
-        }
-
-        .cell-bottom{
-          .centerBox;
-          flex-wrap: wrap;
-          padding: 22rpx 20rpx 0;
-
-          image{
-            margin: 24rpx 24rpx 0 0;
-            width: 180rpx;
-            height: 180rpx;
-
-            &:nth-last-child(3n+1){//3是计数器，1是偏移值
-              margin-right: 0;
+            .hint {
+              color: #C42B2B;
+              font-size: @normalFontSize;
+              width: 100%;
+              text-align: left;
+              margin-top: 8rpx;
             }
           }
+          .cell-top {
+            width: 100%;
+            align-items: center;
+            .betweenBox;
+            image {
+              margin-left: 18rpx;
+              width: 46rpx;
+              height: 46rpx;
+            }
+            .title {
+              width: 528rpx;
+              color: @txtColor;
+              font-size: 32rpx;
+              line-height: 44rpx;
+            }
+          }
+          .cell-bottom {
+            .centerBox;
+            flex-wrap: wrap;
+            padding: 22rpx 20rpx 0;
+            image {
+              margin: 24rpx 24rpx 0 0;
+              width: 180rpx;
+              height: 180rpx;
+              &:nth-last-child(3n+1) {
+                //3是计数器，1是偏移值
+                margin-right: 0;
+              }
+            }
+          }
+          &:last-child {
+            border-bottom: 0;
+          }
         }
-
-        &:last-child{
-          border-bottom: 0;
+      }
+      .pay-btn {
+        padding: 14rpx 46rpx 72rpx;
+        .nomal-btn {
+          .longBtn(@normalBtnBgColor, @normalBtnBorderColor);
+          margin-bottom: 24rpx;
+        }
+        .cancel-btn {
+          .longBtn(@cancelBtnBgColor, @cancelBtnBgColor);
+          margin-bottom: 24rpx;
         }
       }
     }
-
-    .pay-btn{
-      padding: 14rpx 46rpx 72rpx;
-
-      .nomal-btn{
-        .longBtn(@normalBtnBgColor,@normalBtnBorderColor);
-        margin-bottom: 24rpx;
-      }
-
-      .cancel-btn{
-        .longBtn(@cancelBtnBgColor,@cancelBtnBgColor);
-        margin-bottom: 24rpx;
-      }
+    .page-fd {
+      .bottom(100rpx);
     }
   }
-
-  .page-fd{
-    .bottom(100rpx);
-  }
-}
 </style>
 <template>
-    <view class="page">
+  <view class="page">
     <!--頂部-->
     <view class="page-bd">
       <view class="cells">
-
         <!-- 洗车进程 -->
         <view class="cell" wx:if="{{ orderDetail.order_status > 0 && orderDetail.order_status < 4}}">
           <view class="cell-left">
@@ -147,7 +123,6 @@ page,
             <image wx:if="{{ orderDetail.order_status == 2 }}" src="../images/icons/washing.png"></image>
             <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/icons/finish.png"></image>
           </view>
-
           <view class="cell-right">
             <view class="txt" wx:if="{{ orderDetail.order_status == 1 }}">
               <view class="title">预约时间</view>
@@ -163,13 +138,11 @@ page,
             </view>
           </view>
         </view>
-
         <!-- 车牌号码 -->
         <view class="cell">
           <view class="cell-left">
             <image src="../images/icons/number.png"></image>
           </view>
-
           <view class="cell-right">
             <view class="txt">
               <view class="title">车牌号码</view>
@@ -177,13 +150,11 @@ page,
             </view>
           </view>
         </view>
-
         <!-- 手机号码 -->
         <view class="cell">
           <view class="cell-left">
             <image src="../images/icons/phone.png"></image>
           </view>
-
           <view class="cell-right">
             <view class="txt">
               <view class="title">手机号码</view>
@@ -191,43 +162,40 @@ page,
             </view>
           </view>
         </view>
-
         <!-- 套餐 -->
         <view class="cell">
           <view class="cell-left">
             <image src="../images/icons/shoppingcar.png"></image>
           </view>
-
           <view class="cell-right" style="flex-direction: column;">
             <view style="width:100%;display:flex;align-items:center;">
               <view class="txt">
                 <view class="title">套餐选择 </view>
-                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}" >{{ orderDetail.product_name }}  预计用时：{{ orderDetail.predict_cost_time / 60 | Int }}小时</view>
-                <view class="subtitle" wx:else >{{ orderDetail.product_name }}  实际用时：{{ orderDetail.actual_cost_time / 60 | Int }}小时</view>
+                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}">{{ orderDetail.product_name }} 预计用时：{{ orderDetail.predict_cost_time > 60 ? ((orderDetail.predict_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.predict_cost_time % 60 > 0 ? ( (orderDetail.predict_cost_time % 60 | Int) + '分钟') :
+                  '' }}
+                </view>
+                <view class="subtitle" wx:else>{{ orderDetail.product_name }} 实际用时：{{ orderDetail.actual_cost_time > 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}
+                </view>
               </view>
             </view>
             <view class="hint" wx:if="{{ orderDetail.order_status == 1 }}">*开始洗车前1小时内不可取消预约</view>
           </view>
         </view>
-
         <!-- 效果展示 -->
         <view class="cell" wx:if="{{ orderDetail.image_list.length }}" style="flex-direction: column;">
           <view class="cell-top">
             <image src="../images/icons/view.png"></image>
             <view class="title">效果展示</view>
           </view>
-
           <view class="cell-bottom">
             <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" data-index="{{ index }}" data-src="{{ item }}" mode="bindload" src="{{ item }}"></image>
           </view>
         </view>
-
         <!-- 支付费用 -->
         <view class="cell">
           <view class="cell-left" style="padding-top:0">
             <image src="../images/icons/money.png"></image>
           </view>
-
           <view class="cell-right">
             <view class="txt" style="width:518rpx">
               <view class="title">支付费用</view>
@@ -249,51 +217,46 @@ page,
           </view>
         </view>
       </view>
-
       <!-- 底部按钮 -->
       <view class="pay-btn">
         <block wx:if="{{ orderDetail.order_status == 5 || cancel > 0 }}">
           <button class="cancel-btn" type="default">订单已取消</button>
           <button class="cancel-btn" type="default" @tap="backToIndex">返回</button>
         </block>
-
         <block wx:if="{{ orderDetail.order_status < 0 }}">
           <button class="cancel-btn" type="default">订单异常</button>
           <button class="cancel-btn" type="default" @tap="backToIndex">返回</button>
         </block>
-        
         <button wx:if="{{ orderDetail.order_status == 1 }}" class="nomal-btn" type="default" @tap="lead">导航出发</button>
         <button wx:if="{{ orderDetail.order_status == 2 }}" class="nomal-btn" type="default">正在洗车…</button>
         <button wx:if="{{ orderDetail.order_status == 3 }}" class="nomal-btn" type="default" @tap="wxTotalPayment">支付尾款</button>
         <button wx:if="{{ orderDetail.order_status < 2 }}" class="cancel-btn" type="default" @tap="cancelOrder">取消订单</button>
-
         <block wx:if="{{ orderDetail.order_status == 4 }}">
           <button wx:if="{{is_evaluate}}" class="cancel-btn" type="default">已评价</button>
           <button wx:if="{{!is_evaluate}}" class="nomal-btn" type="default" @tap="toEvaluate">发表评价</button>
           <button class="cancel-btn" type="default" @tap="backToIndex">返回</button>
         </block>
       </view>
-      </view>
-
-      <view class="page-fd"></view>
     </view>
-    <tips :step.sync="step" :title.sync="title"></tips>
-    <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo" ></alert>
-    <pay :pay_active.sync="pay_active" :title.sync="payTitle" :user_balance.sync="user_balance" :amount.sync="amount"></pay>
-    <!-- <view class="brightMask">
-        <view class="pre" @tap="pre" wx:if="{{ orderIndex > 0 }}">
-            <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg" >左</image>
-        </view>
-        <view class="pre" wx:else>
-            <image style="width: 70rpx" src="../images/order/left_disable.svg" >左</image>
-        </view>
-        <view class="next" wx:if="{{ (orderIndex+1) >= orderCount }}">
-            <image style="width: 70rpx" src="../images/order/rightTriDisable.svg" >右</image>
-        </view>
-        <view class="next" @tap="next" wx:else>
-            <image style="width: 70rpx" src="../images/order/rightTriNormal.svg" >右</image>
-        </view>
-    </view> -->
+    <view class="page-fd"></view>
+  </view>
+  <tips :step.sync="step" :title.sync="title"></tips>
+  <alert :is_active.sync="is_active" :alertInfo.sync="alertInfo"></alert>
+  <pay :pay_active.sync="pay_active" :title.sync="payTitle" :user_balance.sync="user_balance" :amount.sync="amount"></pay>
+  <!-- <view class="brightMask">
+          <view class="pre" @tap="pre" wx:if="{{ orderIndex > 0 }}">
+              <image style="width: 70rpx" src="../images/order/LeftTriNormal.svg" >左</image>
+          </view>
+          <view class="pre" wx:else>
+              <image style="width: 70rpx" src="../images/order/left_disable.svg" >左</image>
+          </view>
+          <view class="next" wx:if="{{ (orderIndex+1) >= orderCount }}">
+              <image style="width: 70rpx" src="../images/order/rightTriDisable.svg" >右</image>
+          </view>
+          <view class="next" @tap="next" wx:else>
+              <image style="width: 70rpx" src="../images/order/rightTriNormal.svg" >右</image>
+          </view>
+      </view> -->
 </template>
 
 <script>
@@ -323,7 +286,6 @@ page,
     data = {
       is_active: 0,
       pay_active: 0, //是否限制支付選項
-
       alertInfo: {
         alert_title: "取消订单",
         msg: "确认要取消预约吗？取消后可能无法选择同一时间\n",
@@ -331,49 +293,38 @@ page,
         confirmText: '确认取消',
       },
       //是否已经取消
-      cancel: 0 ,
-
+      cancel: 0,
       orderDetail: {},
       orderIndex: 0,
       order_id: 0,
       // orderCount: 0,
-
-
       // step: 1, //订单排序
       // tipContent: "我的预约",
       // tipType: 2, //1 为下订单 2为查看订单
-
-
       //评价分数
       evaluate: 5,
-
       defaultBranch: {},
       payTitle: "尾款",
       user_balance: 0,
-      amount:0,
-
+      amount: 0,
       // 新加的data-------------------------------------------------
       step: 4,
       title: "支付尾款",
       is_evaluate: false,
       //------------------------------------------------------------
     }
-
-
     methods = {
       // 新加的方法--------------------------------------------------
-      toEvaluate () {
+      toEvaluate() {
         let that = this;
         wepy.navigateTo({
           url: `/pages/evaluate?order_id=${that.order_id}`
         });
       },
-
       //------------------------------------------------------------
-      backToIndex () {
+      backToIndex() {
         wepy.navigateBack()
       },
-
       // async pre (e) {
       //   this.orderIndex = this.orderIndex - 1
       //   this.step = this.orderIndex + 1
@@ -393,7 +344,7 @@ page,
       // parentFn (num, evt) {
       //   console.log('parent received emit event, number is: ' + num)
       // },
-      previewImage (e) {
+      previewImage(e) {
         var index = e.target.dataset.index
         var current = this.orderDetail.image_list[index]
         wepy.previewImage({
@@ -402,21 +353,19 @@ page,
         })
       },
       //導航
-      lead () {
+      lead() {
         wepy.openLocation({
           latitude: parseFloat(this.defaultBranch.longitude_latitude.lat),
           longitude: parseFloat(this.defaultBranch.longitude_latitude.lng),
           name: this.defaultBranch.name,
-          address:this.defaultBranch.location,
+          address: this.defaultBranch.location,
           scale: 28
         })
       },
-
       // callbackStart(count){
       //   this.evaluate = count
       //   this.$apply()
       // },
-
       //传评价到后台
       // async evaluate () {
       //   const res = await api.updatecomment({
@@ -434,29 +383,25 @@ page,
       //     tip.error(res.data.errmsg)
       //   }
       // },
-
-      async cancelOrder () {
+      async cancelOrder() {
         this.is_active = 1
         if (this.orderDetail.cannot_cancel)
-            this.alertInfo.msg = "现在取消预约将无法退还定金，是否还要取消预约？"
+          this.alertInfo.msg = "现在取消预约将无法退还定金，是否还要取消预约？"
         this.$apply()
       },
       //支付尾款
-      async wxTotalPayment () {
+      async wxTotalPayment() {
         this.pay_active = 1
         this.$apply()
       },
-
     }
-
     //车牌加空格
-    showCarNum () {
+    showCarNum() {
       let string1 = `${this.orderDetail.car_number.slice(0,2)} `;
       let string2 = this.orderDetail.car_number.slice(2);
       this.orderDetail.car_number = string1.concat(string2);
     }
-
-    async getorderinfo (order_id) {
+    async getorderinfo(order_id) {
       const res = await api.getorderinfo({
         query: {
           order_id: order_id,
@@ -472,18 +417,18 @@ page,
     // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
     events = {
       'evaluate': (value) => {
-        if(value == 1) this.is_evaluate = true
+        if (value == 1) this.is_evaluate = true
       },
-      'comfirmAction': async  (comfirm) => {
-        if (comfirm == 1){
+      'comfirmAction': async(comfirm) => {
+        if (comfirm == 1) {
           const res = await api.cancelorder({
             query: {
               orderId: parseInt(this.order_id),
-              appid:APPID,
+              appid: APPID,
             },
             method: 'POST'
           });
-          if (res.data.status){
+          if (res.data.status) {
             this.cancel = 1
             this.$apply()
             wepy.navigateBack()
@@ -491,24 +436,24 @@ page,
           }
         }
       },
-      'payByBalance' : async (e) => {
+      'payByBalance': async(e) => {
         const res = await api.balancetotalpayment({
           query: {
             orderId: this.order_id,
           },
           method: 'POST'
         });
-        if(res.data.status){
+        if (res.data.status) {
           this.pay_success = 1
           this.orderDetail.order_status = 4
           this.is_evaluate = false
           this.$apply()
           tip.success('支付成功')
-        }else {
+        } else {
           tip.error(res.data.errmsg)
         }
       },
-      'payByWechat' : async (e) => {
+      'payByWechat': async(e) => {
         const res = await api.wxtotalpayment({
           query: {
             userId: wepy.getStorageSync('userid'),
@@ -522,39 +467,36 @@ page,
         });
         let wxpayData = res.data.data[0]
         let that = this
-        await this.wxpay(wxpayData,that)
+        await this.wxpay(wxpayData, that)
       }
     }
-
-    async wxpay(param,that) {
+    async wxpay(param, that) {
       wx.requestPayment({
         timeStamp: param.timeStamp,
         nonceStr: param.nonceStr,
         package: param.package,
         signType: param.signType,
         paySign: param.paySign,
-        success: function (res) {
-            that.pay_success = 1
-            that.orderDetail.order_status = 4
-            that.is_evaluate = false
-            that.$apply()
-            tip.success('支付成功')
+        success: function(res) {
+          that.pay_success = 1
+          that.orderDetail.order_status = 4
+          that.is_evaluate = false
+          that.$apply()
+          tip.success('支付成功')
         },
-        fail: function (res) {
+        fail: function(res) {
           tip.success('支付出错')
         },
-        complete: function () {
+        complete: function() {
           console.log("done");
         }
       })
     }
-
     async onLoad(option) {
       // 用户评价
-      if(option.is_evaluate){
+      if (option.is_evaluate) {
         this.is_evaluate = option.is_evaluate
       }
-
       this.pacakge_id = option.pacakge_id
       this.package_detail = option.package_detail
       this.package_name = option.package_name
@@ -566,8 +508,7 @@ page,
       await this.getorderinfo(order_id)
       this.$apply()
     }
-
-    async onShow () {
+    async onShow() {
       this.user_balance = wepy.getStorageSync('user_balance')
       this.$apply()
     }

@@ -564,7 +564,7 @@ page,
         method: 'POST'
       });
       let wxpayData = res.data.data[0]
-      if (wxpayData.is_success) {
+      if (res.data.is_success) {
         let that = this
         await this.wxpay(wxpayData,that)
       }else{

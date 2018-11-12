@@ -134,7 +134,8 @@
             </view>
             <view class="txt" wx:if="{{ orderDetail.order_status == 3 }}">
               <view class="title">洗车已完成</view>
-              <view class="subtitle">耗时 {{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
+              <view wx:if="{{ orderDetail.actual_cost_time > 0 }}" class="subtitle">耗时{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
+              <view wx:else class="subtitle">耗时0分钟</view>
             </view>
           </view>
         </view>
@@ -171,10 +172,12 @@
             <view style="width:100%;display:flex;align-items:center;">
               <view class="txt">
                 <view class="title">套餐选择 </view>
-                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 3 }}">{{ orderDetail.product_name }} 预计用时：{{ orderDetail.predict_cost_time >= 60 ? ((orderDetail.predict_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.predict_cost_time % 60 > 0 ? ( (orderDetail.predict_cost_time % 60 | Int) + '分钟') :
+                <view class="subtitle" wx:if="{{ orderDetail.order_status <= 2 }}">{{ orderDetail.product_name }} 预计用时：{{ orderDetail.predict_cost_time >= 60 ? ((orderDetail.predict_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.predict_cost_time % 60 > 0 ? ( (orderDetail.predict_cost_time % 60 | Int) + '分钟') :
                   '' }}
                 </view>
-                <view class="subtitle" wx:else>{{ orderDetail.product_name }} 实际用时：{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}
+                <view class="subtitle" wx:else>
+                    <view wx:if="{{ orderDetail.actual_cost_time > 0 }}">实际用时：{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
+                    <view wx:else>实际用时：0分钟</view>
                 </view>
               </view>
             </view>
@@ -188,7 +191,7 @@
             <view class="title">效果展示</view>
           </view>
           <view class="cell-bottom">
-            <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" data-index="{{ index }}" data-src="{{ item }}" mode="bindload" src="{{ item }}"></image>
+            <image wx:for="{{ orderDetail.thumbnail_list }}" wx:key="item" @tap="previewImage" data-index="{{ index }}" data-src="{{ item }}" mode="aspectFill" src="{{ item }}"></image>
           </view>
         </view>
         <!-- 支付费用 -->

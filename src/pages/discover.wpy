@@ -219,7 +219,15 @@
       .about-fd {
         .bottom(52rpx);
       }
+      .tech-apply{
+        font-size: 20rpx;
+        line-height: 28rpx;
+        color: #9B9B9B;
+        text-align:center;
+        margin-top:30rpx;
+      }
     }
+    
   }
 </style>
 <template>
@@ -301,6 +309,10 @@
                 </view>
               </view>
             </repeat>
+          </view>
+          <view class="tech-apply">
+            <view class="name">技术支持：Mist One</view>  
+            <view class="mail">mistoneassistance@outlook.com</view>
           </view>
           <!-- 底部间隔 -->
           <view class="about-fd"></view>

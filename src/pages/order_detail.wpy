@@ -117,11 +117,11 @@
     <view class="page-bd">
       <view class="cells">
         <!-- 洗车进程 -->
-        <view class="cell" wx:if="{{ orderDetail.order_status > 0 && orderDetail.order_status < 4}}">
+        <view class="cell" wx:if="{{ orderDetail.order_status > 0 && orderDetail.order_status <= 4}}">
           <view class="cell-left">
             <image wx:if="{{ orderDetail.order_status == 1 }}" src="../images/icons/time.png"></image>
             <image wx:if="{{ orderDetail.order_status == 2 }}" src="../images/icons/washing.png"></image>
-            <image wx:if="{{ orderDetail.order_status == 3 }}" src="../images/icons/finish.png"></image>
+            <image wx:if="{{ orderDetail.order_status >= 3 }}" src="../images/icons/finish.png"></image>
           </view>
           <view class="cell-right">
             <view class="txt" wx:if="{{ orderDetail.order_status == 1 }}">
@@ -132,7 +132,7 @@
               <view class="title">洗车进行中…</view>
               <view class="subtitle">预计结束时间 {{ orderDetail.end_time }}</view>
             </view>
-            <view class="txt" wx:if="{{ orderDetail.order_status == 3 }}">
+            <view class="txt" wx:if="{{ orderDetail.order_status >= 3 }}">
               <view class="title">洗车已完成</view>
               <view wx:if="{{ orderDetail.actual_cost_time > 0 }}" class="subtitle">耗时{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
               <view wx:else class="subtitle">耗时0分钟</view>
@@ -176,8 +176,7 @@
                   '' }}
                 </view>
                 <view class="subtitle" wx:else>
-                    <view wx:if="{{ orderDetail.actual_cost_time > 0 }}">实际用时：{{ orderDetail.actual_cost_time >= 60 ? ((orderDetail.actual_cost_time / 60 | Int) + '小时 ') : '' }} {{ orderDetail.actual_cost_time % 60 > 0 ? ( (orderDetail.actual_cost_time % 60 | Int) + '分钟') : '' }}</view>
-                    <view wx:else>实际用时：0分钟</view>
+                   {{ orderDetail.product_name }}
                 </view>
               </view>
             </view>

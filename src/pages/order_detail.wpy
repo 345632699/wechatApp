@@ -435,6 +435,8 @@
             this.$apply()
             wepy.navigateBack()
             tip.toast("取消成功")
+          }else{
+            tip.longError(res.data.errmsg);
           }
         }
       },

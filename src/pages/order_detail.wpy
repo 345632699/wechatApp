@@ -399,9 +399,16 @@
     }
     //车牌加空格
     showCarNum() {
-      let string1 = `${this.orderDetail.car_number.slice(0,2)} `;
-      let string2 = this.orderDetail.car_number.slice(2);
-      this.orderDetail.car_number = string1.concat(string2);
+      if (this.orderDetail.car_number.length > 8) {
+        let string1 = `${this.orderDetail.car_number.slice(0, 4)} `;
+        let string2 = this.orderDetail.car_number.slice(4);
+        this.orderDetail.car_number = string1.concat(string2);
+      }else{
+        let string1 = `${this.orderDetail.car_number.slice(0,2)} `;
+        let string2 = this.orderDetail.car_number.slice(2);
+        this.orderDetail.car_number = string1.concat(string2);
+      }
+     
     }
     async getorderinfo(order_id) {
       const res = await api.getorderinfo({

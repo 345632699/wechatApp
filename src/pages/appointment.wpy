@@ -203,7 +203,7 @@ page,
                       </view>
                     </picker>
                     <!-- 车牌号码输入 -->
-                    <view style="max-width:145rpx;margin-left:20rpx;">
+                    <view style="max-width:120rpx;margin-left:20rpx;">
                       <input disabled="{{ pay_success >= 1 }}" @blur="setCarNUm" maxlength="6" value="{{ carInfo.carNum }}" placeholder="请输入车牌号" />
                     </view>
                   </view>
@@ -403,8 +403,14 @@ page,
         this.active_sel_car = !this.active_sel_car;
         this.carInfo.carNumIndex = e.currentTarget.id;
         this.carInfo.currentCarNum = this.carInfo.carNumList[this.carInfo.carNumIndex]
-        this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
-        this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+        if(this.carInfo.currentCarNum.length > 8){
+          this.carInfo.carNum = this.carInfo.currentCarNum.slice(4,)
+          this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,4)
+        }else{
+          this.carInfo.carNum = this.carInfo.currentCarNum.slice(2,)
+          this.carInfo.currentProvince = this.carInfo.currentCarNum.slice(0,2)
+        }
+        
         wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
         wepy.setStorageSync('carNum',this.carInfo.carNum)
         this.$apply()
@@ -465,6 +471,7 @@ page,
       setCarNUm (e) {
         this.carInfo.currentCarNum = this.carInfo.currentProvince + e.detail.value
         this.carInfo.carNum = e.detail.value
+      
         wepy.setStorageSync('currentProvince',this.carInfo.currentProvince)
         wepy.setStorageSync('carNum',this.carInfo.carNum)
         this.$apply()
@@ -477,6 +484,10 @@ page,
       async payPre() {
         if (!this.carInfo.currentCarNum){
           tip.longError('车牌号不能为空')
+          return
+        }
+         if (/[\u4E00-\u9FA5]/i.test(this.carInfo.currentCarNum)) {
+           tip.longError('车牌号不能包含中文字符')
           return
         }
         if (!this.phone){
